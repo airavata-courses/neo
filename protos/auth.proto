@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package authentication;
+
+service AuthService {
+    rpc getSampleData(SampleRequest) returns (SampleResponse);
+}
+
+message SampleRequest {
+    string my_request = 1;
+}
+
+message SampleResponse {
+    string my_response = 1;
+}
+
