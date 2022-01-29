@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package data_processor;
+
+service DataProcessorService {
+    rpc getAttributes(InputParameters) returns (ProcessedAttributes);
+}
+
+message InputParameters {
+    string year = 1;
+    string month = 2;
+    string day = 3;
+    string hour = 4;
+    string min = 5;
+    string longitude = 6;
+    string latitude = 7;
+}
+
+message ProcessedAttributes {
+    string base_reflectivity = 1;
+    string base_radial_velocity = 2;
+}
+
+/*
+{
+    "year" : ip.year,
+    
+}
+*/
