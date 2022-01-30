@@ -16,27 +16,50 @@ def find_url(station, year, month, date, hour, minute):
         f"{year}-{month}-{date} {hour}:{minute}:00.000")
     start = end - datetime.timedelta(hours=24)
     scans = conn.get_avail_scans_in_range(start, end, station)
-    return scans[-1]
+    count = -1
+    while count > len(scans)*-1:
+
+        if scans[count].filename[-3:] == 'V06':
+            return scans[count]
+        else:
+            count= count -1
+
+
+    return -1
 
 
 def fetch_data(url):
     templocation = tempfile.mkdtemp()
     results = conn.download(url, templocation)
-    for i in results.iter_success():
-        return pyart.io.read(i.filepath)
+    if results.success_count > 0:
+        for i in results.iter_success():
+            try:
+                data =  pyart.io.read(i.filepath)
+                return data
+            except:
+                return -1
+    else:
+        return -1
     
 
     
 def data_viz(radar, product):
-    if product == 'reflectivity':
 
-        display = pyart.graph.RadarDisplay(radar)
-        fig = plt.figure(figsize=(6, 5))
-        ax = fig.add_subplot(111)
+    display = pyart.graph.RadarDisplay(radar)
+    fig = plt.figure(figsize=(6, 5))
+
+    if product == 'reflectivity':
         display.plot('reflectivity', 0, title='NEXRAD Reflectivity',
-             vmin=-32, vmax=64, colorbar_label='', ax=ax)
+             vmin=-32, vmax=64, colorbar_label='')
         
-    # if product == 'reflectivity':
+    elif product == 'velocity':
+        display.plot('velocity', 1, title='Doppler Velocity',
+             vmin=-95, vmax=95,colorbar_label='')
+
+    elif product == 'cross_correlation_ratio':
+        display.plot('cross_correlation_ratio', 0, title='Correlation Coefficient',
+             vmin=0, vmax=1,colorbar_label='')
+
     s = io.BytesIO()
     fig.savefig(s, format='png', bbox_inches="tight")
     s.seek(0)
@@ -46,18 +69,30 @@ def data_viz(radar, product):
 
 if __name__ == "__main__":
     station = 'KLVX'
-    year = 2021
-    month = 12
-    date = 12
-    hour = 11
-    minute = 10
-    product = 'reflectivity'
+    # Year month date hour and minute should be string with fixed width
+    year = '2021'
+    month = '12'
+    date = '11'
+    hour = '02'
+    minute = '55'
+    # Possible values could be velocity, reflectivity or cross_correlation_ratio
+    product = 'velocity'
 
+# If a function is not able to produce required output, it will return -1
     url = find_url(station, year, month, date, hour, minute)
-    data_radar = fetch_data(url)
-    out_viz_file  = data_viz(data_radar, product)
+    if url==-1:
+        flag = 404
+    else:
+        data_radar = fetch_data(url)
+        if data_radar == -1:
+            flag = 404
+        else:
+            out_viz_file  = data_viz(data_radar, product)
+flag = 1
 
-    with open('C:/Users/shashank/Downloads/test1.png','wb') as f:
-        f.write(base64.decodebytes(out_viz_file))
+
+# test for checking base64 data to image
+with open('C:/Users/shashank/Downloads/test1.png','wb') as f:
+    f.write(base64.decodebytes(out_viz_file))
 
 
