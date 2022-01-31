@@ -8,9 +8,11 @@ service AuthService {
 
 message SampleRequest {
     string my_request = 1;
+    string my_req_data = 2;
 }
 
 message SampleResponse {
     string my_response = 1;
+    string my_resp_data = 2;
 }
 

@@ -19,64 +19,64 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x14\x64\x61ta_processor.proto\x12\x0e\x64\x61ta_processor\"{\n\x0fInputParameters\x12\x0c\n\x04year\x18\x01 \x01(\t\x12\r\n\x05month\x18\x02 \x01(\t\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\t\x12\x0c\n\x04hour\x18\x04 \x01(\t\x12\x0b\n\x03min\x18\x05 \x01(\t\x12\x11\n\tlongitude\x18\x06 \x01(\t\x12\x10\n\x08latitude\x18\x07 \x01(\t\"N\n\x13ProcessedAttributes\x12\x19\n\x11\x62\x61se_reflectivity\x18\x01 \x01(\t\x12\x1c\n\x14\x62\x61se_radial_velocity\x18\x02 \x01(\t2m\n\x14\x44\x61taProcessorService\x12U\n\rgetAttributes\x12\x1f.data_processor.InputParameters\x1a#.data_processor.ProcessedAttributesb\x06proto3'
+  serialized_pb=b'\n\x14\x64\x61ta_processor.proto\x12\x0e\x64\x61ta_processor\"v\n\nInputQuery\x12\x0c\n\x04year\x18\x01 \x01(\t\x12\r\n\x05month\x18\x02 \x01(\t\x12\x0b\n\x03\x64\x61y\x18\x03 \x01(\t\x12\x0c\n\x04hour\x18\x04 \x01(\t\x12\x0e\n\x06minute\x18\x05 \x01(\t\x12\x0f\n\x07\x66\x65\x61ture\x18\x06 \x01(\t\x12\x0f\n\x07station\x18\x07 \x01(\t\"#\n\x0bResultImage\x12\x14\n\x0cimage_base64\x18\x01 \x01(\t2[\n\x14\x44\x61taProcessorService\x12\x43\n\x08getImage\x12\x1a.data_processor.InputQuery\x1a\x1b.data_processor.ResultImageb\x06proto3'
 )
 
 
 
 
-_INPUTPARAMETERS = _descriptor.Descriptor(
-  name='InputParameters',
-  full_name='data_processor.InputParameters',
+_INPUTQUERY = _descriptor.Descriptor(
+  name='InputQuery',
+  full_name='data_processor.InputQuery',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='year', full_name='data_processor.InputParameters.year', index=0,
+      name='year', full_name='data_processor.InputQuery.year', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='month', full_name='data_processor.InputParameters.month', index=1,
+      name='month', full_name='data_processor.InputQuery.month', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='day', full_name='data_processor.InputParameters.day', index=2,
+      name='day', full_name='data_processor.InputQuery.day', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='hour', full_name='data_processor.InputParameters.hour', index=3,
+      name='hour', full_name='data_processor.InputQuery.hour', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='min', full_name='data_processor.InputParameters.min', index=4,
+      name='minute', full_name='data_processor.InputQuery.minute', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='longitude', full_name='data_processor.InputParameters.longitude', index=5,
+      name='feature', full_name='data_processor.InputQuery.feature', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='latitude', full_name='data_processor.InputParameters.latitude', index=6,
+      name='station', full_name='data_processor.InputQuery.station', index=6,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -95,28 +95,21 @@ _INPUTPARAMETERS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=40,
-  serialized_end=163,
+  serialized_end=158,
 )
 
 
-_PROCESSEDATTRIBUTES = _descriptor.Descriptor(
-  name='ProcessedAttributes',
-  full_name='data_processor.ProcessedAttributes',
+_RESULTIMAGE = _descriptor.Descriptor(
+  name='ResultImage',
+  full_name='data_processor.ResultImage',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='base_reflectivity', full_name='data_processor.ProcessedAttributes.base_reflectivity', index=0,
+      name='image_base64', full_name='data_processor.ResultImage.image_base64', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='base_radial_velocity', full_name='data_processor.ProcessedAttributes.base_radial_velocity', index=1,
-      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -133,27 +126,27 @@ _PROCESSEDATTRIBUTES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=165,
-  serialized_end=243,
+  serialized_start=160,
+  serialized_end=195,
 )
 
-DESCRIPTOR.message_types_by_name['InputParameters'] = _INPUTPARAMETERS
-DESCRIPTOR.message_types_by_name['ProcessedAttributes'] = _PROCESSEDATTRIBUTES
+DESCRIPTOR.message_types_by_name['InputQuery'] = _INPUTQUERY
+DESCRIPTOR.message_types_by_name['ResultImage'] = _RESULTIMAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-InputParameters = _reflection.GeneratedProtocolMessageType('InputParameters', (_message.Message,), {
-  'DESCRIPTOR' : _INPUTPARAMETERS,
+InputQuery = _reflection.GeneratedProtocolMessageType('InputQuery', (_message.Message,), {
+  'DESCRIPTOR' : _INPUTQUERY,
   '__module__' : 'data_processor_pb2'
-  # @@protoc_insertion_point(class_scope:data_processor.InputParameters)
+  # @@protoc_insertion_point(class_scope:data_processor.InputQuery)
   })
-_sym_db.RegisterMessage(InputParameters)
+_sym_db.RegisterMessage(InputQuery)
 
-ProcessedAttributes = _reflection.GeneratedProtocolMessageType('ProcessedAttributes', (_message.Message,), {
-  'DESCRIPTOR' : _PROCESSEDATTRIBUTES,
+ResultImage = _reflection.GeneratedProtocolMessageType('ResultImage', (_message.Message,), {
+  'DESCRIPTOR' : _RESULTIMAGE,
   '__module__' : 'data_processor_pb2'
-  # @@protoc_insertion_point(class_scope:data_processor.ProcessedAttributes)
+  # @@protoc_insertion_point(class_scope:data_processor.ResultImage)
   })
-_sym_db.RegisterMessage(ProcessedAttributes)
+_sym_db.RegisterMessage(ResultImage)
 
 
 
@@ -164,16 +157,16 @@ _DATAPROCESSORSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=245,
-  serialized_end=354,
+  serialized_start=197,
+  serialized_end=288,
   methods=[
   _descriptor.MethodDescriptor(
-    name='getAttributes',
-    full_name='data_processor.DataProcessorService.getAttributes',
+    name='getImage',
+    full_name='data_processor.DataProcessorService.getImage',
     index=0,
     containing_service=None,
-    input_type=_INPUTPARAMETERS,
-    output_type=_PROCESSEDATTRIBUTES,
+    input_type=_INPUTQUERY,
+    output_type=_RESULTIMAGE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

@@ -14,17 +14,17 @@ class DataProcessorServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.getAttributes = channel.unary_unary(
-                '/data_processor.DataProcessorService/getAttributes',
-                request_serializer=data__processor__pb2.InputParameters.SerializeToString,
-                response_deserializer=data__processor__pb2.ProcessedAttributes.FromString,
+        self.getImage = channel.unary_unary(
+                '/data_processor.DataProcessorService/getImage',
+                request_serializer=data__processor__pb2.InputQuery.SerializeToString,
+                response_deserializer=data__processor__pb2.ResultImage.FromString,
                 )
 
 
 class DataProcessorServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def getAttributes(self, request, context):
+    def getImage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -33,10 +33,10 @@ class DataProcessorServiceServicer(object):
 
 def add_DataProcessorServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'getAttributes': grpc.unary_unary_rpc_method_handler(
-                    servicer.getAttributes,
-                    request_deserializer=data__processor__pb2.InputParameters.FromString,
-                    response_serializer=data__processor__pb2.ProcessedAttributes.SerializeToString,
+            'getImage': grpc.unary_unary_rpc_method_handler(
+                    servicer.getImage,
+                    request_deserializer=data__processor__pb2.InputQuery.FromString,
+                    response_serializer=data__processor__pb2.ResultImage.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -49,7 +49,7 @@ class DataProcessorService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def getAttributes(request,
+    def getImage(request,
             target,
             options=(),
             channel_credentials=None,
@@ -59,8 +59,8 @@ class DataProcessorService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/data_processor.DataProcessorService/getAttributes',
-            data__processor__pb2.InputParameters.SerializeToString,
-            data__processor__pb2.ProcessedAttributes.FromString,
+        return grpc.experimental.unary_unary(request, target, '/data_processor.DataProcessorService/getImage',
+            data__processor__pb2.InputQuery.SerializeToString,
+            data__processor__pb2.ResultImage.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
