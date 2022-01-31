@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import auth_data_pb2 as auth__data__pb2
+import auth_pb2 as auth__pb2
 
 
 class AuthServiceStub(object):
@@ -16,8 +16,8 @@ class AuthServiceStub(object):
         """
         self.getSampleData = channel.unary_unary(
                 '/authentication.AuthService/getSampleData',
-                request_serializer=auth__data__pb2.SampleRequest.SerializeToString,
-                response_deserializer=auth__data__pb2.SampleResponse.FromString,
+                request_serializer=auth__pb2.SampleRequest.SerializeToString,
+                response_deserializer=auth__pb2.SampleResponse.FromString,
                 )
 
 
@@ -35,8 +35,8 @@ def add_AuthServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'getSampleData': grpc.unary_unary_rpc_method_handler(
                     servicer.getSampleData,
-                    request_deserializer=auth__data__pb2.SampleRequest.FromString,
-                    response_serializer=auth__data__pb2.SampleResponse.SerializeToString,
+                    request_deserializer=auth__pb2.SampleRequest.FromString,
+                    response_serializer=auth__pb2.SampleResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -60,7 +60,7 @@ class AuthService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/authentication.AuthService/getSampleData',
-            auth__data__pb2.SampleRequest.SerializeToString,
-            auth__data__pb2.SampleResponse.FromString,
+            auth__pb2.SampleRequest.SerializeToString,
+            auth__pb2.SampleResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

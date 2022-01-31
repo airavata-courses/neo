@@ -3,27 +3,19 @@ syntax = "proto3";
 package data_processor;
 
 service DataProcessorService {
-    rpc getAttributes(InputParameters) returns (ProcessedAttributes);
+    rpc getImage(InputQuery) returns (ResultImage);
 }
 
-message InputParameters {
+message InputQuery {
     string year = 1;
     string month = 2;
     string day = 3;
     string hour = 4;
-    string min = 5;
-    string longitude = 6;
-    string latitude = 7;
+    string minute = 5;
+    string feature = 6;
+    string station = 7;
 }
 
-message ProcessedAttributes {
-    string base_reflectivity = 1;
-    string base_radial_velocity = 2;
+message ResultImage {
+    string image_base64 = 1;
 }
-
-/*
-{
-    "year" : ip.year,
-    
-}
-*/
