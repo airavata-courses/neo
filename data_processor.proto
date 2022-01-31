@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package data_processor;
+
+service DataProcessorService {
+    rpc getImage(InputQuery) returns (ResultImage);
+}
+
+message InputQuery {
+    string year = 1;
+    string month = 2;
+    string day = 3;
+    string hour = 4;
+    string minute = 5;
+    string feature = 6;
+    string station = 7;
+}
+
+message ResultImage {
+    string image_base64 = 1;
+}
