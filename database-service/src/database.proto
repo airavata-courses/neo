@@ -16,6 +16,7 @@ message Widget {
     string station = 1;
     string feature = 2;
     string date = 3;
+    string email = 4;
 }
 
 message SuccessMessage {

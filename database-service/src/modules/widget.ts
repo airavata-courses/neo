@@ -1,7 +1,6 @@
-import { stringify } from "querystring";
 import Widget from "../model/widget.model";
 
-export function addWidget({station, feature, date, email}) {
+export async function addWidget({station, feature, date, email}) {
     try {
         const newWidget = new Widget({
             station,
@@ -10,20 +9,20 @@ export function addWidget({station, feature, date, email}) {
             email
         });
 
-        return newWidget.save()
-        .then(() => {
+        const widgetResponse = await newWidget.save();
+        if (widgetResponse) {
             return new Promise(resolve => {
-                resolve(true);
+                resolve({status: true});
             });
-        })
-        .catch(err => {
-            return new Promise(resolve => {
-                resolve(false);
+        }
+        else {
+            return new Promise((resolve,reject) => {
+                reject({status: false});
             });
-        })
+        }
     } catch (err) {
-        return new Promise(resolve => {
-            resolve(false);
+        return new Promise((resolve,reject) => {
+            reject(err);
         });
     }
 }
@@ -38,13 +37,13 @@ export async function showHistory(req) {
             .skip((page-1)*limit)
             .exec();
 
-            return new Promise(resolve => {
-                resolve({
-                    history: stringify({history}),
-                    totalPages: Math.ceil(rows / limit),
-                    currentPage: page
-                });
+        return new Promise(resolve => {
+            resolve({
+                history: JSON.stringify({history}),
+                totalPages: Math.ceil(rows / limit),
+                currentPage: page
             });
+        });
     } catch(err) {
         return new Promise(resolve => {
             resolve({

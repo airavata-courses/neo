@@ -21,21 +21,30 @@ const packageDefinition = protoLoader.loadSync(
 const databaseProto: any = grpc.loadPackageDefinition(packageDefinition);
 
 async function saveWidget(input, cb) {
-    cb(null, {
-        status: addWidget(input.request)
-    });
+    try{
+        const widgetResponse = await addWidget(input.request)
+        cb(null, widgetResponse);
+    } catch(error) {
+        cb(error, {status: false});
+    }
 }
 
 async function getHistory(input, cb) {
-    cb(null, {
-        history: showHistory(input.req)
-    });
+    try{
+        const historyResponse = await showHistory(input.req)
+        cb(null, historyResponse);
+    } catch(error) {
+        cb(error, {history: 'failed'});
+    }
 }
 
 async function getUser(input, cb) {
-    cb(null, {
-        status: saveUser(input.request)
-    });
+    try{
+        const userResponse = await saveUser(input.request)
+        cb(null, userResponse);
+    } catch(error) {
+        cb(error, {status: false});
+    }
 }
 
 const databaseServer = {

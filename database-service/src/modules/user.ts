@@ -1,6 +1,6 @@
 import User from "../model/user.model";
 
-export function saveUser({name, photoURL, tokenId, email}) {
+export async function saveUser({name, photoURL, tokenId, email}) {
     try {
         const newUser = new User({
             name,
@@ -9,20 +9,21 @@ export function saveUser({name, photoURL, tokenId, email}) {
             email
         });
 
-        return newUser.save()
-        .then(() => {
+        const user = await newUser.save();
+
+        if(user) {
             return new Promise(resolve => {
-                resolve(true);
+                resolve({status: true});
             })
-        })
-        .catch(err => {
+        }
+        else {
             return new Promise(resolve => {
-                resolve(false);
+                resolve({status: false});
             })
-        })
+        }
     } catch (err) {
-        return new Promise(resolve => {
-            resolve(false);
+        return new Promise(reject => {
+            reject(err);
         })
     }
 }
