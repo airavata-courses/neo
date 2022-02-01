@@ -1,0 +1,36 @@
+syntax = "proto3";
+package db;
+
+service Database {
+    rpc saveWidget(Widget) returns (SuccessMessage);
+    rpc saveUser(User) returns (SuccessMessage);
+    rpc showHistory(HistoryArgs) returns (History);
+}
+
+message HistoryArgs {
+    string page = 1;
+    string email = 2;
+}
+
+message Widget {
+    string station = 1;
+    string feature = 2;
+    string date = 3;
+}
+
+message SuccessMessage {
+    bool status = 1;
+}
+
+message History {
+    string history = 1;
+    string totalPages = 2;
+    string currentPage = 3;
+}
+
+message User {
+    string name = 1;
+    string photoURL = 2;
+    string tokenId = 3;
+    string email = 4;
+}
