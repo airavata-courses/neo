@@ -1,0 +1,29 @@
+syntax = "proto3";
+package registry;
+
+service Registry {
+    rpc registerWidget(Widget) returns (SuccessMessage);
+    rpc getHistory(HistoryArgs) returns (History);
+}
+
+message HistoryArgs {
+    string page = 1;
+    string email = 2;
+}
+
+message Widget {
+    string station = 1;
+    string feature = 2;
+    string date = 3;
+    string email = 4;
+}
+
+message SuccessMessage {
+    bool status = 1;
+}
+
+message History {
+    string history = 1;
+    string totalPages = 2;
+    string currentPage = 3;
+}
