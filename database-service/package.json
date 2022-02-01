@@ -5,9 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "start": "node ./dist",
-    "precompile": "node ./node_modules/shx/lib/cli.js rm -rf out/",
+    "precompile": "node ./node_modules/shx/lib/cli.js rm -rf dist/",
     "compile": "node ./node_modules/typescript/bin/tsc -p .",
-    "postcompile": "node ./node_modules/shx/lib/cli.js cp ./src/*.proto ./out"
+    "postcompile": "node ./node_modules/shx/lib/cli.js cp ./src/*.proto ./dist"
   },
   "author": "Rajdeep Singh Chauhan",
   "dependencies": {
