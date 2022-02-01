@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+    <div fxHide.gt-xs>
+        <button mat-icon-button (click)="onToggleSidenav()">
+            <mat-icon> menu </mat-icon>
+        </button>
+    </div>
+    <div>
+        <a routerLink="/home">Project-Neo</a>
+    </div>
+    <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+        <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+            <li *ngIf="!(isAuthenticated$ | async)">
+                <a routerLink="/signin">Sign In</a>
+            </li>
+
+            <li *ngIf="(isAuthenticated$ | async)">
+                <a (click)=logout()>Logout</a>
+            </li>
+
+            <li *ngIf="(isAuthenticated$ | async)">
+                <a routerLink="/dashboard">Dashboard</a>
+            </li>
+
+            <li *ngIf="(isAuthenticated$ | async)">
+                <a routerLink="/history">History</a>
+            </li>
+        </ul>
+    </div>
+</mat-toolbar>

@@ -1,0 +1,46 @@
+<div class="options-header">
+    <button *ngIf="nextId$ | async as nextId" mat-mini-fab (click)="addItem(nextId)" class="add-button cols-2">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<mat-card style="background-color: grey;">
+    <mat-card-content *ngIf="dashboard$ | async as dashboard">
+        <ng-container *ngIf="!!dashboard.length; else noData">
+            <gridster [options]="options" class="content">
+                <gridster-item [item]="item.gridster" *ngFor="let item of dashboard">
+                    <div class="button-holder">
+                        <div class="gridster-item-content" *ngIf="item.gridster['hasContent']">
+                            <div class="stuff">
+                                <span>Some content to select and click without dragging the widget</span>
+                                <a href="https://www.google.com" target="_blank">Link to Google</a>
+                            </div>
+                        </div>
+                        <div class="item-buttons" *ngIf="item.gridster['hasContent']">
+                            <button mat-icon-button mat-raised-button class="drag-handler">
+                                <mat-icon>open_with</mat-icon>
+                            </button>
+                            <button mat-icon-button mat-raised-button class="remove-button"
+                                (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                        <label *ngIf="!item.gridster['hasContent']">{{item.gridster['label']}}</label>
+                        <button mat-mini-fab *ngIf="!item.gridster['hasContent']" (mousedown)="removeItem($event, item)"
+                            (touchstart)="removeItem($event, item)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </gridster-item>
+            </gridster>
+        </ng-container>
+
+        <ng-template #noData>
+            <mat-card class="no-data">
+                <mat-card-content>
+                    <h4>Please click add button to start adding weather widgets</h4>
+                </mat-card-content>
+            </mat-card>
+        </ng-template>
+    </mat-card-content>
+</mat-card>

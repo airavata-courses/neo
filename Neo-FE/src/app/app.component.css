@@ -1,0 +1,20 @@
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+    height: 100%;
+}
+ 
+mat-sidenav {
+    width: 250px;
+}
+ 
+main {
+    padding: 10px;
+}
+
+.mat-dialog-container {
+    padding-top: 0px;
+  }
+
+.sidenav-container {
+    position: absolute;
+    width: 100%;
+}

@@ -1,0 +1,13 @@
+<section fxLayout="column" fxFlexAlign="stretch"> 
+    <div fxFlexAlign="center"> 
+        <p>Welcome to the Weather Application Project-Neo</p> 
+    </div>
+
+    <p>In this application we are going to work with:</p> 
+
+    <mat-tab-group (selectedTabChange)="executeSelectedChange($event)">
+        <mat-tab label="Weather"> 
+          <p>We are going to show weather diagrams as per radar station, weather feature, time and date.</p> 
+        </mat-tab>
+      </mat-tab-group>
+</section>

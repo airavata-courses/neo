@@ -1,0 +1,23 @@
+<mat-nav-list>
+    <a mat-list-item routerLink="/home" (click)="onSidenavClose()">
+        <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
+    </a>
+    <a *ngIf="(isAuthenticated$ | async)" mat-list-item routerLink="/dashboard" (click)="onSidenavClose()">
+        <mat-icon>dashboard</mat-icon> <span class="nav-caption">Dashboard</span>
+    </a>
+    <a *ngIf="!(isAuthenticated$ | async)" mat-list-item routerLink="/signin" (click)="onSidenavClose()">
+        <mat-icon>login</mat-icon> <span class="nav-caption">Sign In</span>
+    </a>
+    <mat-list-item *ngIf="(isAuthenticated$ | async)" [matMenuTriggerFor]="menu">
+        <mat-icon>account_box</mat-icon>
+        <a matline>User</a>
+    </mat-list-item>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onSidenavClose()">
+            <mat-icon>history</mat-icon>View history
+        </button>
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>Logout
+        </button>
+    </mat-menu>
+</mat-nav-list>

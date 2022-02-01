@@ -1,0 +1,12 @@
+.content {
+    height:1000px
+}
+
+.options-header {
+    padding-bottom: 10px;
+}
+
+.no-data {
+    text-align: center;
+    text-align: -webkit-center;
+}
