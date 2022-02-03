@@ -23,35 +23,30 @@ export const getClient = () => {
     return new session.db.Database(`${settings.serviceIP}:${settings.servicePort}`, grpc.credentials.createInsecure());
 }
 
-export const fetchHistory = ({page, email}, client) => {
-    if(!client) {
-        client = getClient();
+export const fetchHistory = async ({page, email}, client) => {
+    try {
+        if(!client) {
+            client = getClient();
+        }
+    
+        return await client.showHistory({page, email});
+    } catch(error) {
+        return {
+            exist: false
+        }
     }
-
-    return new Promise((resolve,reject) => {
-        client.showHistory({page, email}, (error, response) => {
-            if (error) {
-                reject(error)
-            }
-            if (response.history === 'failed') {
-                reject('failed');
-            }
-            resolve(response);
-        });
-    })
 }
 
 export const saveWidget = async ({station, feature, date, email}, client) => {
-    if(!client) {
-        client = getClient();
+    try {
+        if(!client) {
+            client = getClient();
+        }
+    
+        return await client.saveWidget({station, feature, date, email});
+    } catch(error) {
+        return {
+            status: false
+        }
     }
-
-    return new Promise((resolve,reject) => {
-        client.saveWidget({station, feature, date, email}, (error, response) => {
-            if (error) {
-                reject(error)
-            }
-            resolve(response);
-        });
-    });
 }

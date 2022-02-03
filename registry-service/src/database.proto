@@ -27,6 +27,7 @@ message History {
     string history = 1;
     string totalPages = 2;
     string currentPage = 3;
+    bool exist = 4;
 }
 
 message User {

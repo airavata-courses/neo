@@ -31,8 +31,13 @@ async function registerWidget(input, cb) {
     }
 }
 
-function getHistory(input, cb) {
-    cb(null, fetchHistory(input.req, databaseClient));
+async function getHistory(input, cb) {
+    try {
+        const historyResponse = await fetchHistory(input.req, databaseClient);
+        cb(null, historyResponse);
+    } catch(error) {
+        cb(error, {exist: false});
+    }
 }
 
 const registryServer = {
