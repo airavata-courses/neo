@@ -25,17 +25,21 @@ const databaseClient = getClient();
 async function registerWidget(input, cb) {
     try{
         const widgetResponse =  await saveWidget(input.request, databaseClient);
+        console.log("widgetResponse", widgetResponse)
         cb(null, widgetResponse);
     } catch(error){
+        console.error(error)
         cb(error, {status: false});
     }
 }
 
 async function getHistory(input, cb) {
     try {
-        const historyResponse = await fetchHistory(input.req, databaseClient);
+        const historyResponse = await fetchHistory(input.request, databaseClient);
+        console.log("historyResponse", historyResponse)
         cb(null, historyResponse);
     } catch(error) {
+        console.error(error)
         cb(error, {exist: false});
     }
 }
