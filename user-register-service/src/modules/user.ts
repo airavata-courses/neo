@@ -19,24 +19,20 @@ export const getClient = () => {
         }
     );
 
-    const session = grpc.loadPackageDefinition(packageDefinition);
-    return new session.db.Database(`${settings.serviceIP}:${settings.servicePort}`, grpc.credentials.createInsecure());
+    const database = grpc.loadPackageDefinition(packageDefinition);
+    return new database.db.Database(`${settings.serviceIP}:${settings.servicePort}`, grpc.credentials.createInsecure());
 }
 
-export const saveUser = ({name, photoURL, tokenId, email}, client) => {
-    if(!client) {
-        client = getClient();
+export const saveUser = async ({name, photoURL, tokenId, email}, client) => {
+    try {
+        if(!client) {
+            client = getClient();
+        }
+    
+        return await client.saveUser({name, photoURL, tokenId, email});
+    } catch(error) {
+        return {
+            status: false
+        }
     }
-
-    return new Promise((resolve,reject) => {
-        client.saveUser({name, photoURL, tokenId, email}, (error, response) => {
-            if (error) {
-                reject(error)
-            }
-            if (response.history === 'failed') {
-                reject('failed');
-            }
-            resolve(response);
-        });
-    })
-}
+};
