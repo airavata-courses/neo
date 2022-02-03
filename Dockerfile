@@ -4,9 +4,11 @@ WORKDIR /data-processor
 COPY environment.yml environment.yml
 
 # RUN conda info -e
- RUN conda env create -f environment.yml
- RUN conda list
- RUN conda activate neodata
+RUN conda env create -f environment.yml
+
+RUN echo "source activate neodata" > ~/.bashrc
+
+ENV PATH /opt/conda/envs/env/bin:$PATH
 
 COPY . .
 
