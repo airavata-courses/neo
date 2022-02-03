@@ -25,18 +25,22 @@ const auth2Client = getAuth2Client();
 
 async function authUser(input, cb) {
     try{
-        const authResponse =  await authenticateUser(input.request, userRegisterClient, auth2Client);
+        const authResponse =  await checkUser(input.request, userRegisterClient, auth2Client);
+        console.log("authResponse", authResponse)
         cb(null, authResponse);
     } catch(error){
+        console.log(error)
         cb(error, {isAuth: false});
     }
 }
 
 async function loginUser(input, cb) {
     try{
-        const loginResponse =  await checkUser(input.request, userRegisterClient, auth2Client);
+        const loginResponse =  await authenticateUser(input.request, userRegisterClient, auth2Client);
+        console.log("loginResponse", loginResponse)
         cb(null, loginResponse);
     } catch(error){
+        console.log("error",error)
         cb(error, {isAuth: false});
     }
 }

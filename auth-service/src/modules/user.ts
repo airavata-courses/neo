@@ -1,6 +1,6 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const {OAuth2Client} = require("google-auth-library");
+const { OAuth2Client } = require("google-auth-library");
 
 const settings = {
     protoFile: "user-register.proto",
@@ -27,10 +27,10 @@ export const getClient = () => {
 
 export const getAuth2Client = () => {
     return new OAuth2Client(settings.CLIENT_ID);
-} 
+}
 
 const checkToken = async (auth2Client, idToken) => {
-    try{
+    try {
         const ticket = await auth2Client.verifyIdToken({
             idToken,
             audience: settings.CLIENT_ID
@@ -38,73 +38,95 @@ const checkToken = async (auth2Client, idToken) => {
 
         const payload = ticket.getPayload();
 
-        if (!payload['sub']){
+        if (!payload['sub']) {
             return {
                 isAuth: false
             };
         }
 
-        return {...ticket.getPayload(), isAuth: true};
+        return { ...ticket.getPayload(), isAuth: true };
     }
-    catch(error) {
-        return {isAuth: false};
+    catch (error) {
+        console.log(error)
+        return { isAuth: false };
     }
 }
 
-export const authenticateUser = async ({tokenId}, client, auth2Client) => {
+export const authenticateUser = async ({ tokenId }, client, auth2Client) => {
     try {
-        if(!client) {
+        if (!client) {
             client = getClient();
         }
-    
-        if(!auth2Client) {
+
+        if (!auth2Client) {
             auth2Client = getAuth2Client();
         }
-    
         const payload = await checkToken(auth2Client, tokenId)
 
         if (!payload['isAuth']) {
             return payload
         }
 
-        const user =  {
+        const user = {
             name: payload["name"],
             photoURL: payload["picture"],
             email: payload["email"],
             tokenId
         }
+        
+        return await new Promise((resolve, reject) => {
+            client.registerUser(user, (error, response) => {
+                if (error) {
+                    console.log("register-user error", error)
+                    resolve({ isAuth: false })
+                }
 
-        const {status} = await client.registerUser(user)
+                if (response) {
+                    if (!!response.status) {
+                        resolve({
+                            name: payload["name"],
+                            photoURL: payload["picture"],
+                            email: payload["email"],
+                            accessToken: tokenId,
+                            isAuth: true
+                        });
+                    }
+                }
 
-        if (!status) {
-            return {
-                isAuth: false
-            }
-        }
-
-        return {
-            ...user,
-            accessToken: tokenId,
-            isAuth: true
-        }
-    } catch(error) {
+                resolve({ isAuth: false });
+            });
+        });
+    } catch (error) {
+        console.log("error", error)
         return {
             isAuth: false
         }
     }
 }
 
-export const checkUser = async ({accessToken}, client, auth2Client) => {
+export const checkUser = async ({ accessToken }, client, auth2Client) => {
     try {
-        if(!client) {
+        if (!client) {
             client = getClient();
         }
-    
-        if(!auth2Client) {
+
+        if (!auth2Client) {
             auth2Client = getAuth2Client();
         }
-    
-        const payload = await checkToken(auth2Client, accessToken)
+
+        if (!accessToken) {
+            return {
+                isAuth: false
+            }
+        }
+        const auth_token = accessToken.split(' ');
+        if (auth_token.length < 2) {
+            return {
+                isAuth: false
+            }
+        }
+
+        const payload = await checkToken(auth2Client, auth_token[1])
 
         if (!payload['isAuth']) {
             return {
@@ -115,7 +137,8 @@ export const checkUser = async ({accessToken}, client, auth2Client) => {
         return {
             isAuth: true
         }
-    } catch(error) {
+    } catch (error) {
+        console.log(error)
         return {
             isAuth: false
         }
