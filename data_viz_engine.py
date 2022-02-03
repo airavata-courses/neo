@@ -81,6 +81,6 @@ if __name__ == "__main__":
     print("base64: " + str(out_viz_file))
 
 
-# test for checking base64 data to image
-with open('imagetest.png','wb') as f:
-    f.write(base64.decodebytes(out_viz_file))
+# # test for checking base64 data to image
+# with open('imagetest.png','wb') as f:
+#     f.write(base64.decodebytes(out_viz_file))

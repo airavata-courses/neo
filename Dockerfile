@@ -1,4 +1,4 @@
-FROM continuumio/miniconda:latest
+FROM continuumio/miniconda3
 WORKDIR /data-processor
 
 COPY environment.yml environment.yml
@@ -14,7 +14,7 @@ COPY . .
 
 EXPOSE 8082
 
-CMD ["python3", "app.py"]
+CMD ["/opt/conda/envs/neodata/bin/python", "app.py"]
 
 
 
