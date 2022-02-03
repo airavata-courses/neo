@@ -37,16 +37,16 @@ def fetch_data(url):
     
 
 def data_viz(radar, product):
-    display = pyart.graph.RadarDisplay(radar)
+    display = pyart.graph.RadarMapDisplay(radar)
     fig = plt.figure(figsize=(6, 5))
     if product == 'reflectivity':
-        display.plot('reflectivity', 0, title='NEXRAD Reflectivity',
+        display.plot_ppi_map('reflectivity', 0, title='NEXRAD Reflectivity',
              vmin=-32, vmax=64, colorbar_label='')
     elif product == 'velocity':
-        display.plot('velocity', 1, title='Doppler Velocity',
+        display.plot_ppi_map('velocity', 1, title='Doppler Velocity',
              vmin=-95, vmax=95,colorbar_label='')
     elif product == 'cross_correlation_ratio':
-        display.plot('cross_correlation_ratio', 0, title='Correlation Coefficient',
+        display.plot_ppi_map('cross_correlation_ratio', 0, title='Correlation Coefficient',
              vmin=0, vmax=1,colorbar_label='')
     s = io.BytesIO()
     fig.savefig(s, format='png', bbox_inches="tight")
@@ -81,6 +81,6 @@ if __name__ == "__main__":
     print("base64: " + str(out_viz_file))
 
 
-# # test for checking base64 data to image
-# with open('imagetest.png','wb') as f:
-#     f.write(base64.decodebytes(out_viz_file))
+# test for checking base64 data to image
+with open('imagetest.png','wb') as f:
+    f.write(base64.decodebytes(out_viz_file))

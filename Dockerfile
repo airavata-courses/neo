@@ -4,14 +4,15 @@ WORKDIR /data-processor
 COPY environment.yml environment.yml
 
 # RUN conda info -e
-# RUN conda env create -f environment.yml
-# RUN conda activate neo-conda
+ RUN conda env create -f environment.yml
+ RUN conda list
+ RUN conda activate neodata
 
 COPY . .
 
 EXPOSE 8082
 
-CMD ["python", "app.py"]
+CMD ["python3", "app.py"]
 
 
 
