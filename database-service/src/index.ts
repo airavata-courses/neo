@@ -2,6 +2,9 @@ const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 import { saveUser } from './modules/user';
 import { addWidget, showHistory } from './modules/widget';
+import db from './model/mongodb';
+
+db();
 
 const settings = {
     protoFile: "database.proto",
@@ -31,9 +34,11 @@ async function saveWidget(input, cb) {
 
 async function getHistory(input, cb) {
     try{
-        const historyResponse = await showHistory(input.req)
+        const historyResponse = await showHistory(input.request)
+        console.log("historyResponse",historyResponse)
         cb(null, historyResponse);
     } catch(error) {
+        console.log(error)
         cb(error, {exist: false});
     }
 }
@@ -41,6 +46,7 @@ async function getHistory(input, cb) {
 async function getUser(input, cb) {
     try{
         const userResponse = await saveUser(input.request)
+        console.log('userResponse', userResponse)
         cb(null, userResponse);
     } catch(error) {
         cb(error, {status: false});

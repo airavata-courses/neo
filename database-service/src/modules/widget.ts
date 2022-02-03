@@ -25,13 +25,13 @@ export async function showHistory(req) {
     try {
         const { page = 1, limit = 10 } = req
         const rows = await Widget.countDocuments();
-        const history = await Widget.find()
-            .select(req.email)
+        const history = await Widget.find({email: req.email})
+            .select(["station", "feature", "date"])
             .limit(limit)
-            .skip((page - 1) * limit)
+            .skip(((!page || page < 0 ? 1: +page) - 1) * limit)
             .exec();
 
-        if (!!history) {
+        if (!!history && history.length > 0) {
             return {
                 history: JSON.stringify({ history }),
                 totalPages: Math.ceil(rows / limit),
@@ -40,6 +40,7 @@ export async function showHistory(req) {
             };
         }
     } catch (err) {
+        console.log(err)
         return {
             exist: false
         };
