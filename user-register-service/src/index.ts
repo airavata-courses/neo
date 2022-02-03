@@ -25,8 +25,10 @@ const databaseClient = getClient();
 async function registerUser(input, cb) {
     try{
         const userResponse =  await saveUser(input.request, databaseClient);
+        console.log("userResponse", userResponse)
         cb(null, userResponse);
     } catch(error){
+        console.log(error)
         cb(error, {status: false});
     }
 }

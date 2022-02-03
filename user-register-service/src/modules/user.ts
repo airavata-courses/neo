@@ -29,8 +29,23 @@ export const saveUser = async ({name, photoURL, tokenId, email}, client) => {
             client = getClient();
         }
     
-        return await client.saveUser({name, photoURL, tokenId, email});
+        return await new Promise((resolve,reject) => {
+            client.saveUser({name, photoURL, tokenId, email}, (error, response) => {
+                if(error) {
+                    console.log("database service error", error)
+                    resolve({status: false})
+                }
+                if(response) {
+                    if(!response.status){
+                        resolve({status: false})
+                    }
+                    resolve({status: true})
+                }
+                resolve({status: false})
+            });
+        });
     } catch(error) {
+        console.log(error)
         return {
             status: false
         }
