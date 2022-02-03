@@ -11,19 +11,13 @@ export async function saveUser({name, photoURL, tokenId, email}) {
 
         const user = await newUser.save();
 
-        if(user) {
-            return new Promise(resolve => {
-                resolve({status: true});
-            })
+        if(!!user) {
+            return {status: true}
         }
         else {
-            return new Promise(resolve => {
-                resolve({status: false});
-            })
+            return {status: false};
         }
     } catch (err) {
-        return new Promise(reject => {
-            reject(err);
-        })
+        return {status: false};
     }
 }

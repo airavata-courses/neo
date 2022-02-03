@@ -34,7 +34,7 @@ async function getHistory(input, cb) {
         const historyResponse = await showHistory(input.req)
         cb(null, historyResponse);
     } catch(error) {
-        cb(error, {history: 'failed'});
+        cb(error, {exist: false});
     }
 }
 

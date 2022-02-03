@@ -1,6 +1,6 @@
 import Widget from "../model/widget.model";
 
-export async function addWidget({station, feature, date, email}) {
+export async function addWidget({ station, feature, date, email }) {
     try {
         const newWidget = new Widget({
             station,
@@ -10,20 +10,14 @@ export async function addWidget({station, feature, date, email}) {
         });
 
         const widgetResponse = await newWidget.save();
-        if (widgetResponse) {
-            return new Promise(resolve => {
-                resolve({status: true});
-            });
+        if (!!widgetResponse) {
+            return { status: true };
         }
         else {
-            return new Promise((resolve,reject) => {
-                reject({status: false});
-            });
+            return { status: false };
         }
     } catch (err) {
-        return new Promise((resolve,reject) => {
-            reject(err);
-        });
+        return { status: false };
     }
 }
 
@@ -34,23 +28,20 @@ export async function showHistory(req) {
         const history = await Widget.find()
             .select(req.email)
             .limit(limit)
-            .skip((page-1)*limit)
+            .skip((page - 1) * limit)
             .exec();
 
-        return new Promise(resolve => {
-            resolve({
-                history: JSON.stringify({history}),
+        if (!!history) {
+            return {
+                history: JSON.stringify({ history }),
                 totalPages: Math.ceil(rows / limit),
-                currentPage: page
-            });
-        });
-    } catch(err) {
-        return new Promise(resolve => {
-            resolve({
-                history: 'failed',
-                totalPages: 0,
-                currentPage: 0
-            });
-        })
+                currentPage: page,
+                exist: true
+            };
+        }
+    } catch (err) {
+        return {
+            exist: false
+        };
     }
 }
