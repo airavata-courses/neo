@@ -4,7 +4,7 @@ const { OAuth2Client } = require("google-auth-library");
 
 const settings = {
     protoFile: "user-register.proto",
-    serviceIP: "localhost",
+    serviceIP: "0.0.0.0",
     servicePort: "42000",
     CLIENT_ID: "778346190675-ta0pn5r045g7h8415dap39buriocgos1.apps.googleusercontent.com"
 }
@@ -73,7 +73,7 @@ export const authenticateUser = async ({ tokenId }, client, auth2Client) => {
             email: payload["email"],
             tokenId
         }
-        
+
         return await new Promise((resolve, reject) => {
             client.registerUser(user, (error, response) => {
                 if (error) {
