@@ -1,0 +1,17 @@
+syntax = "proto3";
+package user;
+
+service UserRegister {
+    rpc registerUser(User) returns (SuccessMessage);
+}
+
+message SuccessMessage {
+    bool status = 1;
+}
+
+message User {
+    string name = 1;
+    string photoURL = 2;
+    string tokenId = 3;
+    string email = 4;
+}

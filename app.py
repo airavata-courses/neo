@@ -5,6 +5,8 @@ import requests
 # import blueprints (APIs) from routes
 # from routes.auth_route import auth_api
 from routes.data_processor_route import data_processor_api
+from routes.user_register_route import user_register_api
+from routes.registry_route import registry_api
 
 app = Flask(__name__)
 CORS(app)
