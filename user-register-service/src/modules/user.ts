@@ -3,7 +3,7 @@ const protoLoader = require('@grpc/proto-loader');
 
 const settings = {
     protoFile: "database.proto",
-    serviceIP: "localhost",
+    serviceIP: "0.0.0.0",
     servicePort: "40000"
 }
 

@@ -5,7 +5,7 @@ const protoLoader = require('@grpc/proto-loader');
 
 const settings = {
     protoFile: "user-register.proto",
-    serviceIP: "localhost",
+    serviceIP: "0.0.0.0",
     servicePort: "42000"
 }
 
