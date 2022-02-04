@@ -19,5 +19,5 @@ def register():
         )
     )
 
-    print("User Register Response Received: " + str(response))
-    return jsonify("Response Received: ", str(image_base64))
+    print("User Register Response: " + str(response))
+    return jsonify("User Register Response: ", str(response))
