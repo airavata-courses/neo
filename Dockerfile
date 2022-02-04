@@ -1,4 +1,25 @@
-FROM continuumio/miniconda3
+# version of installed packages
+ARG UBUNTU_VER=18.04
+ARG CONDA_VER=latest
+ARG OS_TYPE=x86_64
+
+# Base OS
+FROM ubuntu:${UBUNTU_VER}
+
+# System packages
+RUN apt-get update && apt-get install -yq curl wget jq vim
+
+# Use the above args during building https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
+ARG CONDA_VER
+ARG OS_TYPE
+# Install miniconda to /miniconda
+RUN curl -LO "http://repo.continuum.io/miniconda/Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh"
+RUN bash Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh -p /miniconda -b
+RUN rm Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh
+ENV PATH=/miniconda/bin:${PATH}
+RUN conda update -y conda
+
+
 WORKDIR /data-processor
 
 COPY environment.yml environment.yml
@@ -14,7 +35,7 @@ COPY . .
 
 EXPOSE 8082
 
-CMD ["/opt/conda/envs/neodata/bin/python", "app.py"]
+CMD ["/miniconda/envs/neodata/bin/python", "app.py"]
 
 
 
