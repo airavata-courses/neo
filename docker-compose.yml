@@ -1,0 +1,48 @@
+version: "3"
+services:
+  database-service:
+    container_name: database-service
+    image: neoairavataproject/database-service:latest
+    restart: always
+    ports:
+      - "40000:40000"
+    links:
+      - mongo-neo
+  auth-service:
+    container_name: auth-service
+    image: neoairavataproject/auth-service:latest
+    restart: always
+    ports:
+      - "43000:43000"
+    links:
+      - user-register-service
+  user-register-service:
+    container_name: user-register-service
+    image: neoairavataproject/user-register-service:latest
+    restart: always
+    ports:
+      - "42000:42000"
+    links:
+      - database-service
+  registry-service:
+    container_name: registry-service
+    image: neoairavataproject/registry-service:latest
+    restart: always
+    ports:
+      - "41000:41000"
+    links:
+      - database-service
+  mongo-neo:
+    container_name: mongo-neo
+    image: mongo:latest
+    volumes:
+      - mongodbdata:/data/db
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - "27017:27017"
+    command: mongod
+
+volumes:
+  mongodbdata:
