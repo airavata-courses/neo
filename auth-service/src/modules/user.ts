@@ -4,7 +4,7 @@ const { OAuth2Client } = require("google-auth-library");
 
 const settings = {
     protoFile: "user-register.proto",
-    serviceIP: "0.0.0.0",
+    serviceIP: "user-register-service",
     servicePort: "42000",
     CLIENT_ID: "778346190675-ta0pn5r045g7h8415dap39buriocgos1.apps.googleusercontent.com"
 }
