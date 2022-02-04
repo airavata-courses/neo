@@ -8,7 +8,7 @@ db();
 
 const settings = {
     protoFile: "database.proto",
-    serviceIP: "localhost",
+    serviceIP: "0.0.0.0",
     servicePort: "40000"
 }
 
@@ -69,7 +69,7 @@ function init() {
         `${settings.serviceIP}:${settings.servicePort}`,
         grpc.ServerCredentials.createInsecure(),
         () => {
-            console.log("Database Service Started");
+            console.log(`Database Service Started on ${settings.serviceIP}:${settings.servicePort}`);
             server.start();
         }
     )
