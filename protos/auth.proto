@@ -1,0 +1,27 @@
+syntax = "proto3";
+package auth;
+
+service Auth {
+    rpc authUser(AuthArgs) returns (SuccessMessage);
+    rpc loginUser(LoginArgs) returns (User);
+}
+
+message AuthArgs {
+    string accessToken = 1;
+}
+
+message SuccessMessage {
+    bool isAuth = 1;
+}
+
+message LoginArgs {
+    string tokenId = 1;
+}
+
+message User {
+    string name = 1;
+    string photoURL = 2;
+    string accessToken = 3;
+    string email = 4;
+    bool isAuth = 5;
+}
