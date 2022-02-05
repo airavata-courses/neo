@@ -16,9 +16,6 @@ def check():
     print('Gateway is running...')
     return "Gateway Started!"
 
-
-# Contains the routes for the authentication APIs defined in the auth microservice
-# app.register_blueprint(auth_api)
 app.register_blueprint(data_processor_api)
 app.register_blueprint(auth_api)
 app.register_blueprint(registry_api)

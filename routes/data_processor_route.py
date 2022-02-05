@@ -10,8 +10,6 @@ stub = data_processor_pb2_grpc.DataProcessorServiceStub(channel)
 
 @data_processor_api.route('/image', methods=["POST", "GET"])
 def image():
-    # response = stub.getSampleData(auth_data_pb2.SampleRequest(my_request='Hello from client'))
-
     station = 'KLVX'
     year = '2021'
     month = '12'
@@ -19,7 +17,6 @@ def image():
     hour = '02'
     minute = '55'
     feature = 'velocity'
-
 
     image_base64 = None
     image_base64 = stub.getImage(
