@@ -39,10 +39,15 @@ import { AddWidgetModalComponent } from './components/dashboard/add-widget-modal
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTableModule } from '@angular/material/table';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
 import { LoginComponent } from './components/signin/login.component';
+import { HistoryFacade } from './services/history.facade';
+import { HistoryComponent } from './components/history/history.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const jwtProvider = {
   provide: JwtHelperService,
@@ -58,7 +63,8 @@ const jwtProvider = {
     HomeComponent,
     DashboardComponent,
     AddWidgetModalComponent,
-    LoginComponent
+    LoginComponent,
+    HistoryComponent
   ],
   imports: [
     CommonModule,
@@ -95,7 +101,10 @@ const jwtProvider = {
     NgxMatTimepickerModule,
     MatDatepickerModule,
     NgxMatMomentModule,
-    SocialLoginModule
+    SocialLoginModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
@@ -121,7 +130,8 @@ const jwtProvider = {
     AuthFacade,
     jwtProvider,
     DashboardFacade,
-    ModalService
+    ModalService,
+    HistoryFacade
   ],
   bootstrap: [AppComponent]
 })

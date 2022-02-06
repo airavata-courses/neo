@@ -18,6 +18,7 @@ export class AuthFacade {
   readonly isAuthTokenSuccess$ = this.store.select(s.getAuthSuccess);
   readonly isAuthenticated$ = this.store.select(s.getIsAuthenticated);
   readonly getLoginErrors$ = this.store.select(s.getLoginErrors);
+  readonly getAuthData$ = this.store.select(s.getAuthLogin);
 
   login({
     tokenId
