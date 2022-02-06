@@ -3,6 +3,9 @@ import grpc
 import data_processor_pb2
 import data_processor_pb2_grpc
 
+# from neo.grpc_classes import data_processor_pb2
+# from neo.grpc_classes import data_processor_pb2_grpc
+
 data_processor_api = Blueprint('data_processor_api', __name__)
 
 channel = grpc.insecure_channel('localhost:50052', options=(('grpc.enable_http_proxy', 0),))
