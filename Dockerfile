@@ -16,7 +16,7 @@ COPY . .
 
 EXPOSE 8082
 
-CMD ["python", "app.py"]
+CMD ["/usr/local/envs/neodata/bin/python","-u" ,"app.py"]
 
 
 
