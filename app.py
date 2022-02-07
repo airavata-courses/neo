@@ -44,4 +44,6 @@ def serve():
     server.wait_for_termination()
 
 if __name__ == '__main__':
+
+    print("Service will run now")
     serve()
