@@ -10,3 +10,44 @@
     text-align: center;
     text-align: -webkit-center;
 }
+
+.spinner-container {
+    height: 100%;
+    text-align:center;
+    text-align: -webkit-center;
+}
+
+.spinner {
+    position: relative;
+    top: 27%;
+    transform: scale(0.6)
+}
+
+.label-content {
+    margin: 0 20px;
+    text-align: center;
+}
+
+.button-delete {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+}
+
+.button-delete-action {
+    transform: scale(0.8);
+    position: relative;
+    top: -4px;
+}
+
+.button-config {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+}
+
+.button-config-action {
+    transform: scale(0.8);
+    position: relative;
+    top: -4px;
+}

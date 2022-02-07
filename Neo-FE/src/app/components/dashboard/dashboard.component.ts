@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
+import { DomSanitizer } from "@angular/platform-browser";
 import { take } from "rxjs";
 import { WidgetProperty } from "src/app/dto";
 import { OPTIONS, Safe } from "src/app/model/gridster-config";
+import { AuthFacade } from "src/app/services/auth.facade";
 import { DashboardFacade } from "src/app/services/dashboard.facade";
 import { ModalService } from "src/app/services/modal.service";
 import { AddWidgetModalComponent, AddWidgetModalData } from "./add-widget-modal/add-widget-modal.component";
@@ -16,13 +18,22 @@ import { AddWidgetModalComponent, AddWidgetModalData } from "./add-widget-modal/
 })
 export class DashboardComponent {
     options: Safe = OPTIONS;
-    dashboard$ = this.dashboardService.getWidgetsList$;
+    readonly dashboard$ = this.dashboardService.getWidgetsList$;
+    readonly dashboardById$ = this.dashboardService.getWidgetsListbyId$;
     nextId$ = this.dashboardService.nextId$;
+    email = ''
+    readonly getAuthData$ = this.authService.getAuthData$.subscribe((data) => {
+        if (data.data?.email) {
+            this.email = data.data?.email
+        }
+    });
 
     constructor(
         private readonly dashboardService: DashboardFacade,
-        private readonly modalService: ModalService
-    ) {}
+        private readonly modalService: ModalService,
+        private readonly authService: AuthFacade,
+        private readonly domSanitizer: DomSanitizer
+    ) { }
 
     changedOptions(): void {
         if (this.options.api && this.options.api.optionsChanged) {
@@ -33,7 +44,60 @@ export class DashboardComponent {
     removeItem($event: MouseEvent | TouchEvent, item: WidgetProperty): void {
         $event.preventDefault();
         $event.stopPropagation();
-        // this.dashboard.splice(this.dashboard.indexOf(item), 1);
+
+        this.dashboardService.removeWidget({ id: item.id });
+    }
+
+    sanitizeImage(base64Data: string) {
+        return this.domSanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${base64Data}`);
+    }
+
+    getLabel(data: WidgetProperty) {
+        return `${data.station}-${data.feature}-${data.date}`
+    }
+
+    configItem($event: MouseEvent | TouchEvent, item: WidgetProperty): void {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        const modal = this.modalService.open(
+            AddWidgetModalComponent,
+            AddWidgetModalData.asConfig(
+                'Please edit the weather details.',
+                {
+                    station: item.station,
+                    feature: item.feature,
+                    date: item.date,
+                    buttonData: 'Update Widget'
+                }
+            )
+        )
+
+        const component = modal.componentInstance;
+        component.confirm.pipe(take(1)).subscribe((payload: MatDialogRef<AddWidgetModalComponent, any>) => {
+            const instance = payload.componentInstance;
+
+            this.dashboardService.getWidget({
+                station: instance.station,
+                date: instance.date,
+                day: instance.day,
+                year: instance.year,
+                month: instance.month,
+                hour: instance.hour,
+                minute: instance.minute,
+                feature: instance.feature,
+                id: item.id,
+                gridster: {
+                    x: 0,
+                    y: 0,
+                    cols: 1,
+                    rows: 1
+                },
+                email: this.email
+            });
+
+            modal.close();
+        })
     }
 
     addItem(id: number): void {
@@ -45,7 +109,7 @@ export class DashboardComponent {
         );
 
         const component = modal.componentInstance;
-        component.confirm.pipe(take(1)).subscribe((payload: MatDialogRef<AddWidgetModalComponent,any>) => {
+        component.confirm.pipe(take(1)).subscribe((payload: MatDialogRef<AddWidgetModalComponent, any>) => {
             const instance = payload.componentInstance;
 
             this.dashboardService.getWidget({
@@ -63,10 +127,13 @@ export class DashboardComponent {
                     y: 0,
                     cols: 1,
                     rows: 1
-                }
+                },
+                email: this.email
             });
-            
+
             modal.close();
         })
     }
+
+
 }

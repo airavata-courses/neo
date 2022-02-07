@@ -4,7 +4,7 @@ export interface Safe extends GridsterConfig {
     draggable: Draggable;
     resizable: Resizable;
     pushDirections: PushDirections;
-  }
+}
 
 export const OPTIONS = {
     gridType: GridType.Fixed,
@@ -30,7 +30,7 @@ export const OPTIONS = {
     defaultItemCols: 1,
     defaultItemRows: 1,
     fixedColWidth: 300,
-    fixedRowHeight: 300,
+    fixedRowHeight: 400,
     keepFixedHeightInMobile: false,
     keepFixedWidthInMobile: false,
     scrollSensitivity: 10,
@@ -53,7 +53,7 @@ export const OPTIONS = {
     pushItems: false,
     disablePushOnDrag: false,
     disablePushOnResize: false,
-    pushDirections: {north: true, east: true, south: true, west: true},
+    pushDirections: { north: true, east: true, south: true, west: true },
     pushResizeItems: false,
     displayGrid: DisplayGrid.None,
     disableWindowResize: false,

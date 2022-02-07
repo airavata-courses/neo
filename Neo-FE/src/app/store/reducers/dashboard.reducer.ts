@@ -18,14 +18,36 @@ export const initialState: DashboardState = {
 
 const dashboardReducer = createReducer(
     initialState,
-    on(dashboardActions.getWidget, (state, { payload }) => ({
-        ...state,
-        data: {
-            widgets: [...(state.data?.widgets || []), { ...payload, id: (state.data?.id || 0) + 1, isLoading: true }],
-            id: (state.data?.id || 0) + 1
-        },
-        loading: true
-    })),
+    on(dashboardActions.getWidget, (state, { payload }) => {
+        const indexOfData = (state.data?.widgets || []).findIndex((widget) => (widget.id === payload.id));
+        if (indexOfData >= 0) {
+            let updatedData = [...state.data?.widgets || []]
+            updatedData[indexOfData] = {
+                ...updatedData[indexOfData],
+                isLoading: true,
+                station: payload.station,
+                date: payload.date,
+                feature: payload.feature
+            }
+            return {
+                ...state,
+                data: {
+                    id: state.data?.id || 0,
+                    widgets: updatedData
+                },
+                loading: true,
+                loaded: false
+            };
+        }
+        return {
+            ...state,
+            data: {
+                widgets: [...(state.data?.widgets || []), { ...payload, id: (state.data?.id || 0) + 1, isLoading: true }],
+                id: (state.data?.id || 0) + 1
+            },
+            loading: true
+        }
+    }),
 
     on(dashboardActions.getWidgetSuccess, (state, { payload }) => {
         const indexOfData = (state.data?.widgets || []).findIndex((widget) => (widget.id === payload.id));
@@ -70,6 +92,14 @@ const dashboardReducer = createReducer(
     on(dashboardActions.deleteAuthTokenSuccess, _ => ({
         ...initialState
     })),
+
+    on(dashboardActions.removeWidget, (state, { payload: { id } }) => ({
+        ...state,
+        data: {
+            widgets: state.data?.widgets.filter(widget => !(widget.id === id)) || [],
+            id: state.data?.id || 0
+        }
+    }))
 );
 
 export function reducer(

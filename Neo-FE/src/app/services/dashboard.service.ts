@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Injectable, OnDestroy } from "@angular/core";
-import { map, Observable } from "rxjs";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 import { WidgetArgs, WidgetData, WidgetResponse } from "../dto/dashboard";
 
 @Injectable({
@@ -8,7 +8,7 @@ import { WidgetArgs, WidgetData, WidgetResponse } from "../dto/dashboard";
 })
 export class DashboardClientService {
 
-    constructor(private readonly http: HttpClient){}
+    constructor(private readonly http: HttpClient) { }
 
     private readonly pathBase = 'http://localhost:3000/';
 
@@ -22,12 +22,23 @@ export class DashboardClientService {
         })
     }
 
-    get_widget(request: WidgetArgs): Observable<WidgetResponse<WidgetData>> {
-        return this.http.post<WidgetResponse<WidgetData>>(
-            this.getPath('get-widget'),
-            request
-        ).pipe(
-            map(response => ({...response, id: request.id}))
+    get_widget({ id, station, date, feature, day, month, year, hour, minute, email }: WidgetArgs): Observable<WidgetResponse<WidgetData>> {
+        return this.http.get<WidgetResponse<WidgetData>>(
+            this.getPath('widget'),
+            {
+                params: {
+                    id,
+                    station,
+                    date,
+                    feature,
+                    day,
+                    month,
+                    year,
+                    hour,
+                    minute,
+                    email
+                }
+            }
         )
     }
 }

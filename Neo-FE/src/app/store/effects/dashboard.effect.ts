@@ -23,7 +23,7 @@ export class DashboardEffects {
                         if (hasWidgetRequestFailed(response)) {
                             return throwError(response)
                         }
-                        return [a.getWidgetSuccess({ payload: response })]
+                        return [a.getWidgetSuccess({ payload: { ...response, id: action.payload.id } })]
                     }),
                     catchError((error: WidgetDataFail) => [
                         a.getWidgetFail({ payload: { widgetId: action.payload.id, error } })

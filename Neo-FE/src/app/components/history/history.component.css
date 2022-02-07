@@ -10,3 +10,12 @@ table {
 .no-history-content {
     margin: 20px 50px;
 }
+
+.mid-cell {
+    padding: 10px !important;
+    text-align: center;
+}
+
+.mat-cell {
+    text-align: center;
+}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { WidgetArgs } from '../dto';
+import { RemoveWidgetArgs, WidgetArgs } from '../dto';
 import { neoActions as a, neoQuery as s, NeoStateSlice } from '../store';
 
 @Injectable()
@@ -19,5 +19,11 @@ export class DashboardFacade {
         payload
       })
     );
+  }
+
+  removeWidget(payload: RemoveWidgetArgs) {
+    this.store.dispatch(
+      a.removeWidget({ payload })
+    )
   }
 }

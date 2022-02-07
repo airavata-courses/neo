@@ -12,7 +12,12 @@ export interface WidgetArgs {
     readonly month: string,
     readonly year: string,
     readonly hour: string,
-    readonly minute: string
+    readonly minute: string,
+    readonly email: string
+}
+
+export interface RemoveWidgetArgs {
+    readonly id: number
 }
 
 export interface WidgetData {
