@@ -41,7 +41,6 @@ def widget():
             )
         )
         print("auth_response.isAuth: ", auth_response.isAuth)
-        auth_response_value = auth_response.isAuth
         if not auth_response.isAuth:
             return jsonify(protobuf_to_dict(auth_response)), 401
 
@@ -90,7 +89,7 @@ def widget():
 
         # -------- Consolidating Response --------
         response_dict = {
-            isAuth: auth_response_value,
+            isAuth: True,
             status: registry_response.status,
             image: str(image_base64)
         }
