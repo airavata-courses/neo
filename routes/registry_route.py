@@ -89,9 +89,9 @@ def widget():
 
         # -------- Consolidating Response --------
         response_dict = {
-            isAuth: True,
-            status: registry_response.status,
-            image: str(image_base64)
+            'isAuth': True,
+            'status': registry_response.status,
+            'image': str(image_base64)
         }
         return jsonify(response_dict), 200
     else:
