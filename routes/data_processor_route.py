@@ -8,7 +8,7 @@ import data_processor_pb2_grpc
 
 data_processor_api = Blueprint('data_processor_api', __name__)
 
-channel = grpc.insecure_channel('localhost:50052', options=(('grpc.enable_http_proxy', 0),))
+channel = grpc.insecure_channel('data-service:8082', options=(('grpc.enable_http_proxy', 0),))
 stub = data_processor_pb2_grpc.DataProcessorServiceStub(channel)
 
 @data_processor_api.route('/image', methods=["POST", "GET"])
