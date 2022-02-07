@@ -26,8 +26,6 @@ class Servicer(data_processor_pb2_grpc.DataProcessorServiceServicer):
         print("type: " , type(image_base64))
         return data_processor_pb2.ResultImage(image_base64=image_base64)
 
-
-
     def getSampleData(self, request, context):
         custom_response = "Client said: " + request.my_request + ". Server said: You are: " + request.my_req_data
         custom_resp_data = "Authenticated " + request.my_req_data
@@ -41,7 +39,7 @@ def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     data_processor_pb2_grpc.add_DataProcessorServiceServicer_to_server(Servicer(), server)
     # server.add_insecure_port('[::]:50051')
-    server.add_insecure_port('localhost:50052')
+    server.add_insecure_port('0.0.0.0:8082')
     server.start()
     server.wait_for_termination()
 
