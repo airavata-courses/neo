@@ -5,7 +5,7 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 
 ## Software Requirements
 
-* Docker
+* [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Installation Steps
 
@@ -13,15 +13,26 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 
   ```git clone https://github.com/airavata-courses/neo.git```
 
-* Switch to dev
+* Change directory:
+
+  ```cd neo```
+
+* Checkout ```dev``` branch:
 
   ```git checkout dev```
   
   The ```dev``` branch contains the ```docker-compose.yml``` configuration file which will pull, build and run all images from our [neoairavata](https://hub.docker.com/u/neoairavataproject) public repository on Docker Hub.
+  
+## Launching all microservices:
 
-* Run the docker-compose.yml file:
+   All our microservices are hosted on the [neoairavata](https://hub.docker.com/u/neoairavataproject) Docker hub repository.
+  
+* To start all microservices, execute the below command. Ensure that you are in the root directory of the ```dev``` branch while executing below command:
 
   ```docker-compose up```
+  
+**Note:** Each microservice's Docker image has been built with multi-arch support for ```linux/arm64``` and ```linux/amd64```.
+   Based on the user's machine (arm64 or amd64 arch), the appropriate Docker image gets pulled by docker-compose.
 
 ## Accessing User Interface
 
@@ -48,8 +59,6 @@ Hence, after initiating all services with ```docker-compose up```, the UI of our
 ## Architecture Diagram
 
 ![Neo System Architecture2](https://user-images.githubusercontent.com/35288428/152919633-c0686e43-8954-4fac-bf2c-59afc0aadb30.png)
-
-
 
 ## Team:
 * Rajdeep Singh Chauhan (rajchauh@iu.edu)
