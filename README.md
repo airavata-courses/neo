@@ -26,7 +26,8 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 ## Accessing User Interface
 
 Our UI service is exposed on port 4200 in the Docker container and maps to port 4200 of localhost.
-Hence, UI of our application can be accessed from: ```http://localhost:4200```
+
+Hence, after initiating all services with ```docker-compose up```, the UI of our application can be accessed from: ```http://localhost:4200```
 
 ## Technology Stack
 
