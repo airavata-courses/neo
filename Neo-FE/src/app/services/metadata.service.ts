@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { AuthArgs, AuthTokenUser, UserTokenResponse } from "../dto";
+import { MetaData } from "../dto";
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthClientService {
+export class MetadataClientService {
 
     constructor(private readonly http: HttpClient) { }
 
@@ -22,9 +22,9 @@ export class AuthClientService {
         })
     }
 
-    login(request: AuthArgs): Observable<UserTokenResponse<AuthTokenUser>> {
-        return this.http.get<UserTokenResponse<AuthTokenUser>>(
-            this.getPath('login'), { params: { ...request } }
+    get_metadata():Observable<MetaData> {
+        return this.http.get<MetaData>(
+            this.getPath('metadata')
         );
     }
 }

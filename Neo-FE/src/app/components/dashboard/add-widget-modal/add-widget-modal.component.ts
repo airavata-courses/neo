@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { Nullable } from 'src/app/model/state-slice';
+import { MetadataFacade } from 'src/app/services/metadata.facade';
 
 export interface AddWidgetModalDataOptions {
   readonly station?: string;
@@ -48,7 +49,8 @@ export class AddWidgetModalComponent {
     private readonly dialog: MatDialogRef<AddWidgetModalComponent, MatDialogRef<unknown>>,
     @Optional()
     @Inject(MAT_DIALOG_DATA)
-    readonly data: AddWidgetModalData | null
+    readonly data: AddWidgetModalData | null,
+    private metadataService: MetadataFacade
   ) {
     const now = new Date();
     this.minDate = moment(new Date("July 21, 1983 00:00:00"));
@@ -63,18 +65,10 @@ export class AddWidgetModalComponent {
   minDate: moment.Moment;
   maxDate: moment.Moment;
 
-  stations: { name: string, code: string }[] = [
-    { name: 'Indianapolis', code: 'KIND' },
-    { name: 'Louisville', code: 'KLVX' },
-    { name: 'Aberdien', code: 'KABR' },
-    { name: 'Albany', code: 'KENX' }
-  ];
+  readonly stations$ = this.metadataService.getStations$;
+  readonly properties$ = this.metadataService.getProperties$;
+  readonly error$ = this.metadataService.error$;
 
-  properties: { name: string }[] = [
-    { name: 'velocity' },
-    { name: 'reflectivity' },
-    { name: 'cross-corelation-ratio' }
-  ];
   readonly confirm = new EventEmitter<
     MatDialogRef<AddWidgetModalComponent>
   >();
@@ -119,7 +113,11 @@ export class AddWidgetModalComponent {
   }
 
   get day() {
-    return this.dateFormControlValue.utc().date().toString()
+    const day = this.dateFormControlValue.utc().date()
+    if (day > 9) {
+      return day.toString()
+    }
+    return "0" + day.toString();
   }
 
   get month() {
@@ -138,11 +136,19 @@ export class AddWidgetModalComponent {
   }
 
   get hour() {
-    return this.dateFormControlValue.utc().hour().toString()
+    const hour = this.dateFormControlValue.utc().hour()
+    if (hour > 9) {
+      return hour.toString()
+    }
+    return "0" + hour.toString();
   }
 
   get minute() {
-    return this.dateFormControlValue.utc().minute().toString()
+    const minute = this.dateFormControlValue.utc().minute()
+    if (minute > 9) {
+      return minute.toString()
+    }
+    return "0" + minute.toString();
   }
 
   get station() {

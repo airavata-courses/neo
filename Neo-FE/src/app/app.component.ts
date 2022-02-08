@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { tap } from 'rxjs';
 import { AuthFacade } from './services/auth.facade';
+import { MetadataFacade } from './services/metadata.facade';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,9 @@ export class AppComponent {
   title = 'Project Neo';
   public isAuthenticated = false;
 
-  constructor(private authService: AuthFacade) { }
+  constructor(
+    private authService: AuthFacade,
+    private metadataService: MetadataFacade) { }
 
   readonly isAuthError$ = this.authService.getLoginErrors$.pipe(
     tap((isError) => {
@@ -23,6 +26,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.authService.attemptLoginFromSessionStorage();
+    this.metadataService.getMetadata();
   }
 
   logout(): void {

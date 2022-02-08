@@ -12,6 +12,7 @@ export class DashboardFacade {
   readonly getWidgetsList$ = this.store.select(s.widgetsList);
   readonly getWidgetsListbyId$ = this.store.select(s.widgetsListById);
   readonly nextId$ = this.store.select(s.getNextId);
+  readonly error$ = this.store.select(s.getDashboardError);
 
   getWidget(payload: WidgetArgs) {
     this.store.dispatch(

@@ -48,6 +48,7 @@ import { HistoryFacade } from './services/history.facade';
 import { HistoryComponent } from './components/history/history.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MetadataFacade } from './services/metadata.facade';
 
 const jwtProvider = {
   provide: JwtHelperService,
@@ -131,7 +132,8 @@ const jwtProvider = {
     jwtProvider,
     DashboardFacade,
     ModalService,
-    HistoryFacade
+    HistoryFacade,
+    MetadataFacade
   ],
   bootstrap: [AppComponent]
 })

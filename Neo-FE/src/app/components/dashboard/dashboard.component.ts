@@ -20,7 +20,8 @@ export class DashboardComponent {
     options: Safe = OPTIONS;
     readonly dashboard$ = this.dashboardService.getWidgetsList$;
     readonly dashboardById$ = this.dashboardService.getWidgetsListbyId$;
-    nextId$ = this.dashboardService.nextId$;
+    readonly error$ = this.dashboardService.error$;
+    readonly nextId$ = this.dashboardService.nextId$;
     email = ''
     readonly getAuthData$ = this.authService.getAuthData$.subscribe((data) => {
         if (data.data?.email) {
@@ -49,7 +50,7 @@ export class DashboardComponent {
     }
 
     sanitizeImage(base64Data: string) {
-        return this.domSanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${base64Data}`);
+        return this.domSanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${base64Data.slice(18,-4)}`);
     }
 
     getLabel(data: WidgetProperty) {

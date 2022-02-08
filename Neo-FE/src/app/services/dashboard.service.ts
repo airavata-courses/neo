@@ -10,7 +10,7 @@ export class DashboardClientService {
 
     constructor(private readonly http: HttpClient) { }
 
-    private readonly pathBase = 'http://localhost:3000/';
+    private readonly pathBase = 'http://localhost:4200/api/';
 
     private getPath(action: string) {
         return `${this.pathBase}${action}`

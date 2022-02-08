@@ -12,6 +12,11 @@ export const getDashboardLoading = createSelector(
   ({ loading }) => loading
 );
 
+export const getDashboardError = createSelector(
+  getDashboardState,
+  ({ error }) => error
+);
+
 export const widgetsList = createSelector(
   getDashboardState,
   ({ data }) =>

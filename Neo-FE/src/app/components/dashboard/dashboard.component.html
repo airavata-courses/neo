@@ -17,7 +17,7 @@
                         </div>
                     </ng-container>
                     <ng-template #weatherData>
-                        <div class="button-holder">
+                        <div class="button-holder" *ngIf = "!(error$ | async) as error; else noData">
                             <button class="button-delete" mat-mini-fab (mousedown)="removeItem($event, item)"
                                 (touchstart)="removeItem($event, item)">
                                 <mat-icon class="button-delete-action">delete</mat-icon>
@@ -42,6 +42,9 @@
                                 <label>{{item.date}}</label>
                             </mat-card>
                         </div>
+                        <ng-template #noData>
+                            No Image Data
+                        </ng-template>
                     </ng-template>
                 </gridster-item>
             </gridster>
