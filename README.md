@@ -44,6 +44,6 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 
 
 ## Team:
-* Rajdeep Singh Chauhan ()
+* Rajdeep Singh Chauhan (rajchauh@iu.edu)
 * Nirav Raje (nraje@iu.edu)
-* Shashank Jain ()
+* Shashank Jain (shasjain@iu.edu)
