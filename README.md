@@ -11,15 +11,15 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 
 * Clone project repository:
 
-```git clone https://github.com/airavata-courses/neo.git```
+  ```git clone https://github.com/airavata-courses/neo.git```
 
 * Switch to dev
 
-```git checkout dev```
+  ```git checkout dev```
 
 * Run the docker-compose.yml file:
 
-```docker-compose up```
+  ```docker-compose up```
 
 ## Technology Stack
 
