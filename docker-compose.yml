@@ -20,7 +20,7 @@ services:
       - "52000:52000"
   database-service:
     container_name: database-service
-    image: neoairavataproject/database-service:latest
+    image: neoairavataproject/database-service
     restart: always
     ports:
       - "40000:40000"
@@ -42,6 +42,12 @@ services:
     restart: always
     ports:
       - "41000:41000"
+  ui-service:
+    container_name: ui-service
+    image: neoairavataproject/ui-service:latest
+    restart: always
+    ports:
+      - "4200:80"
   mongo-neo:
     container_name: mongo-neo
     image: mongo:latest
