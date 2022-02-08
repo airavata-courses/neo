@@ -26,12 +26,6 @@ class Servicer(data_processor_pb2_grpc.DataProcessorServiceServicer):
         print("type: " , type(image_base64))
         return data_processor_pb2.ResultImage(image_base64=image_base64)
 
-    def getSampleData(self, request, context):
-        custom_response = "Client said: " + request.my_request + ". Server said: You are: " + request.my_req_data
-        custom_resp_data = "Authenticated " + request.my_req_data
-        print(custom_resp_data)
-        return auth_pb2.SampleResponse(my_response=custom_response, my_resp_data=custom_resp_data)
-
 
 # serve() runs a Servicer() instance and keeps listening for requests
 def serve():

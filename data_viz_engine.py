@@ -66,14 +66,14 @@ def get_result_image(station, year, month, date, hour, minute, product):
 if __name__ == "__main__":
     station = 'KLVX'
     # Year month date hour and minute should be string with fixed width
-    year = '2021'
-    month = '12'
+    year = '2016'
+    month = '11'
     date = '11'
     hour = '02'
     minute = '55'
     # Possible values could be velocity, reflectivity or cross_correlation_ratio
-    product = 'velocity'
-
+    product = 'reflectivity'
+    print( find_url(station, year, month, date, hour, minute).filename)
     # Get Result Image
     out_viz_file = get_result_image(
         station, year, month, date, hour, minute, product)
