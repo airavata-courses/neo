@@ -11,15 +11,23 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 
 * Clone project repository:
 
-```git clone https://github.com/airavata-courses/neo.git```
+  ```git clone https://github.com/airavata-courses/neo.git```
 
 * Switch to dev
 
-```git checkout dev```
+  ```git checkout dev```
+  
+  The ```dev``` branch contains the ```docker-compose.yml``` configuration file which will pull, build and run all images from our [neoairavata](https://hub.docker.com/u/neoairavataproject) public repository on Docker Hub.
 
 * Run the docker-compose.yml file:
 
-```docker-compose up```
+  ```docker-compose up```
+
+## Accessing User Interface
+
+Our UI service is exposed on port 4200 in the Docker container and maps to port 4200 of localhost.
+
+Hence, after initiating all services with ```docker-compose up```, the UI of our application can be accessed from: ```http://localhost:4200```
 
 ## Technology Stack
 
