@@ -73,7 +73,7 @@ if __name__ == "__main__":
     # Possible values could be velocity, reflectivity or cross_correlation_ratio
     product = 'reflectivity'
     url = find_url(station, year, month, date, hour, minute)
-    fetch_data(url).info()
+    fetch_data(url).fields['reflectivity']
     # Get Result Image
     out_viz_file = get_result_image(
         station, year, month, date, hour, minute, product)
