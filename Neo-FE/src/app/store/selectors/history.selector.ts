@@ -23,7 +23,7 @@ export const getCurrentPage = createSelector(
 export const getDataLength = createSelector(
     getHistoryState,
     ({ data }) =>
-        (data?.totalPages || 1) * 10
+        (data?.totalPages || 1)
 );
 
 export const getHistoryError = createSelector(
