@@ -21,11 +21,11 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 
 ## Architecture Diagram
 
+![Neo System Architecture2](https://user-images.githubusercontent.com/35288428/152919633-c0686e43-8954-4fac-bf2c-59afc0aadb30.png)
 
 ## Software Requirements
 
 * Docker
-
 
 ## Team:
 * Rajdeep Singh Chauhan ()
