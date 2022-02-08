@@ -20,6 +20,7 @@ Flask-Cors = "==3.0.10"
 Jinja2 = "==3.0.3"
 MarkupSafe = "==2.0.1"
 Werkzeug = "==2.0.2"
+pytest = "*"
 
 [dev-packages]
 autopep8 = "*"
