@@ -28,13 +28,12 @@ def fetch_data(url):
     if results.success_count > 0:
         for i in results.iter_success():
             try:
-                data =  pyart.io.read(i.filepath)
+                data = pyart.io.read(i.filepath)
                 return data
             except:
                 return -1
     else:
         return -1
-    
 
 def data_viz(radar, product):
     display = pyart.graph.RadarMapDisplay(radar)
@@ -73,7 +72,8 @@ if __name__ == "__main__":
     minute = '55'
     # Possible values could be velocity, reflectivity or cross_correlation_ratio
     product = 'reflectivity'
-    print( find_url(station, year, month, date, hour, minute).filename)
+    url = find_url(station, year, month, date, hour, minute)
+    fetch_data(url).info()
     # Get Result Image
     out_viz_file = get_result_image(
         station, year, month, date, hour, minute, product)
