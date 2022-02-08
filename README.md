@@ -17,6 +17,7 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 
 ## Napkin Diagram
 
+![Napkin 2 drawio](https://user-images.githubusercontent.com/9477137/152918166-e621fdbb-09d7-4d52-a6b2-e01b015a7a15.png)
 
 ## Architecture Diagram
 
