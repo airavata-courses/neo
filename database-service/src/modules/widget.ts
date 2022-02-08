@@ -2,6 +2,20 @@ import Widget from "../model/widget.model";
 
 export async function addWidget({ station, feature, date, email }) {
     try {
+
+        const exist = await Widget.exists({
+            station,
+            feature,
+            email,
+            date
+        });
+
+        if (exist) {
+            return {
+                status: true
+            }
+        }
+
         const newWidget = new Widget({
             station,
             feature,
@@ -34,7 +48,7 @@ export async function showHistory(req) {
         if (!!history && history.length > 0) {
             return {
                 history: JSON.stringify({ history }),
-                totalPages: Math.ceil(rows / limit),
+                totalPages: Math.ceil(rows),
                 currentPage: page,
                 exist: true
             };
