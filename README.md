@@ -1,6 +1,8 @@
 # neo
 Spring 2022 Project
 
+Neo is a microservice architecture based application to visualize Doppler Radar Feed from the NEXRAD system's AWS S3 buckets.
+
 ## Introduction
 
 The gateway service is the entrypoint into the microservices architecture.
