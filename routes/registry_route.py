@@ -118,7 +118,9 @@ def history():
     # -------- Service 2: Call to Registry Service --------
     # Retrieve request args
     email = request.args.get('email')
-    page = str(1)
+    page = request.args.get('page')
+    if not page:
+        page = str(1)
     history_response = reg_stub.getHistory(
         registry_pb2.HistoryArgs(
             email=email,
