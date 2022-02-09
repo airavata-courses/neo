@@ -54,7 +54,7 @@ Hence, after initiating all services with ```docker-compose up```, the UI of our
 
 ## Napkin Diagram
 
-![Napkin 2 drawio](https://user-images.githubusercontent.com/9477137/152918166-e621fdbb-09d7-4d52-a6b2-e01b015a7a15.png)
+![Neo Napkin Diagram 2](https://user-images.githubusercontent.com/35288428/153309800-0325f9c3-cf05-4230-a13d-684aae279550.png)
 
 ## Architecture Diagram
 
