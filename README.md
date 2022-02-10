@@ -30,8 +30,10 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 ## Launching all microservices:
 
    All our microservices are hosted on the [neoairavata](https://hub.docker.com/u/neoairavataproject) Docker hub repository.
-  
-* To start all microservices, execute the below command. Ensure that you are in the root directory of the ```dev``` branch while executing below command:
+   
+* Start Docker Desktop to ensure Docker Daemon is running. For running on local machine for Milestone 1, we highly recommend to ensure that Docker Desktop's default resource limits (especially RAM) are increased to atleast 75% of available system resources.
+ 
+* To start all microservices, execute the below command in the terminal. Ensure that you are in the root directory of the ```dev``` branch while executing below command:
 
   ```docker-compose up```
   
