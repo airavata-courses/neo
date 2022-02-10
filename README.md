@@ -1,7 +1,11 @@
 # neo
 Spring 2022 Project
 
-Neo is a microservice architecture based application to visualize Doppler Radar Feed from the NEXRAD system's AWS S3 buckets.
+Neo is a microservice architecture based application to visualize Doppler Radar Feed from the NEXRAD system's [Registry of Open Data on AWS](https://registry.opendata.aws/noaa-nexrad/).
+
+**Quick Reference Links:**
+- [Project Milestone 1 Release](https://github.com/airavata-courses/neo/releases/tag/v1https://github.com/airavata-courses/neo/releases/tag/v1)
+- [Project Milestone 1 Wiki](https://github.com/airavata-courses/neo/wiki/Project-1)
 
 ## Software Requirements
 
@@ -54,7 +58,7 @@ Hence, after initiating all services with ```docker-compose up```, the UI of our
 
 ## Napkin Diagram
 
-![Neo Napkin Diagram 2](https://user-images.githubusercontent.com/35288428/153309800-0325f9c3-cf05-4230-a13d-684aae279550.png)
+![Neo Napkin Diagram 2](https://user-images.githubusercontent.com/35288428/153309704-4b3c9175-3bb2-4208-92b2-b90a7c81effa.png)
 
 ## Architecture Diagram
 
