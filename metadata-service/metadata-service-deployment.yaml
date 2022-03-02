@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metadata-service-deploy
+spec:
+  selector:
+    matchLabels:
+      app: metadata-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: metadata-service
+
+    spec:
+      containers:
+      - name: metadata-service
+        imagePullPolicy: Always
+        image: neoairavataproject/metadata-service:1.3
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 52000
+      restartPolicy: Always
