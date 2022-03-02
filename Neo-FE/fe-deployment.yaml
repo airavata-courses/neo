@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-deploy
+spec:
+  selector:
+    matchLabels:
+      app: fe
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: fe
+
+    spec:
+      containers:
+      - name: fe
+        imagePullPolicy: Always
+        image: neoairavataproject/ui-service:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 80
+      restartPolicy: Always

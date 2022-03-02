@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-service-deploy
+spec:
+  selector:
+    matchLabels:
+      app: database-service
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: database-service
+
+    spec:
+      containers:
+      - name: database-service
+        imagePullPolicy: Always
+        image: neoairavataproject/database-service:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 40000
+      restartPolicy: Always
