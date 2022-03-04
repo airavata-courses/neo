@@ -78,7 +78,7 @@ if __name__ == "__main__":
     out_viz_file = get_result_image(
         station, year, month, date, hour, minute, product)
 
-    print("base64: " + str(out_viz_file))
+    
 
 
 # # test for checking base64 data to image

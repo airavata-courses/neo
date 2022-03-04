@@ -23,21 +23,22 @@ class Servicer(data_processor_pb2_grpc.DataProcessorServiceServicer):
 
         image_base64 = get_result_image(station=station, year=year, month=month, date=day, hour=hour, minute=minute, product=feature)
         image_base64 = str(image_base64)
-        print("type: " , type(image_base64))
+        print("base64 generated in dp service (100 chars):" + str(out_viz_file)[:100])
         return data_processor_pb2.ResultImage(image_base64=image_base64)
 
 
 # serve() runs a Servicer() instance and keeps listening for requests
 def serve():
     print('Data Processor Service is running..')
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))
     data_processor_pb2_grpc.add_DataProcessorServiceServicer_to_server(Servicer(), server)
     # server.add_insecure_port('[::]:50051')
     server.add_insecure_port('0.0.0.0:8082')
     server.start()
     server.wait_for_termination()
 
-if __name__ == '__main__':
+app = serve()
 
+if __name__ == '__main__':
     print("Service will run now")
     serve()
