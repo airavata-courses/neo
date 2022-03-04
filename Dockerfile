@@ -8,4 +8,4 @@ COPY . .
 
 EXPOSE 8081
 
-CMD ["python", "app.py"]
+CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:8081", "app:app"]

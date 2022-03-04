@@ -25,4 +25,4 @@ app.register_blueprint(registry_api)
 app.register_blueprint(metadata_api)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port='8081')
+    app.run(host='0.0.0.0', port='8081')
