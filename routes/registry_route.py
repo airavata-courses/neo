@@ -13,17 +13,17 @@ registry_api = Blueprint('registry_api', __name__)
 # ------------- Create channels and stubs ---------------
 
 # Change hostname from "auth-service" to "localhost" if running without docker-compose
-reg_channel = grpc.insecure_channel(
-    'registry-service:41000', options=(('grpc.enable_http_proxy', 0),))
-reg_stub = registry_pb2_grpc.RegistryStub(reg_channel)
+# reg_channel = grpc.insecure_channel(
+#     'registry-service:41000', options=(('grpc.enable_http_proxy', 0),))
+# reg_stub = registry_pb2_grpc.RegistryStub(reg_channel)
 
-auth_channel = grpc.insecure_channel(
-    'auth-service:43000', options=(('grpc.enable_http_proxy', 0),))
-auth_stub = auth_pb2_grpc.AuthStub(auth_channel)
+# auth_channel = grpc.insecure_channel(
+#     'auth-service:43000', options=(('grpc.enable_http_proxy', 0),))
+# auth_stub = auth_pb2_grpc.AuthStub(auth_channel)
 
-dp_channel = grpc.insecure_channel(
-    'data-service:8082', options=(('grpc.enable_http_proxy', 0),))
-dp_stub = data_processor_pb2_grpc.DataProcessorServiceStub(dp_channel)
+# dp_channel = grpc.insecure_channel(
+#     'data-service:8082', options=(('grpc.enable_http_proxy', 0),))
+# dp_stub = data_processor_pb2_grpc.DataProcessorServiceStub(dp_channel)
 
 # ------------- Create endpoints ---------------
 
@@ -31,7 +31,14 @@ dp_stub = data_processor_pb2_grpc.DataProcessorServiceStub(dp_channel)
 @registry_api.route('/widget', methods=["GET"])
 def widget():
     if request.method == 'GET':
+
         # -------- Service 1: Call to Auth Service --------
+
+        # Create channels and stubs
+        auth_channel = grpc.insecure_channel(
+            'auth-service:43000', options=(('grpc.enable_http_proxy', 0),))
+        auth_stub = auth_pb2_grpc.AuthStub(auth_channel)
+
         auth_token = request.headers.get('Authorization')
         if not auth_token:
             auth_token = ' '
@@ -41,12 +48,19 @@ def widget():
             )
         )
         print("auth_response.isAuth: ", auth_response.isAuth)
+        auth_channel.close()
         if not auth_response.isAuth:
             return jsonify(protobuf_to_dict(auth_response)), 401
 
         print("User authorized...")
 
         # -------- Service 2: Call to Registry Service --------
+
+        # Create channels and stubs
+        reg_channel = grpc.insecure_channel(
+            'registry-service:41000', options=(('grpc.enable_http_proxy', 0),))
+        reg_stub = registry_pb2_grpc.RegistryStub(reg_channel)
+
         # Retrieve request args
         station = request.args.get('station')
         feature = request.args.get('feature')
@@ -71,8 +85,13 @@ def widget():
             )
         )
         print("registry_response.status: ", str(registry_response.status))
+        reg_channel.close()
 
         # -------- Service 3: Call to Data Processor Service --------
+
+        dp_channel = grpc.insecure_channel(
+            'data-service:8082', options=(('grpc.enable_http_proxy', 0),))
+        dp_stub = data_processor_pb2_grpc.DataProcessorServiceStub(dp_channel)
 
         image_base64 = None
         image_base64 = dp_stub.getImage(
@@ -87,6 +106,8 @@ def widget():
             ))
         print("Base 64 image's initial chars: ", str(image_base64))
 
+        dp_channel.close()
+
         # -------- Consolidating Response --------
         response_dict = {
             'isAuth': True,
@@ -100,6 +121,15 @@ def widget():
 
 @registry_api.route('/history', methods=["GET"])
 def history():
+
+    reg_channel = grpc.insecure_channel(
+        'registry-service:41000', options=(('grpc.enable_http_proxy', 0),))
+    reg_stub = registry_pb2_grpc.RegistryStub(reg_channel)
+
+    auth_channel = grpc.insecure_channel(
+        'auth-service:43000', options=(('grpc.enable_http_proxy', 0),))
+    auth_stub = auth_pb2_grpc.AuthStub(auth_channel)
+
     # -------- Service 1: Call to Auth Service --------
     auth_token = request.headers.get('Authorization')
     if not auth_token:
@@ -130,4 +160,8 @@ def history():
     history_dict = protobuf_to_dict(history_response)
     history_dict['isAuth'] = auth_response.isAuth
     print("History Response: ", history_dict)
+
+    reg_channel.close()
+    auth_channel.close()
+
     return jsonify(history_dict), 200
