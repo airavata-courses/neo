@@ -144,6 +144,7 @@ def history():
         return jsonify(protobuf_to_dict(auth_response)), 401
 
     print("User authorized...")
+    auth_channel.close()
 
     # -------- Service 2: Call to Registry Service --------
     # Retrieve request args
@@ -162,6 +163,5 @@ def history():
     print("History Response: ", history_dict)
 
     reg_channel.close()
-    auth_channel.close()
 
     return jsonify(history_dict), 200
