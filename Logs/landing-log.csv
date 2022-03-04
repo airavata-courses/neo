@@ -1,0 +1,2 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1646381176810,89,Landing Request,200,OK,Users - Landing Route 1-1,text,true,,1517,116,1,1,http://localhost:4200/,85,0,11

@@ -1,0 +1,2 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1646381199807,2057,Metadata Request,200,OK,Users - Metadata Route 1-1,text,true,,4048,128,1,1,http://localhost:4200/api/metadata,2044,0,41
