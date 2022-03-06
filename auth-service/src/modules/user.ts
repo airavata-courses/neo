@@ -51,7 +51,7 @@ const checkToken = async (auth2Client, idToken) => {
         }
 
         const parts = idToken.split('.');
-        if (parts.length === 2){
+        if (parts.length > 1) {
             const headerBuf = new Buffer(parts[0], 'base64');
             const bodyBuf = new Buffer(parts[1], 'base64');
             const header = JSON.parse(headerBuf.toString());
