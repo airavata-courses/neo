@@ -16,7 +16,7 @@ spec:
       containers:
       - name: auth-service
         imagePullPolicy: Always
-        image: neoairavataproject/auth-service:latest
+        image: neoairavataproject/auth-service:3.1
         resources:
           requests:
             cpu: 100m
