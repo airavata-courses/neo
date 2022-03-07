@@ -104,7 +104,7 @@ def widget():
                 feature=feature,
                 station=station
             ))
-        print("Base 64 image's initial chars: ", str(image_base64))
+        print("Base 64 image's initial chars: ", str(image_base64)[:50])
 
         dp_channel.close()
 
