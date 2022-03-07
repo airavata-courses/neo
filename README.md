@@ -1,72 +1,79 @@
 # neo
+
 Spring 2022 Project
 
-Neo is a microservice architecture based application to visualize Doppler Radar Feed from the NEXRAD system's [Registry of Open Data on AWS](https://registry.opendata.aws/noaa-nexrad/).
+Neo is a microservice architecture based application to visualize Doppler Radar Feed from the NEXRAD system's AWS S3 buckets.
 
-**Quick Reference Links:**
-- [Project Milestone 1 Release](https://github.com/airavata-courses/neo/releases/tag/v1https://github.com/airavata-courses/neo/releases/tag/v1)
-- [Project Milestone 1 Wiki](https://github.com/airavata-courses/neo/wiki/Project-1)
+## Introduction
 
-## Software Requirements
+The gateway service is the entrypoint into the microservices architecture.
+The UI service calls the API Gateway and based on the API route, the gateway would redirect the request to the appropriate microservice.
 
-* [Docker Desktop](https://www.docker.com/products/docker-desktop)
+The gateway is also responsible for ensuring each request is authorized and communicates with the auth-service for this function, before re-directing to the concerned microservice.
 
-## Installation Steps
+REST API endpoints on the gateway are:
 
-* Clone project repository:
+- GET /widget : Routes first to auth-service, then registry-service and finally data-service.
+- GET /history : Routes first to auth-service and then to registry-service.
+- GET /login : Routes to auth-service.
+- GET /metadata : Routes to metadata-service.
 
-  ```git clone https://github.com/airavata-courses/neo.git```
+## Prerequisites
 
-* Change directory:
+- Docker Desktop
 
-  ```cd neo```
+## Steps
 
-* Checkout ```dev``` branch:
+### Running on Docker Desktop
 
-  ```git checkout dev```
-  
-  The ```dev``` branch contains the ```docker-compose.yml``` configuration file which will pull, build and run all images from our [neoairavata](https://hub.docker.com/u/neoairavataproject) public repository on Docker Hub.
-  
-## Launching all microservices:
+All the docker images are hosted on our Docker repository: https://hub.docker.com/repository/docker/neoairavataproject
 
-   All our microservices are hosted on the [neoairavata](https://hub.docker.com/u/neoairavataproject) Docker hub repository.
-   
-* Start Docker Desktop to ensure Docker Daemon is running. For running on local machine for Milestone 1, we highly recommend to ensure that Docker Desktop's default resource limits (especially RAM) are increased to atleast 75% of available system resources.
- 
-* To start all microservices, execute the below command in the terminal. Ensure that you are in the root directory of the ```dev``` branch while executing below command:
+- To pull image of the Gateway microservice, open any terminal and run the below command to pull the image from our public Docker repository.
+  ```
+  docker pull neoairavataproject/gateway:latest
+  ```
+- To run the pulled image, execute the below command: (docker pull can be skipped as docker run will both pull and run the image)
 
-  ```docker-compose up```
-  
-**Note:** Each microservice's Docker image has been built with multi-arch support for ```linux/arm64``` and ```linux/amd64```.
-   Based on the user's machine (arm64 or amd64 arch), the appropriate Docker image gets pulled by docker-compose.
+  - To run in attach mode (i.e. see the output of the service in the terminal), execute below command:
 
-## Accessing User Interface
+  ```
+  docker run -p 8081:8081 neoairavataproject/gateway:latest
+  ```
 
-Our UI service is exposed on port 4200 in the Docker container and maps to port 4200 of localhost.
+  - To run in detach mode (hide the output of the service in the terminal)
 
-Hence, after initiating all services with ```docker-compose up```, the UI of our application can be accessed from: ```http://localhost:4200```
+  ```
+  docker run -d -p 8081:8081 neoairavataproject/gateway:latest
+  ```
 
-## Technology Stack
+### For running on localhost:
 
-- gRPC
-- RESTful APIs
-- Angular
-- TypeScript
-- Python
-- Flask
-- Java
-- Nginx
-- Docker (with docker-compose)
+- Clone Airavata repository to a local directory
 
-## Napkin Diagram
+  ```
+  git clone git@github.com:airavata-courses/neo.git
+  ```
 
-![Neo Napkin Diagram 2](https://user-images.githubusercontent.com/35288428/153309704-4b3c9175-3bb2-4208-92b2-b90a7c81effa.png)
+- Checkout develop branch
 
-## Architecture Diagram
+  ```
+  git checkout feature-gateway
+  ```
 
-![Neo System Architecture2](https://user-images.githubusercontent.com/35288428/152919633-c0686e43-8954-4fac-bf2c-59afc0aadb30.png)
+- Create virtual environment with pipenv
 
-## Team:
-* Rajdeep Singh Chauhan (rajchauh@iu.edu)
-* Nirav Raje (nraje@iu.edu)
-* Shashank Jain (shasjain@iu.edu)
+  ```
+  pip install pipenv
+  pipenv shell
+  ```
+
+- Install dependencies from requirements.txt
+  ```
+  pipenv install -r requirements.txt
+  ```
+- Start the Gateway service:
+  ```
+  python app.py
+  ```
+  **Note:** This will start the service on port 8081 of localhost. This service would be running standalone in this case.
+  To experience the full functionality of this service and have it communicating with all other microservices, the easiest way is to run the `docker-compose up` command as specified in the main branch's README.md.
