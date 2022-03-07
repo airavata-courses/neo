@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: data-service
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
@@ -16,11 +16,11 @@ spec:
       containers:
       - name: data-service
         imagePullPolicy: Always
-        image: neoairavataproject/data-service:2.3
+        image: neoairavataproject/data-service:latest
         resources:
           requests:
-            cpu: 500m
-            memory: 800Mi
+            cpu: 100m
+            memory: 100Mi
         ports:
         - containerPort: 8082
       restartPolicy: Always
