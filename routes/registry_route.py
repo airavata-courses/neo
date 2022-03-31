@@ -7,6 +7,9 @@ import auth_pb2_grpc
 import data_processor_pb2
 import data_processor_pb2_grpc
 from proto_converters import protobuf_to_dict
+import pika
+import pickle
+import sys
 
 registry_api = Blueprint('registry_api', __name__)
 
