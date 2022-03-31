@@ -3,7 +3,6 @@ from flask_cors import CORS
 import requests
 
 # import blueprints (APIs) from routes
-from routes.dnu_data_processor_route import data_processor_api
 from routes.registry_route import registry_api
 from routes.auth_route import auth_api
 from routes.metadata_route import metadata_api
@@ -19,7 +18,6 @@ def check():
     return "Gateway Started!"
 
 
-app.register_blueprint(data_processor_api)
 app.register_blueprint(auth_api)
 app.register_blueprint(registry_api)
 app.register_blueprint(metadata_api)

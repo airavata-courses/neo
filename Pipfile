@@ -22,6 +22,7 @@ MarkupSafe = "==2.0.1"
 Werkzeug = "==2.0.2"
 pytest = "*"
 gunicorn = "*"
+pika = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -32,6 +32,44 @@ registry_api = Blueprint('registry_api', __name__)
 def widget():
     if request.method == 'GET':
 
+        # -------- Service 3: Call to Data Processor Service --------
+
+        # RabbitMQ connection
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host='localhost'))
+        channel = connection.channel()
+
+        # Declare work queue
+        channel.queue_declare(queue='request_queue', durable=True)
+
+        # Prepare message
+        email = "niravraje3@gmail.com"
+        year = "2016"
+        month = "11"
+        day = "11"
+        hour = "02"
+        minute = "55"
+        feature = "reflectivity"
+        station = "KLVX"
+
+        message_json = {"email": email, "year": year, "month": month, "day": day,
+                        "hour": hour, "minute": minute, "feature": feature, "station": station}
+        serialized_msg = pickle.dumps(message_json)
+
+        # Publish to declared work queue
+        channel.basic_publish(
+            exchange='',
+            routing_key='request_queue',
+            body=serialized_msg,
+            properties=pika.BasicProperties(
+                delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE
+            ))
+        print(" [x] Sent %r" % message_json)
+
+        # Close the connection after message has been published
+        connection.close()
+        return jsonify({"msg": "done"})
+
         # -------- Service 1: Call to Auth Service --------
 
         # Create channels and stubs
