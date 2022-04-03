@@ -38,22 +38,30 @@ pipeline{
 	    }
 
         stage('Build Docker Image') {
+            agent any
             steps{
-                script{
-                    dockerImage = docker.build(REGISTRY, "${HOME_DIRECTORY}")
-                }
+                sh 'cd ${HOME_DIRECTORY}' 
+                sh 'docker build -t ${REGISTRY}:latest'
+                // script{
+                //     dockerImage = docker.build(REGISTRY, "${HOME_DIRECTORY}")
+                // }
                 echo "Successfully built docker images"
             }
         }
 
         stage('Push Image to Dockerhub'){
+            agent any
             steps{
-                script{
-                    docker.withRegistry('https://registry.hub.docker.com', REGISTRY_CREDENTIAL ){
-                    dockerImage.push("latest")
-                    }
-                    
+                withCredentials([usernamePassword(credentialsId: 'REGISTRY_CREDENTIAL', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                    sh 'docker push ${REGISTRY}:latest'
                 }
+                // script{
+                //     docker.withRegistry('https://registry.hub.docker.com', REGISTRY_CREDENTIAL ){
+                //     dockerImage.push("latest")
+                //     }
+                    
+                // }
                 echo "Successfully pushed image to docker hub"
             }    
         
