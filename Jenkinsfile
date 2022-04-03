@@ -3,7 +3,6 @@ pipeline{
 
     tools {
         nodejs "nodeJS"
-        dockerTool "docker"
     }
 
     environment {
@@ -40,8 +39,8 @@ pipeline{
         stage('Build Docker Image') {
             agent any
             steps{
-                sh 'cd ${HOME_DIRECTORY}' 
-                sh 'docker build -t ${REGISTRY}:latest'
+                sh 'cd ${HOME_DIRECTORY} && pwd && docker image build . -t ${SERVICE_NAME}:latest'
+                sh 'docker tag ${SERVICE_NAME}:latest ${REGISTRY}:latest'
                 // script{
                 //     dockerImage = docker.build(REGISTRY, "${HOME_DIRECTORY}")
                 // }
