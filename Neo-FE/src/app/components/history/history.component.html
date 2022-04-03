@@ -1,0 +1,66 @@
+<ng-container *ngIf="!(loading$ | async)">
+    <ng-container *ngIf="history$ | async as history">
+        <mat-card *ngIf="history.length > 0 else noData">
+            <table mat-table [dataSource]="history" class="mat-elevation-z8">
+                <ng-container *ngIf="station$ | async as station" matColumnDef="station">
+                    <th mat-header-cell *matHeaderCellDef> Station </th>
+                    <td mat-cell *matCellDef="let element"> {{station[element.station]}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="feature">
+                    <th mat-header-cell *matHeaderCellDef> Feature </th>
+                    <td class="mid-cell" mat-cell *matCellDef="let element"> {{element.feature}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef> Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action" *ngIf="dashboard$ | async as dashboard">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <button *ngIf="nextId$ | async as nextId" (click)="confirmAdd(element, nextId)" color="primary"
+                            id="confirm" mat-stroked-button [disabled]="!hasSpace(dashboard)">
+                            Show Widget
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [hidePageSize]="true" [pageSize]="10" [pageIndex]="page$ | async" [length]="count$ | async"
+                showFirstLastButtons (page)="pageChanged($event)"></mat-paginator>
+        </mat-card>
+
+        <ng-template #noData>
+            <div class="no-history-container">
+                <mat-card class="no-history-content">
+                    <mat-card-content>
+                        <h4>No History Data</h4>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </ng-template>
+    </ng-container>
+    <ng-container *ngIf="!(history$ | async) as history">
+        <div class="no-history-container">
+            <mat-card class="no-history-content">
+                <mat-card-content>
+                    <h4>No History Data Present.</h4>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </ng-container>
+</ng-container>
+
+<ng-container *ngIf="(loading$ | async)">
+    <div class="no-history-container">
+        <mat-card>
+            <mat-spinner>
+
+            </mat-spinner>
+        </mat-card>
+    </div>
+</ng-container>

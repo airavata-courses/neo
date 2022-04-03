@@ -1,0 +1,21 @@
+table {
+    width: 100%;
+    text-align-last: center;
+  }
+
+.no-history-container {
+    text-align: center;
+    text-align: -webkit-center;
+}
+.no-history-content {
+    margin: 20px 50px;
+}
+
+.mid-cell {
+    padding: 10px !important;
+    text-align: center;
+}
+
+.mat-cell {
+    text-align: center;
+}

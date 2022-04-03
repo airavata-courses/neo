@@ -1,0 +1,61 @@
+<div class="options-header" *ngIf="dashboard$ | async as dashboard">
+    <button *ngIf="nextId$ | async as nextId" mat-mini-fab (click)="addItem(nextId)"
+        [disabled]="!(dashboard.length < 10) " class="add-button cols-2">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<mat-card style="background-color: grey;" *ngIf="dashboardById$ | async as dashboardById">
+    <mat-card-content *ngIf="dashboard$ | async as dashboard">
+        <ng-container *ngIf="!!dashboard.length; else noData">
+            <gridster [options]="options" class="content">
+                <gridster-item [item]="item.gridster" *ngFor="let item of dashboard">
+
+                    <ng-container *ngIf="item['isLoading'] ;else weatherData">
+                        <div class="spinner-container">
+                            <mat-spinner class="spinner"></mat-spinner>
+                        </div>
+                    </ng-container>
+                    <ng-template #weatherData>
+                        <div class="button-holder" *ngIf = "!(error$ | async) as error; else noData">
+                            <button class="button-delete" mat-mini-fab (mousedown)="removeItem($event, item)"
+                                (touchstart)="removeItem($event, item)">
+                                <mat-icon class="button-delete-action">delete</mat-icon>
+                            </button>
+
+                            <button class="button-config" mat-mini-fab (mousedown)="configItem($event, item)"
+                                (touchstart)="configItem($event, item)">
+                                <mat-icon class="button-config-action">edit</mat-icon>
+                            </button>
+
+                            <div class="gridster-item-content">
+                                <div class="stuff" *ngIf="!!item.image">
+                                    <img class="weather-image" style="width: 100%;height: 100%;"
+                                        [src]="sanitizeImage(item.image)">
+                                </div>
+                            </div>
+                            <mat-card class="label-content">
+                                <label>{{item.station}}</label>
+                                <br>
+                                <label>{{item.feature}}</label>
+                                <br>
+                                <label>{{item.date}}</label>
+                            </mat-card>
+                        </div>
+                        <ng-template #noData>
+                            No Image Data
+                        </ng-template>
+                    </ng-template>
+                </gridster-item>
+            </gridster>
+        </ng-container>
+
+        <ng-template #noData>
+            <mat-card class="no-data">
+                <mat-card-content>
+                    <h4>Please click add button to start adding weather widgets</h4>
+                </mat-card-content>
+            </mat-card>
+        </ng-template>
+    </mat-card-content>
+</mat-card>

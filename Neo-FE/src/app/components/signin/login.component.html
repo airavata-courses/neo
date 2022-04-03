@@ -1,0 +1,9 @@
+<mat-card class="login" *ngIf="!(isAuthenticated$ | async) as isAuthenticated">
+  <h4>Login</h4>
+  <mat-card-actions>
+    <div>
+      <button (click)="loginWithGoogle()" mat-raised-button class="google-login-btn"><img class="google-image"
+          src="assets/google-logo.png"></button>
+    </div>
+  </mat-card-actions>
+</mat-card>
