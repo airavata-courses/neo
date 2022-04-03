@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-register-service-deploy
+spec:
+  selector:
+    matchLabels:
+      app: user-register-service
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: user-register-service
+
+    spec:
+      containers:
+      - name: user-register-service
+        imagePullPolicy: Always
+        image: neoairavataproject/user-register-service:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 42000
+      restartPolicy: Always
