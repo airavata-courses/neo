@@ -3,6 +3,8 @@ pipeline{
 
     tools {nodejs "nodeJS"}
 
+    tools {docker "docker"}
+
     environment {
         REGISTRY = 'neoairavataproject/database-service'
         REGISTRY_CREDENTIAL = 'docker-credentials'
