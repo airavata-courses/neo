@@ -1,9 +1,10 @@
 pipeline{
     agent any
 
-    tools {nodejs "nodeJS"}
-
-    tools {docker "docker"}
+    tools {
+        nodejs "nodeJS"
+        dockerTool "docker"
+    }
 
     environment {
         REGISTRY = 'neoairavataproject/database-service'
