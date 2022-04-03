@@ -1,5 +1,8 @@
 pipeline{
     agent any
+
+    tools {nodejs "nodeJS"}
+
     environment {
         REGISTRY = 'neoairavataproject/database-service'
         REGISTRY_CREDENTIAL = 'docker-credentials'
