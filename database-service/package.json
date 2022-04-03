@@ -1,0 +1,23 @@
+{
+  "name": "database-service",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "node ./dist",
+    "precompile": "node ./node_modules/shx/lib/cli.js rm -rf dist/",
+    "compile": "node ./node_modules/typescript/bin/tsc -p .",
+    "postcompile": "node ./node_modules/shx/lib/cli.js cp ./src/*.proto ./dist"
+  },
+  "author": "Rajdeep Singh Chauhan",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.5.4",
+    "@grpc/proto-loader": "^0.6.9",
+    "mongoose": "^6.1.9"
+  },
+  "devDependencies": {
+    "cpx": "^1.5.0",
+    "shx": "^0.3.4",
+    "typescript": "^4.5.5"
+  }
+}
