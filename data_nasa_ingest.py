@@ -70,9 +70,9 @@ def request_subset(subset_request):
     # Report the JobID and initial status
     myJobId = response['result']['jobId']
 
-    return myJobId
+    return myJobId, response
 
-def get_url(myJobId):
+def get_url(myJobId, response):
     status_request = {
         'methodname': 'GetStatus',
         'version': '1.0',
@@ -134,15 +134,18 @@ def download_data_file(urls):
     except:
         print('Error! Status code is %d for this URL:\n%s' % (result.status.code,URL))
 
-    numpyData = Dataset(outfn)
-    out_file = json.dump(numpyData, cls=NumpyArrayEncoder)
+    data = Dataset(outfn)
+    a = data.variables['SLP'][0][:][:]
+    out = numpy.array(a)
+    numpyData = {"SLP": out}
+    out_file = json.dumps(numpyData, cls=NumpyArrayEncoder)
     return out_file
 
 
 def get_json_file(product, begTime):
     subset_request = create_json_wsp(product, begTime)
-    myJobId = request_subset(subset_request)
-    urls = get_url(myJobId)
+    myJobId, response = request_subset(subset_request)
+    urls = get_url(myJobId, response)
     json_out = download_data_file(urls)
     return json_out
 
