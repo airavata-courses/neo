@@ -18,3 +18,5 @@ dependencies:
       - grpcio
       - grpcio-tools
       - gunicorn
+      - netCDF4
+      - requests
