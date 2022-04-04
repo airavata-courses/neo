@@ -3,7 +3,6 @@ pipeline{
 
     tools {
         nodejs "nodeJS"
-        dockerTool "docker"
     }
 
     environment {
@@ -40,11 +39,8 @@ pipeline{
         stage('Build Docker Image') {
             agent any
             steps{
-                sh 'cd ${HOME_DIRECTORY}' 
-                sh 'docker build -t ${REGISTRY}:latest'
-                // script{
-                //     dockerImage = docker.build(REGISTRY, "${HOME_DIRECTORY}")
-                // }
+                sh 'cd ${HOME_DIRECTORY} && pwd && docker image build . -t ${SERVICE_NAME}:latest'
+                sh 'docker tag ${SERVICE_NAME}:latest ${REGISTRY}:latest'
                 echo "Successfully built docker images"
             }
         }
@@ -56,12 +52,6 @@ pipeline{
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
                     sh 'docker push ${REGISTRY}:latest'
                 }
-                // script{
-                //     docker.withRegistry('https://registry.hub.docker.com', REGISTRY_CREDENTIAL ){
-                //     dockerImage.push("latest")
-                //     }
-                    
-                // }
                 echo "Successfully pushed image to docker hub"
             }    
         
@@ -73,40 +63,27 @@ pipeline{
             }
         }    
 
-        // stage('Kubernetes Cluster Deployment') {
-        //     steps{
-        //         script{
-        //             sshPublisher(
-        //                 continueOnError: false, failOnError: true,
-        //                 publishers: [
-        //                     sshPublisherDesc(
-        //                         configName: 'ssh_openshift',
-        //                         verbose: true,
-        //                         transfers: [
-        //                             sshTransfer(
-        //                                 execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment ${deployName}; kubectl delete svc ${svcName};  kubectl apply -f ${file_name}"
-        //                             )
-        //                     ])
-        //             ])
-                
-        //         }
-        //         script{
-        //             sshPublisher(
-        //                 continueOnError: false, failOnError: true,
-        //                 publishers: [
-        //                     sshPublisherDesc(
-        //                         configName: 'ssh_openshift2',
-        //                         verbose: true,
-        //                         transfers: [
-        //                             sshTransfer(
-        //                                 execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment ${deployName}; kubectl delete svc ${svcName};  kubectl apply -f ${file_name}"
-        //                             )
-        //                     ])
-        //             ])
-                
-        //         }
-        //     }
-        // }
+        stage('Kubernetes Cluster Deployment') {
+            steps{
+                sshagent (credentials: ['PRIVATE_KEY'])
+                {
+                    script{
+                        try{
+                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 mkdir ${SERVICE_NAME}'
+                        }catch(error)
+                        {}
+                    }
+                    sh 'scp -r -o StrictHostKeyChecking=no ${SERVICE_NAME}/${SERVICE_NAME}*.yaml ubuntu@149.165.153.238:/home/ubuntu/${SERVICE_NAME}'
+                    script{
+                        try{
+                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo kubectl apply -f ${SERVICE_NAME}/${SERVICE_NAME}.yaml'
+                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo rm -rf ${SERVICE_NAME}'
+                        }catch(error)
+                        {}
+                    }
+                }
+            }
+        }
     }   
            
 }
