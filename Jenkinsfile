@@ -76,7 +76,8 @@ pipeline{
                     sh 'scp -r -o StrictHostKeyChecking=no ${SERVICE_NAME}/${SERVICE_NAME}*.yaml ubuntu@149.165.153.238:/home/ubuntu/${SERVICE_NAME}'
                     script{
                         try{
-                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo kubectl apply -f ${SERVICE_NAME}/${SERVICE_NAME}.yaml'
+                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo kubectl delete --ignore-not-found=true -f ${SERVICE_NAME}/${SERVICE_NAME}.yaml -f ${SERVICE_NAME}/${SERVICE_NAME}-deployment.yaml'
+                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo kubectl apply -f ${SERVICE_NAME}/${SERVICE_NAME}.yaml -f ${SERVICE_NAME}/${SERVICE_NAME}-deployment.yaml'
                             sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo rm -rf ${SERVICE_NAME}'
                         }catch(error)
                         {}
