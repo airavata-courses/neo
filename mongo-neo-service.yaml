@@ -1,14 +1,11 @@
-kind: PersistentVolume
 apiVersion: v1
+kind: Service
 metadata:
- name: mongo-pv
- labels:
-  type: local
+  name: mongo-neo
 spec:
- storageClassName: manual
- capacity:
-  storage: 1Gi
- accessModes:
-  - ReadWriteOnce
- hostPath:
-  path: "/mnt/mongo_data"
+ ports:
+  - protocol: TCP
+    targetPort: 27017
+    port: 27017
+ selector:
+  app: mongo-neo
