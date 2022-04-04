@@ -5,8 +5,10 @@ FROM conda/miniconda3
 WORKDIR /data-processor
 
 COPY environment.yml environment.yml
-
+COPY nasa_login.sh nasa_login.sh
 # RUN conda info -e
+RUN sh nasa_login.sh
+
 RUN conda env create -f environment.yml
 
 RUN echo "source activate neodata" > ~/.bashrc
