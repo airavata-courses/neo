@@ -40,7 +40,7 @@ pipeline{
                         sh '''#!/usr/bin/env bash
                         source $WORKSPACE/miniconda/etc/profile.d/conda.sh
                         conda activate miniconda/envs/neodata/
-                        sh 'python test_data_viz_engine.py'
+                        python test_data_viz_engine.py
                         '''
                     }
                 }
