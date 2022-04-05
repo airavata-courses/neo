@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-neo-deploy
+spec:
+  selector:
+    matchLabels:
+      app: rabbitmq-neo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-neo
+    spec:
+      containers:
+      - name: rabbitmq-neo
+        imagePullPolicy: Always
+        image: rabbitmq:3.9-management
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - name: http
+          containerPort: 15672
+        - name: amqp
+          containerPort: 5672
+      restartPolicy: Always
