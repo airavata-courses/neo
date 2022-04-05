@@ -17,12 +17,6 @@ pipeline{
             }
         }
 
-        stage('Install dependencies') {
-            steps{
-                echo "Successfully installed npm packages"
-            }
-	    }
-
         stage('Test App') {
 		    steps{
                 echo "Successfully tested app"
@@ -32,7 +26,7 @@ pipeline{
         stage('Build Docker Image') {
             agent any
             steps{
-                sh 'cd ${HOME_DIRECTORY} && docker image build . -t ${SERVICE_NAME}:latest'
+                sh 'docker image build . -t ${SERVICE_NAME}:latest'
                 sh 'docker tag ${SERVICE_NAME}:latest ${REGISTRY}:latest'
                 echo "Successfully built docker images"
             }
