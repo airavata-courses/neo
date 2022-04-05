@@ -14,7 +14,7 @@ CORS(app)
 r = redis.Redis(host='redis-neo', port=6379)
 
 
-@app.route('/weather_output', methods=["GET", "POST"])
+@app.route('/weather-output', methods=["GET", "POST"])
 def weather_output():
     if request.method == 'GET':
         print('Checking Redis for existing request output..')
@@ -35,10 +35,27 @@ def weather_output():
         try:
             r.set(request_id, data_output_value)
         except:
-            print('Error: Redis write error for key={}\n',
-                  request_id)
+            print(f'Error: Redis write error for key={request_id}')
             return 400
         return jsonify("Redis write success"), 201
+    else:
+        return jsonify("Method not allowed"), 405
+
+
+@app.route('/poll-data', methods=["GET", "POST"])
+def poll_data():
+    if request.method == 'GET':
+        request_id = request.args.get('request_id')
+        print(f'Polling Redis for request_id {request_id}')
+        try:
+            data_output_value = r.get(request_id)
+        except:
+            print(f'Error: Redis read error for key={request_id}')
+            return 400
+        print('data output value: ', str(data_output_value))
+        if not data_output_value:
+            return jsonify({'data_output_value': -1})
+        return jsonify({'data_output_value': str(data_output_value)})
 
 
 if __name__ == '__main__':
