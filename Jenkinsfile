@@ -8,7 +8,6 @@ pipeline{
         SERVICE_NAME = 'data-service'
         DEPLOY_NAME = 'data-service-deploy'
         SECRET_NAME = 'data-service-secret'
-        # HOME_DIRECTORY = 'database-service'
         KUBE_DIRECTORY = '/home/ubuntu/deploy'
     }
     stages{
@@ -54,7 +53,7 @@ pipeline{
         stage('Build Docker Image') {
             agent any
             steps{
-                sh 'cd ${HOME_DIRECTORY} && pwd && docker image build . -t ${SERVICE_NAME}:latest'
+                sh 'docker image build . -t ${SERVICE_NAME}:latest'
                 sh 'docker tag ${SERVICE_NAME}:latest ${REGISTRY}:latest'
                 echo "Successfully built docker images"
             }
