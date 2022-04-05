@@ -19,12 +19,12 @@ spec:
           - name: login_id
             valueFrom:
               secretKeyRef:
-                name: nasa_cred
+                name: nasa-cred
                 key: user
           - name: login_pw
             valueFrom:
               secretKeyRef:
-                name: nasa_cred
+                name: nasa-cred
                 key: password
         imagePullPolicy: Always
         image: neoairavataproject/data-service:latest
