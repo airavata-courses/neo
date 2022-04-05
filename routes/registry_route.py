@@ -10,6 +10,7 @@ from proto_converters import protobuf_to_dict
 import pika
 import pickle
 import sys
+import requests
 
 registry_api = Blueprint('registry_api', __name__)
 
@@ -30,12 +31,23 @@ registry_api = Blueprint('registry_api', __name__)
 
 # ------------- Create endpoints ---------------
 
+# /nexrad-data
+# /nasa-data
+# /poll-data
+
 
 @registry_api.route('/widget', methods=["GET"])
 def widget():
     if request.method == 'GET':
 
-        # -------- Service 3: Call to Data Processor Service --------
+        # -------- Service 3: Call to Redis Service (check if exists) -------
+        redis_query_params = {"polling": "0", "request_id": "id111"}
+        redis_response = requests.get(
+            'http://localhost:8083/weather_output', params=redis_query_params)
+        print('redis response: ', redis_response.json())
+        if redis_response.json()["data_output_value"] != -1:
+            return jsonify(redis_response.json())
+        # -------- Service 4: If Redis missed and non-polling request, call to Data Service --------
 
         # RabbitMQ connection
         connection = pika.BlockingConnection(
@@ -57,13 +69,13 @@ def widget():
 
         message_json = {"email": email, "year": year, "month": month, "day": day,
                         "hour": hour, "minute": minute, "feature": feature, "station": station}
-        serialized_msg = pickle.dumps(message_json)
+        serialized_message = pickle.dumps(message_json)
 
         # Publish to declared work queue
         channel.basic_publish(
             exchange='',
             routing_key='request_queue',
-            body=serialized_msg,
+            body=serialized_message,
             properties=pika.BasicProperties(
                 delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE
             ))
