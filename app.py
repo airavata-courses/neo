@@ -1,5 +1,5 @@
 from data_viz_engine import get_result_image
-
+import os
 # grpc required imports
 from concurrent import futures
 import grpc
@@ -40,5 +40,11 @@ def serve():
 app = serve()
 
 if __name__ == '__main__':
+    id = os.environ['login_id']
+    pw = os.environ['login_pw']
+    home_path = os.environ['HOME']
+    with open(home_path+'/.netrc', 'w') as f:
+        f.write('machine urs.earthdata.nasa.gov login {user_name} password {password}'.format(user_name=id, password=pw))
+
     print("Service will run now")
     serve()
