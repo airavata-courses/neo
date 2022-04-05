@@ -5,7 +5,7 @@ metadata:
 spec:
  ports:
   - protocol: TCP
-    targetPort: 8089
-    port: 8089
+    targetPort: 32222
+    port: 32222
  selector:
   app: data-service
