@@ -162,6 +162,6 @@
     ,"PS": "Surface pressure"
     ,"SLP": "Sea level pressure"
   },
-"properties": ["velocity", "reflectivity", "cross_correlation_ratio"],
+"properties": ["velocity", "reflectivity", "cross_correlation_ratio"]
 
 }
