@@ -44,16 +44,19 @@ def create_json_wsp(varNames, begTime ):
     begHour = '00:00'
     endHour = '23:59'
     data_set_t = 'M2I3NPASM_V5.12.4'
+    diurnalAggregation = '1'
+
     subset_request = {
         'methodname': 'subset',
         'type': 'jsonwsp/request',
         'version': '1.0',
         'args': {
-            'role'  : 'subset',
-            'start' : begTime,
-            'end'   : begTime,
-            'box'   : [minlon, minlat, maxlon, maxlat],
-            'crop'  : True,
+            'role': 'subset',
+            'start': begTime,
+            'end': begTime,
+            'box': [minlon, minlat, maxlon, maxlat],
+            'crop': True,
+            'diurnalAggregation': diurnalAggregation,
             'data': [{'datasetId': data_set_t,
                       'variable' : varNames,
 
@@ -69,7 +72,6 @@ def request_subset(subset_request):
     response = get_http_data(subset_request)
     # Report the JobID and initial status
     myJobId = response['result']['jobId']
-
     return myJobId, response
 
 def get_url(myJobId, response):

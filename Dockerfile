@@ -20,7 +20,7 @@ COPY . .
 EXPOSE 8082
 
 # CMD ["/usr/local/envs/neodata/bin/python","-u" ,"app.py"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8082", "app:app"]
+# CMD ["gunicorn", "--bind", "0.0.0.0:8082", "app:app"]
 
 
 
