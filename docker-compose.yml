@@ -1,0 +1,40 @@
+version: "3"
+services:
+  gateway:
+    container_name: gateway
+    image: neoairavataproject/gateway:latest
+    restart: always
+    ports:
+      - "8081:8081"
+  # data-service:
+  #   container_name: data-service
+  #   image: neoairavataproject/data-service:2.3
+  #   restart: always
+  #   ports:
+  #     - "8082:8082"
+  redis-service:
+    container_name: redis-service
+    image: neoairavataproject/redis-service:latest
+    restart: always
+    ports:
+      - "8083:8083"
+  redis-neo:
+    container_name: redis-neo
+    image: redis:latest
+    volumes:
+      - redisdbdata:/data/redis_db
+    ports:
+      - "6379:6379"
+    command: redis-server
+  rabbitmq-neo:
+    container_name: rabbitmq-neo
+    image: rabbitmq:3.9-management
+    volumes:
+      - rabbitmqdata:/data/rabbitmq_queue_backup
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  redisdbdata:
+  rabbitmqdata:

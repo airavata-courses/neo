@@ -8,4 +8,5 @@ COPY . .
 
 EXPOSE 8081
 
-CMD ["gunicorn", "--workers", "2", "--bind", "0.0.0.0:8081", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8081", "app:app"]
+# CMD ["gunicorn", "--workers", "2", "--bind", "0.0.0.0:8081", "app:app"]
