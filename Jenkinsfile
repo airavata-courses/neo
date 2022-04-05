@@ -3,7 +3,6 @@ pipeline{
 
     environment {
         SERVICE_NAME = 'rabbitmq-neo'
-        DEPLOY_NAME = 'rabbitmq-neo-deploy'
         HOME_DIRECTORY = 'rabbitmq-neo'
         KUBE_DIRECTORY = '/home/ubuntu/deploy'
     }
@@ -28,7 +27,8 @@ pipeline{
                     sh 'scp -r -o StrictHostKeyChecking=no ${SERVICE_NAME}/*.yaml ubuntu@149.165.153.238:/home/ubuntu/${SERVICE_NAME}'
                     script{
                         try{
-                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo kubectl apply --ignore-not-found=true -f ${SERVICE_NAME}/${SERVICE_NAME}-service.yaml -f ${SERVICE_NAME}/${SERVICE_NAME}-deployment.yaml'
+                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo kubectl delete --ignore-not-found=true -f ${SERVICE_NAME}/${SERVICE_NAME}-service.yaml -f ${SERVICE_NAME}/${SERVICE_NAME}-deployment.yaml'
+                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo kubectl apply -f ${SERVICE_NAME}/${SERVICE_NAME}-service.yaml -f ${SERVICE_NAME}/${SERVICE_NAME}-deployment.yaml'
                             sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo rm -rf ${SERVICE_NAME}'
                         }catch(error)
                         {}
