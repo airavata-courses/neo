@@ -29,7 +29,7 @@ pipeline{
                 conda config --set always_yes yes --set changeps1 no
                 conda update -q conda
 
-                conda env create -f envs/ansible-env.yaml
+                conda env create -f environment.yml
                 '''
             }
 
