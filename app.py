@@ -33,7 +33,7 @@ def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))
     data_processor_pb2_grpc.add_DataProcessorServiceServicer_to_server(Servicer(), server)
     # server.add_insecure_port('[::]:50051')
-    server.add_insecure_port('0.0.0.0:8089')
+    server.add_insecure_port('0.0.0.0:32222')
     server.start()
     server.wait_for_termination()
 
