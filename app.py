@@ -15,7 +15,7 @@ def publish_output(request_id, data_output_value):
                     "data_output_value": str(data_output_value)}
     print("request_body: ", request_body)
     redis_response = requests.post(
-        'http://redis-service:8083/weather_output', json=request_body)
+        'http://redis-service:8083/weather-output', json=request_body)
     print('redis POST response: ', redis_response.json())
 
 
