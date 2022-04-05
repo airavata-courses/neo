@@ -15,8 +15,7 @@ dependencies:
   - pip
   - pip:
       - nexradaws
-      - grpcio
-      - grpcio-tools
       - gunicorn
       - netCDF4
       - requests
+      - pika

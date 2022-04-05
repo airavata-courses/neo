@@ -1,44 +1,77 @@
 from data_viz_engine import get_result_image
+from data_nasa_ingest import get_json_file
+import pika
+import pickle
+import requests
 
-# grpc required imports
-from concurrent import futures
-import grpc
-import data_processor_pb2
-import data_processor_pb2_grpc
-
-class Servicer(data_processor_pb2_grpc.DataProcessorServiceServicer):
-
-    def getImage(self, request, context):
-        year = request.year
-        month = request.month
-        day = request.day
-        hour = request.hour
-        minute = request.minute
-        feature = request.feature
-        station = request.station
+# Establish RabbitMQ connection
+connection = pika.BlockingConnection(
+    pika.ConnectionParameters(host='rabbitmq-neo'))
 
 
-        query_input = [station, year, month, day, hour, minute, feature]
-        print('Server received QueryInput as:', query_input)
+# REST: POST request to Redis-Flask server to update Redis
+def publish_output(request_id, data_output_value):
+    request_body = {"request_id": str(request_id),
+                    "data_output_value": str(data_output_value)}
+    print("request_body: ", request_body)
+    redis_response = requests.post(
+        'http://redis-service:8083/weather_output', json=request_body)
+    print('redis POST response: ', redis_response.json())
 
-        image_base64 = get_result_image(station=station, year=year, month=month, date=day, hour=hour, minute=minute, product=feature)
-        image_base64 = str(image_base64)
-        print("base64 generated in dp service (100 chars):" + str(out_viz_file)[:100])
-        return data_processor_pb2.ResultImage(image_base64=image_base64)
+
+# RabbitMQ: Consume input query message from message queue
+def consume_input_query():
+    # Create channel
+    channel = connection.channel()
+
+    channel.queue_declare(queue='request_queue', durable=True)
+    print(' [*] Waiting for messages. To exit press CTRL+C')
+
+    def callback(ch, method, properties, body):
+        message_json = pickle.loads(body)
+        print(" [x] Consumed from request_queue: %r" % message_json)
+        print(" Processing input query...")
+
+        request_id = message_json["request_id"]
+        request_type = message_json["request_type"]
+
+        data_output_value = -1
+        if request_type == 'nasa':
+            feature = message_json["feature"]
+            year = message_json["year"]
+            month = message_json["month"]
+            day = message_json["day"]
+            date = year + '-' + month + '-' + day
+
+            print("feature: ", feature)
+            print("date: ", date)
+            # Get NASA json file
+            data_output_value = get_json_file(product=feature, begTime=date)
+
+        elif request_type == 'nexrad':
+            year = message_json["year"]
+            month = message_json["month"]
+            day = message_json["day"]
+            hour = message_json["hour"]
+            minute = message_json["minute"]
+            feature = message_json["feature"]
+            station = message_json["station"]
+
+            # Get NEXRAD base64 image
+            data_output_value = get_result_image(
+                station=station, year=year, month=month, date=day, hour=hour, minute=minute, product=feature)
+
+        publish_output(request_id, data_output_value)
+        ch.basic_ack(delivery_tag=method.delivery_tag)
+        print(" [x] Done")
+
+    channel.basic_qos(prefetch_count=1)
+    channel.basic_consume(queue='request_queue',
+                          on_message_callback=callback)
+    channel.start_consuming()
 
 
-# serve() runs a Servicer() instance and keeps listening for requests
-def serve():
-    print('Data Processor Service is running..')
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))
-    data_processor_pb2_grpc.add_DataProcessorServiceServicer_to_server(Servicer(), server)
-    # server.add_insecure_port('[::]:50051')
-    server.add_insecure_port('0.0.0.0:8082')
-    server.start()
-    server.wait_for_termination()
-
-app = serve()
+app = consume_input_query()
 
 if __name__ == '__main__':
-    print("Service will run now")
-    serve()
+    print("Data service running..")
