@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 pika = "*"
 redis = "*"
+flask = "*"
+flask-cors = "*"
 
 [dev-packages]
 autopep8 = "*"

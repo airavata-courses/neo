@@ -3,36 +3,44 @@ import pika
 import sys
 import os
 import pickle
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from threading import Thread
+import json
 
-r = redis.Redis(host='localhost', port=6379)
+app = Flask(__name__)
+CORS(app)
+
+r = redis.Redis(host='redis-neo', port=6379)
 
 
-def main():
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='localhost'))
-    channel = connection.channel()
+@app.route('/weather_output', methods=["GET", "POST"])
+def weather_output():
+    if request.method == 'GET':
+        print('Checking Redis for existing request output..')
+        request_id = request.args.get('request_id')
+        print('request_id: ', str(request))
 
-    channel.queue_declare(queue='data_output_queue', durable=True)
+        data_output_value = r.get(request_id)
+        if not data_output_value:
+            return jsonify({'data_output_value': -1})
+        print('data output value: ', str(data_output_value))
+        return jsonify({'data_output_value': str(data_output_value)})
 
-    def callback(ch, method, properties, body):
-        message_json = pickle.loads(body)
-        print(" [x] Received %r" % message_json)
-
-        request_id = message_json["request_id"]
-        data_output_msg = {"type": "nexrad",
-                           "payload": "base64formatofanimage"}
-        r.set(request_id, data_output_msg)
-
-        print(" [x] Done")
-
-    channel.basic_qos(prefetch_count=1)
-    channel.basic_consume(
-        queue='data_output_queue', on_message_callback=callback, auto_ack=True)
-
-    print(' [*] Waiting for messages. To exit press CTRL+C')
-    channel.start_consuming()
+    elif request.method == 'POST':
+        request_id = request.json.get("request_id")
+        data_output_value = request.json.get("data_output_value")
+        print('request_id received: ', request_id)
+        print('data_output_value received = ', data_output_value)
+        try:
+            r.set(request_id, data_output_value)
+        except:
+            print('Error: Redis write error for key={}\n',
+                  request_id)
+            return 400
+        return jsonify("Redis write success"), 201
 
 
 if __name__ == '__main__':
-    print('Redis service running..')
-    main()
+    print('Redis service starting..')
+    app.run(host='0.0.0.0', port='8083', debug=True)
