@@ -7,6 +7,7 @@ pipeline{
         FILE = 'data-service.yaml'
         SERVICE_NAME = 'data-service'
         DEPLOY_NAME = 'data-service-deploy'
+        SECRET_NAME = 'data-service-secret'
         # HOME_DIRECTORY = 'database-service'
         KUBE_DIRECTORY = '/home/ubuntu/deploy'
     }
@@ -46,7 +47,7 @@ pipeline{
 
         stage ('Test'){
                 steps {
-                    sh 'python unit-test.py'
+                    sh 'python test_data_viz_engine.py'
                 }
             }
 
@@ -87,11 +88,11 @@ pipeline{
                         }catch(error)
                         {}
                     }
-                    sh 'scp -r -o StrictHostKeyChecking=no ${SERVICE_NAME}/${SERVICE_NAME}*.yaml ubuntu@149.165.153.238:/home/ubuntu/${SERVICE_NAME}'
+                    sh 'scp -r -o StrictHostKeyChecking=no ${SERVICE_NAME}*.yaml ubuntu@149.165.153.238:/home/ubuntu/${SERVICE_NAME}'
                     script{
                         try{
                             sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo kubectl delete --ignore-not-found=true -f ${SERVICE_NAME}/${SERVICE_NAME}.yaml -f ${SERVICE_NAME}/${SERVICE_NAME}-deployment.yaml'
-                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo kubectl apply -f ${SERVICE_NAME}/${SERVICE_NAME}.yaml -f ${SERVICE_NAME}/${SERVICE_NAME}-deployment.yaml'
+                            sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo kubectl apply -f ${SERVICE_NAME}/${SECRET_NAME}.yaml -f ${SERVICE_NAME}/${SERVICE_NAME}.yaml -f ${SERVICE_NAME}/${SERVICE_NAME}-deployment.yaml'
                             sh 'ssh -o StrictHostKeyChecking=no ubuntu@149.165.153.238 sudo rm -rf ${SERVICE_NAME}'
                         }catch(error)
                         {}
