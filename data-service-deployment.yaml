@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-service-deploy
+spec:
+  selector:
+    matchLabels:
+      app: data-service
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: data-service
+
+    spec:
+      containers:
+      - name: data-service
+        env:
+          - name: login_id
+            valueFrom:
+              secretKeyRef:
+                name: nasa_cred
+                key: user
+          - name: login_pw
+            valueFrom:
+              secretKeyRef:
+                name: nasa_cred
+                key: password
+        imagePullPolicy: Always
+        image: neoairavataproject/data-service:latest
+        resources:
+          limits:
+            memory: 5000Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8082
+      restartPolicy: Always
