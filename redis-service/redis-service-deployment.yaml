@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-service-deploy
+spec:
+  selector:
+    matchLabels:
+      app: redis-service
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: redis-service
+    spec:
+      containers:
+      - name: redis-service
+        imagePullPolicy: Always
+        image: neoairavataproject/redis-service:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8083
+      restartPolicy: Always
