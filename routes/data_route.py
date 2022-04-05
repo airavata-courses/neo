@@ -15,7 +15,7 @@ data_api = Blueprint('data_api', __name__)
 
 # RabbitMQ connection
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost'))
+    pika.ConnectionParameters(host='rabbitmq-neo'))
 
 
 @data_api.route('/nexrad-data', methods=["GET"])
@@ -29,7 +29,7 @@ def widget():
         print("redis_query_params: ", redis_query_params)
 
         redis_response = requests.get(
-            'http://localhost:8083/weather_output', params=redis_query_params)
+            'http://redis-service:8083/weather_output', params=redis_query_params)
         print('Redis response: ', redis_response.json())
         # If Redis hits, return data_output_value
         if redis_response.json()["data_output_value"] != -1:
