@@ -35,21 +35,17 @@ pipeline{
 
 	    }
 
-	    stage('Test downloading') {
+	    stage('Unit Test') {
                     steps {
                         sh '''#!/usr/bin/env bash
                         source $WORKSPACE/miniconda/etc/profile.d/conda.sh
                         conda activate miniconda/envs/neodata/
-
+                        sh 'python test_data_viz_engine.py'
                         '''
                     }
                 }
 
-        stage ('Test'){
-                steps {
-                    sh 'python test_data_viz_engine.py'
-                }
-            }
+
 
         stage('Build Docker Image') {
             agent any
