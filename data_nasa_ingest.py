@@ -145,15 +145,20 @@ def download_data_file(urls):
 
 
 def get_json_file(product, begTime):
-    subset_request = create_json_wsp(product, begTime)
-    myJobId, response = request_subset(subset_request)
-    urls = get_url(myJobId, response)
-    json_out = download_data_file(urls)
+    try:
+        subset_request = create_json_wsp(product, begTime)
+        myJobId, response = request_subset(subset_request)
+        urls = get_url(myJobId, response)
+        json_out = download_data_file(urls)
+    except:
+        out = numpy.array(numpy.zeros((361, 576)))
+        numpyData = {"SLP": out}
+        json_out = json.dumps(numpyData, cls=NumpyArrayEncoder)
     return json_out
 
 if __name__ == "__main__":
 
-    product ='SLP'
+    product ='dfd'
 
     begTime = '2021-01-01'
     print(get_json_file(product,begTime ))
