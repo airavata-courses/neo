@@ -158,10 +158,10 @@
 ,"KLTX":"Wilmington, NC"
 ,"KYUX":"Yuma, AZ"
 },
-  "feature": {"PHIS":"Surface geo-potential height"
-    ,"PS": "Surface pressure"
-    ,"SLP": "Sea level pressure"
-  },
-"properties": ["velocity", "reflectivity", "cross_correlation_ratio"],
-
+ "feature": {
+   "PHIS": "Surface geo-potential height",
+   "PS": "Surface pressure",
+   "SLP": "Sea level pressure"
+},
+ "properties": ["velocity", "reflectivity", "cross_correlation_ratio"]
 }
