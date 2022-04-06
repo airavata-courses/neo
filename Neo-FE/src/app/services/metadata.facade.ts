@@ -11,6 +11,8 @@ export class MetadataFacade {
     readonly getStations$ = this.store.select(s.getStations);
     readonly getStationById$ = this.store.select(s.getStationById);
     readonly getProperties$ = this.store.select(s.getProperties);
+    readonly getNasaProperties$ = this.store.select(s.getNasaProperties);
+    readonly getNasaPropertiesById$ = this.store.select(s.getNasaPropertiesById);
     readonly error$ = this.store.select(s.getMetadataError);
 
     getMetadata() {

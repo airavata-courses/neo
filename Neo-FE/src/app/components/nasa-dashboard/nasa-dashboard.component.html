@@ -1,5 +1,5 @@
 <div class="options-header" *ngIf="dashboard$ | async as dashboard">
-    <h1 style="color: #3f51b5;"><mat-icon>dashboard</mat-icon>    NEXRAD Dashboard</h1>
+    <h1 style="color: #3f51b5;"><mat-icon>dashboard</mat-icon>    NASA Dashboard</h1>
     <button *ngIf="nextId$ | async as nextId" mat-mini-fab (click)="addItem(nextId)"
         [disabled]="!(dashboard.length < 10) " class="add-button cols-2">
         <mat-icon>add</mat-icon>
@@ -36,8 +36,6 @@
                                 </div>
                             </div>
                             <mat-card class="label-content">
-                                <label>{{item.station}}</label>
-                                <br>
                                 <label>{{item.feature}}</label>
                                 <br>
                                 <label>{{item.date}}</label>

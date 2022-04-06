@@ -41,6 +41,33 @@ export const getProperties = createSelector(
         data?.properties
 );
 
+export const getNasaProperties = createSelector(
+    getMetadataState,
+    ({ data }) => {
+        let properties = Object.keys(data?.feature || {})
+            .map(key => ({ key, value: data?.feature[key] }))
+            .sort((a, b) => {
+                let nameA = a.value?.toUpperCase() || '';
+                let nameB = b.value?.toUpperCase() || '';
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+
+                return 0;
+
+            });
+        return properties
+    }
+);
+
+export const getNasaPropertiesById = createSelector(
+    getMetadataState,
+    ({ data }) => data?.feature
+);
+
 export const getMetadataError = createSelector(
     getMetadataState,
     ({ error }) =>

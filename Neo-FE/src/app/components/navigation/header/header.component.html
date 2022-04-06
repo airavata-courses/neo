@@ -18,7 +18,11 @@
             </li>
 
             <li *ngIf="(isAuthenticated$ | async)">
-                <a routerLink="/dashboard">Dashboard</a>
+                <a routerLink="/nasa-dashboard">NASA</a>
+            </li>
+
+            <li *ngIf="(isAuthenticated$ | async)">
+                <a routerLink="/dashboard">NEXRAD</a>
             </li>
 
             <li *ngIf="(isAuthenticated$ | async)">

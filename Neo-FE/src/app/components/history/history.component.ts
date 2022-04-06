@@ -66,6 +66,7 @@ export class HistoryComponent {
             minute: this.minute(date.minute()),
             feature: item.feature,
             id,
+            request_id: '',
             gridster: {
                 x: 0,
                 y: 0,

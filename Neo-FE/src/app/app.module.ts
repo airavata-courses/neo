@@ -49,6 +49,9 @@ import { HistoryComponent } from './components/history/history.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MetadataFacade } from './services/metadata.facade';
+import { NasaDashboardComponent } from './components/nasa-dashboard/nasa-dashboard.component';
+import { AddNasaWidgetModalComponent } from './components/nasa-dashboard/add-nasa-widget-modal/add-nasa-widget-modal.component';
+import { NasaDashboardFacade } from './services/nasa-dashboard.facade';
 
 const jwtProvider = {
   provide: JwtHelperService,
@@ -63,7 +66,9 @@ const jwtProvider = {
     SidenavListComponent,
     HomeComponent,
     DashboardComponent,
+    NasaDashboardComponent,
     AddWidgetModalComponent,
+    AddNasaWidgetModalComponent,
     LoginComponent,
     HistoryComponent
   ],
@@ -133,7 +138,8 @@ const jwtProvider = {
     DashboardFacade,
     ModalService,
     HistoryFacade,
-    MetadataFacade
+    MetadataFacade,
+    NasaDashboardFacade
   ],
   bootstrap: [AppComponent]
 })

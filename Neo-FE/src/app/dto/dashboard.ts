@@ -4,6 +4,7 @@ export const hasWidgetRequestFailed = <U>(widgetResponse: WidgetResponse<U>): wi
 
 export interface WidgetArgs {
     readonly id: number,
+    readonly request_id: string,
     readonly station: string,
     readonly date: string,
     readonly feature: string,
@@ -24,7 +25,9 @@ export interface WidgetData {
     readonly id: number,
     readonly isAuth: boolean,
     readonly status: boolean,
-    readonly image: string
+    readonly image?: string,
+    readonly ack?: string,
+    readonly data_output_value?: string | -1
 }
 
 export interface WidgetProperty extends WidgetArgs {

@@ -24,6 +24,16 @@ export class SidenavListComponent {
     this.onSidenavClose();
   }
 
+  navigateToNexrad() {
+    this.router.navigate(['dashboard'])
+    this.onSidenavClose();
+  }
+
+  navigateToNasa() {
+    this.router.navigate(['nasa-dashboard'])
+    this.onSidenavClose();
+  }
+
   logout() {
     this.authService.logout();
     this.onSidenavClose();

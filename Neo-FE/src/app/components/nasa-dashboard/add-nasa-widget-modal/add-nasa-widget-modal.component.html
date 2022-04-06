@@ -1,0 +1,34 @@
+<div class="header">
+    <div class="header__data">
+        <h4 class="header__head"> {{ textLines }} </h4>
+    </div>
+</div>
+
+<mat-card>
+    <mat-card-content class="form">
+        <mat-form-field appearance="fill" class="form__field">
+            <input matInput class="form__field-date" [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
+                [formControl]="dateControl" [min]="minDate" [max]="maxDate">
+            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker [showSeconds]="false" color="primary" [enableMeridian]="true">
+            </ngx-mat-datetime-picker>
+            <mat-error *ngIf="dateControl.hasError('required')">
+                Please choose date and time
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf = "(properties$ | async) as properties" appearance="fill" class="form__field">
+            <mat-label>Property</mat-label>
+            <mat-select [formControl]="propertyControl" required>
+                <mat-option *ngFor="let property of properties" [value]="property.key">{{property.value}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="propertyControl.hasError('required')">
+                Please choose a weather property
+            </mat-error>
+        </mat-form-field>
+
+        <button (click)="confirmAdd()" color="primary" id="confirm" mat-stroked-button [disabled]="hasError()">
+            {{buttonText}}
+        </button>
+    </mat-card-content>
+</mat-card>

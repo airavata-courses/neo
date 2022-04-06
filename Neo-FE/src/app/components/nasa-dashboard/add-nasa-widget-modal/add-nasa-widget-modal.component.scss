@@ -1,0 +1,21 @@
+.header {
+    padding: 10px 0;
+  
+    &__data {
+      display: flex;
+      justify-content: center;
+    }
+
+    &__head {
+      margin: -24px;
+      padding: 4px;
+    }
+  }
+
+  .form {
+    text-align: center;
+    text-align: -webkit-center;
+    &__field {
+      width: 100%
+    }
+  }

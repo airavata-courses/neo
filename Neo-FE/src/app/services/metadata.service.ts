@@ -10,7 +10,7 @@ export class MetadataClientService {
 
     constructor(private readonly http: HttpClient) { }
 
-    private readonly pathBase = 'http://localhost:32000/api/';
+    private readonly pathBase = `${window.location.origin}/api/`;
 
     private getPath(action: string) {
         return `${this.pathBase}${action}`

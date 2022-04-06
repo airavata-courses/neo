@@ -23,7 +23,12 @@ export class DashboardEffects {
                         if (hasWidgetRequestFailed(response)) {
                             return throwError(response)
                         }
-                        return [a.getWidgetSuccess({ payload: { ...response, id: action.payload.id } })]
+                        if (response.data_output_value !== -1) {
+                            return [a.getWidgetSuccess({ payload: { ...response, id: action.payload.id } })]
+                        }
+                        else {
+                            return [a.getWidgetSuccess({ payload: { ...response, id: action.payload.id } }), a.pollingData({payload: {id: action.payload.id, request_id: action.payload.request_id, email: action.payload.email, type: 'NEXRAD'}})]
+                        }
                     }),
                     catchError((error: WidgetDataFail) => [
                         a.getWidgetFail({ payload: { widgetId: action.payload.id, error } })

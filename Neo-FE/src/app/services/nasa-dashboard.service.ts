@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { WidgetArgs, WidgetData, WidgetResponse } from "../dto/dashboard";
+import { map, Observable } from "rxjs";
+import { NasaWidgetArgs, NasaWidgetData, NasaWidgetResponse } from "../dto";
 
 @Injectable({
     providedIn: 'root'
 })
-export class DashboardClientService {
+export class NasaDashboardClientService {
 
     constructor(private readonly http: HttpClient) { }
 
@@ -22,23 +22,22 @@ export class DashboardClientService {
         })
     }
 
-    get_widget({ request_id, station, date, feature, day, month, year, hour, minute, email }: WidgetArgs): Observable<WidgetResponse<WidgetData>> {
-        return this.http.get<WidgetResponse<WidgetData>>(
-            this.getPath('nexrad-data'),
+    get_nasa_widget({ request_id, date, feature, day, month, year, email }: NasaWidgetArgs, widgetId: number): Observable<NasaWidgetResponse<NasaWidgetData>> {
+        return this.http.get<NasaWidgetResponse<NasaWidgetData>>(
+            this.getPath('nasa-data'),
             {
                 params: {
                     request_id,
-                    station,
                     date,
                     feature,
                     day,
                     month,
                     year,
-                    hour,
-                    minute,
                     email
                 }
             }
-        )
+        ).pipe(
+            map((data) => ({...data, widgetId}))
+        );
     }
 }

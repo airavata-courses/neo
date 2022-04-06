@@ -2,26 +2,26 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from "@angular/
 import { MatDialogRef } from "@angular/material/dialog";
 import { DomSanitizer } from "@angular/platform-browser";
 import { take } from "rxjs";
-import { WidgetProperty } from "src/app/dto";
+import { NasaWidgetProperty } from "src/app/dto";
 import { OPTIONS, Safe } from "src/app/model/gridster-config";
 import { AuthFacade } from "src/app/services/auth.facade";
-import { DashboardFacade } from "src/app/services/dashboard.facade";
 import { ModalService } from "src/app/services/modal.service";
-import { AddWidgetModalComponent, AddWidgetModalData } from "./add-widget-modal/add-widget-modal.component";
+import { NasaDashboardFacade } from "src/app/services/nasa-dashboard.facade";
+import { AddNasaWidgetModalComponent, AddNasaWidgetModalData } from "./add-nasa-widget-modal/add-nasa-widget-modal.component";
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css'],
+    selector: 'app-nasa-dashboard',
+    templateUrl: './nasa-dashboard.component.html',
+    styleUrls: ['./nasa-dashboard.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class DashboardComponent {
+export class NasaDashboardComponent {
     options: Safe = OPTIONS;
-    readonly dashboard$ = this.dashboardService.getWidgetsList$;
-    readonly dashboardById$ = this.dashboardService.getWidgetsListbyId$;
-    readonly error$ = this.dashboardService.error$;
-    readonly nextId$ = this.dashboardService.nextId$;
+    readonly dashboard$ = this.nasaDashboardService.getNasaWidgetsList$;
+    readonly dashboardById$ = this.nasaDashboardService.getNasaWidgetsListbyId$;
+    readonly error$ = this.nasaDashboardService.nasaError$;
+    readonly nextId$ = this.nasaDashboardService.nextNasaId$;
     email = ''
     readonly getAuthData$ = this.authService.getAuthData$.subscribe((data) => {
         if (data.data?.email) {
@@ -30,7 +30,7 @@ export class DashboardComponent {
     });
 
     constructor(
-        private readonly dashboardService: DashboardFacade,
+        private readonly nasaDashboardService: NasaDashboardFacade,
         private readonly modalService: ModalService,
         private readonly authService: AuthFacade,
         private readonly domSanitizer: DomSanitizer
@@ -42,53 +42,49 @@ export class DashboardComponent {
         }
     }
 
-    removeItem($event: MouseEvent | TouchEvent, item: WidgetProperty): void {
+    removeItem($event: MouseEvent | TouchEvent, item: NasaWidgetProperty): void {
         $event.preventDefault();
         $event.stopPropagation();
 
-        this.dashboardService.removeWidget({ id: item.id });
+        this.nasaDashboardService.removeNasaWidget({ id: item.id });
     }
 
     sanitizeImage(base64Data: string) {
         return this.domSanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${base64Data.slice(18,-4)}`);
     }
 
-    getLabel(data: WidgetProperty) {
-        return `${data.station}-${data.feature}-${data.date}`
+    getLabel(data: NasaWidgetProperty) {
+        return `${data.feature}-${data.date}`
     }
 
-    configItem($event: MouseEvent | TouchEvent, item: WidgetProperty): void {
+    configItem($event: MouseEvent | TouchEvent, item: NasaWidgetProperty): void {
         $event.preventDefault();
         $event.stopPropagation();
 
         const modal = this.modalService.open(
-            AddWidgetModalComponent,
-            AddWidgetModalData.asConfig(
+            AddNasaWidgetModalComponent,
+            AddNasaWidgetModalData.asConfig(
                 'Please edit the weather details.',
                 {
-                    station: item.station,
                     feature: item.feature,
                     date: item.date,
-                    buttonData: 'Update Widget'
+                    buttonData: 'Update NASA Widget'
                 }
             )
         )
 
         const component = modal.componentInstance;
-        component.confirm.pipe(take(1)).subscribe((payload: MatDialogRef<AddWidgetModalComponent, any>) => {
+        component.confirm.pipe(take(1)).subscribe((payload: MatDialogRef<AddNasaWidgetModalComponent, any>) => {
             const instance = payload.componentInstance;
 
-            this.dashboardService.getWidget({
-                station: instance.station,
+            this.nasaDashboardService.getNasaWidget({
                 date: instance.date,
                 day: instance.day,
                 year: instance.year,
                 month: instance.month,
-                hour: instance.hour,
-                minute: instance.minute,
                 feature: instance.feature,
                 id: item.id,
-                request_id: '', // WRITE GENERATE REQUEST ID CODE
+                request_id: 'abcde', // WRITE GENERATE REQUEST ID CODE 
                 gridster: {
                     x: 0,
                     y: 0,
@@ -104,27 +100,24 @@ export class DashboardComponent {
 
     addItem(id: number): void {
         const modal = this.modalService.open(
-            AddWidgetModalComponent,
-            AddWidgetModalData.asConfig(
+            AddNasaWidgetModalComponent,
+            AddNasaWidgetModalData.asConfig(
                 'Please select weather details to project.'
             )
         );
 
         const component = modal.componentInstance;
-        component.confirm.pipe(take(1)).subscribe((payload: MatDialogRef<AddWidgetModalComponent, any>) => {
+        component.confirm.pipe(take(1)).subscribe((payload: MatDialogRef<AddNasaWidgetModalComponent, any>) => {
             const instance = payload.componentInstance;
 
-            this.dashboardService.getWidget({
-                station: instance.station,
+            this.nasaDashboardService.getNasaWidget({
                 date: instance.date,
                 day: instance.day,
                 year: instance.year,
                 month: instance.month,
-                hour: instance.hour,
-                minute: instance.minute,
                 feature: instance.feature,
                 id,
-                request_id: '', // WRITE GENERATE REQUEST ID CODE
+                request_id: 'abcde', // WRITE GENERATE REQUEST ID CODE
                 gridster: {
                     x: 0,
                     y: 0,

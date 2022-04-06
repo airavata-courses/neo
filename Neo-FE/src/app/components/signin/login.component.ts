@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   readonly isAuthenticated$ = this.authService.isAuthenticated$.pipe(
     tap((isAuth) => {
       if (isAuth) {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['nasa-dashboard']);
       }
 
     }));;
