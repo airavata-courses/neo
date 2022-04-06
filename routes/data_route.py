@@ -19,16 +19,17 @@ connection = pika.BlockingConnection(
 
 
 @data_api.route('/nexrad-data', methods=["GET"])
-def widget():
+def nexrad_data():
     if request.method == 'GET':
-        print('debug: bearer token: ', request.headers.get('Authorization'))
+        print('debug: bearer token: ', request.headers.get(
+            'Authorization'), flush=True)
         # -------- Service 1: Call to Auth Service --------
 
         # Create channels and stubs
         auth_channel = grpc.insecure_channel(
             'auth-service:43000', options=(('grpc.enable_http_proxy', 0),))
         auth_stub = auth_pb2_grpc.AuthStub(auth_channel)
-        print('debug: grpc channel created')
+        print('debug: grpc channel created', flush=True)
         auth_token = request.headers.get('Authorization')
         if not auth_token:
             auth_token = ' '
@@ -37,10 +38,16 @@ def widget():
                 accessToken=auth_token
             )
         )
-        print("auth_response.isAuth: ", auth_response.isAuth)
+        print("auth_response.isAuth: ", auth_response.isAuth, flush=True)
         auth_channel.close()
         if not auth_response.isAuth:
-            return jsonify(protobuf_to_dict(auth_response)), 401
+            response_dict = {
+                'isAuth': auth_response.isAuth,
+                'status': False,
+                'ack': 0,
+                'data_output_value': -1
+            }
+            return jsonify(response_dict), 401
 
         print("User authorized...")
         return jsonify("done")
@@ -88,7 +95,13 @@ def widget():
         print('Redis response: ', redis_response.json())
         # If Redis hits, return data_output_value
         if redis_response.json()["data_output_value"] != -1:
-            return jsonify(redis_response.json())
+            response_dict = {
+                'isAuth': auth_response.isAuth,
+                'status': registry_response.status,
+                'ack': 0,
+                'data_output_value': redis_response.json()["data_output_value"]
+            }
+            return jsonify(response_dict), 200
 
         # -------- Service 4: Call to data service (if Redis misses) --------
 
@@ -149,7 +162,8 @@ def widget():
         response_dict = {
             'isAuth': True,
             'status': registry_response.status,
-            'ack': ack
+            'ack': ack,
+            'data_output_value': -1
         }
         return jsonify(response_dict), 200
     else:
@@ -178,7 +192,13 @@ def nasa_data():
         print("auth_response.isAuth: ", auth_response.isAuth)
         auth_channel.close()
         if not auth_response.isAuth:
-            return jsonify(protobuf_to_dict(auth_response)), 401
+            response_dict = {
+                'isAuth': auth_response.isAuth,
+                'status': False,
+                'ack': 0,
+                'data_output_value': -1
+            }
+            return jsonify(response_dict), 401
 
         print("User authorized...")
 
@@ -196,7 +216,13 @@ def nasa_data():
         print('Redis response: ', redis_response.json())
         # If Redis hits, return data_output_value
         if redis_response.json()["data_output_value"] != -1:
-            return jsonify(redis_response.json())
+            response_dict = {
+                'isAuth': auth_response.isAuth,
+                'status': registry_response.status,
+                'ack': 0,
+                'data_output_value': redis_response.json()["data_output_value"]
+            }
+            return jsonify(response_dict), 200
 
         # -------- Service 4: Call to data service (if Redis misses) --------
 
@@ -243,7 +269,8 @@ def nasa_data():
         response_dict = {
             'isAuth': True,
             'status': registry_response.status,
-            'ack': ack
+            'ack': ack,
+            'data_output_value': -1
         }
         return jsonify(response_dict), 200
     else:
@@ -253,15 +280,44 @@ def nasa_data():
 @data_api.route('/poll-data', methods=["GET"])
 def poll_data():
 
-    # -------- Call to Redis Service for Polling --------
+    # -------- Service 1: Call to Auth Service --------
+
+    # Create channels and stubs
+    auth_channel = grpc.insecure_channel(
+        'auth-service:43000', options=(('grpc.enable_http_proxy', 0),))
+    auth_stub = auth_pb2_grpc.AuthStub(auth_channel)
+
+    auth_token = request.headers.get('Authorization')
+    if not auth_token:
+        auth_token = ' '
+    auth_response = auth_stub.authUser(
+        auth_pb2.AuthArgs(
+            accessToken=auth_token
+        )
+    )
+    print("auth_response.isAuth: ", auth_response.isAuth)
+    auth_channel.close()
+    if not auth_response.isAuth:
+        response_dict = {
+            'isAuth': auth_response.isAuth,
+            'data_output_value': -1
+        }
+        return jsonify(response_dict), 401
+
+    print("User authorized...")
+
+    # -------- Service 2: Call to Redis Service for Polling --------
 
     request_id = request.args.get('request_id')
 
     redis_query_params = {"request_id": str(request_id)}
     redis_response = requests.get(
         'http://redis-service:8083/weather_output', params=redis_query_params)
-    redis_response = redis_response.json()
     print('redis response: ', redis_response.json())
 
     # redis_response["data_output_value"] contains value "-1" for miss or data for hit
-    return jsonify(redis_response)
+    response_dict = {
+        'isAuth': auth_response.isAuth,
+        'data_output_value': redis_response.json()["data_output_value"]
+    }
+    return jsonify(response_dict), 200
