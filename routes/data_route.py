@@ -91,7 +91,7 @@ def nexrad_data():
         return jsonify("done")
 
         redis_response = requests.get(
-            'http://redis-service:8083/weather_output', params=redis_query_params)
+            'http://redis-service:8083/weather-output', params=redis_query_params)
         print('Redis response: ', redis_response.json())
         # If Redis hits, return data_output_value
         if redis_response.json()["data_output_value"] != -1:
@@ -213,7 +213,7 @@ def nasa_data():
         redis_response = 'initial_val'
         try:
             redis_response = requests.get(
-                'http://redis-service:8083/weather_output', params=redis_query_params)
+                'http://redis-service:8083/weather-output', params=redis_query_params)
             print('Redis response: ', redis_response, flush=True)
         except:
             print('Error: Redis GET request failed.')
@@ -317,7 +317,7 @@ def poll_data():
 
     redis_query_params = {"request_id": str(request_id)}
     redis_response = requests.get(
-        'http://redis-service:8083/weather_output', params=redis_query_params)
+        'http://redis-service:8083/weather-output', params=redis_query_params)
     print('redis response: ', redis_response.json())
 
     # redis_response["data_output_value"] contains value "-1" for miss or data for hit
