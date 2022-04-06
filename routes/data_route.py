@@ -22,14 +22,14 @@ connection = pika.BlockingConnection(
 def nexrad_data():
     if request.method == 'GET':
         print('debug: bearer token: ', request.headers.get(
-            'Authorization'), flush=True)
+            'Authorization'))
         # -------- Service 1: Call to Auth Service --------
 
         # Create channels and stubs
         auth_channel = grpc.insecure_channel(
             'auth-service:43000', options=(('grpc.enable_http_proxy', 0),))
         auth_stub = auth_pb2_grpc.AuthStub(auth_channel)
-        print('debug: grpc channel created', flush=True)
+        print('debug: grpc channel created')
         auth_token = request.headers.get('Authorization')
         if not auth_token:
             auth_token = ' '
@@ -38,7 +38,7 @@ def nexrad_data():
                 accessToken=auth_token
             )
         )
-        print("auth_response.isAuth: ", auth_response.isAuth, flush=True)
+        print("auth_response.isAuth: ", auth_response.isAuth)
         auth_channel.close()
         if not auth_response.isAuth:
             response_dict = {
