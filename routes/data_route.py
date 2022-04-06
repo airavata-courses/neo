@@ -50,7 +50,6 @@ def nexrad_data():
             return jsonify(response_dict), 401
 
         print("User authorized...")
-        return jsonify("done")
         # -------- Service 2: Call to Registry Service --------
 
         # Create channels and stubs
@@ -89,6 +88,7 @@ def nexrad_data():
         request_id = request.args.get('request_id')
         redis_query_params = {"request_id": request_id}
         print("redis_query_params: ", redis_query_params)
+        return jsonify("done")
 
         redis_response = requests.get(
             'http://redis-service:8083/weather_output', params=redis_query_params)
@@ -211,6 +211,9 @@ def nasa_data():
         redis_query_params = {"request_id": request_id}
         print("redis_query_params: ", redis_query_params)
 
+        # TEST
+        return jsonify("done")
+
         redis_response = requests.get(
             'http://redis-service:8083/weather_output', params=redis_query_params)
         print('Redis response: ', redis_response.json())
@@ -268,7 +271,7 @@ def nasa_data():
         # -------- Consolidating Response --------
         response_dict = {
             'isAuth': True,
-            'status': registry_response.status,
+            'status': False,
             'ack': ack,
             'data_output_value': -1
         }
