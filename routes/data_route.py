@@ -88,7 +88,6 @@ def nexrad_data():
         request_id = request.args.get('request_id')
         redis_query_params = {"request_id": request_id}
         print("redis_query_params: ", redis_query_params)
-        return jsonify("done")
 
         redis_response = requests.get(
             'http://redis-service:8083/weather-output', params=redis_query_params)
@@ -227,8 +226,7 @@ def nasa_data():
                 'data_output_value': redis_response.json()["data_output_value"]
             }
             return jsonify(response_dict), 200
-        # TEST
-        return jsonify("done")
+
         # -------- Service 4: Call to data service (if Redis misses) --------
 
         # Create RabbitMQ channel
