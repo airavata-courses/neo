@@ -22,9 +22,9 @@ def weather_output():
         print('request_id: ', str(request))
 
         data_output_value = r.get(request_id)
+        print('data output value: ', str(data_output_value))
         if not data_output_value:
             return jsonify({'data_output_value': -1})
-        print('data output value: ', str(data_output_value))
         return jsonify({'data_output_value': str(data_output_value)})
 
     elif request.method == 'POST':
