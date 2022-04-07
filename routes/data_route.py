@@ -103,7 +103,9 @@ def nexrad_data():
             return jsonify(response_dict), 200
 
         # -------- Service 4: Call to data service (if Redis misses) --------
-
+        # RabbitMQ connection
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host='rabbitmq-neo'))
         # Create RabbitMQ channel
         channel = connection.channel()
         # Declare work queue
@@ -154,8 +156,8 @@ def nexrad_data():
             print(f'Publish error for request ID {request_id}.')
             ack = 0
 
-        # Close the channel after message has been published
-        channel.close()
+        # Close the connection after message has been published
+        connection.close()
 
         # -------- Consolidating Response --------
         response_dict = {
@@ -228,7 +230,9 @@ def nasa_data():
             return jsonify(response_dict), 200
 
         # -------- Service 4: Call to data service (if Redis misses) --------
-
+        # RabbitMQ connection
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host='rabbitmq-neo'))
         # Create RabbitMQ channel
         channel = connection.channel()
         # Declare work queue
@@ -265,8 +269,8 @@ def nasa_data():
             print(f'Publish error for request ID {request_id}.')
             ack = 0
 
-        # Close the channel after message has been published
-        channel.close()
+        # Close the connection after message has been published
+        connection.close()
 
         # -------- Consolidating Response --------
         response_dict = {
