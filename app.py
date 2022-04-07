@@ -86,9 +86,9 @@ def consume_input_query():
 app = consume_input_query()
 
 if __name__ == '__main__':
-print("Data service running..")
-id = os.environ['login_id']
-pw = os.environ['login_pw']
-home_path = os.environ['HOME']
-with open(home_path+'/.netrc', 'w') as f:
-    f.write('machine urs.earthdata.nasa.gov login {user_name} password {password}'.format(user_name=id, password=pw))
+    print("Data service running..")
+    id = os.environ['login_id']
+    pw = os.environ['login_pw']
+    home_path = os.environ['HOME']
+    with open(home_path+'/.netrc', 'w') as f:
+        f.write('machine urs.earthdata.nasa.gov login {user_name} password {password}'.format(user_name=id, password=pw))
