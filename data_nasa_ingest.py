@@ -122,7 +122,7 @@ def get_url(myJobId, response):
     return urls
 
 
-def download_data_file(urls):
+def download_data_file(urls, product):
     for item in urls :
         URL = item['link']
     result = requests.get(URL)
@@ -137,7 +137,7 @@ def download_data_file(urls):
         print('Error! Status code is %d for this URL:\n%s' % (result.status.code,URL))
 
     data = Dataset(outfn)
-    a = data.variables['SLP'][0][:][:]
+    a = data.variables[product][0][:][:]
     out = numpy.array(a)
     numpyData = {"SLP": out}
     out_file = json.dumps(numpyData, cls=NumpyArrayEncoder)
@@ -149,7 +149,7 @@ def get_json_file(product, begTime):
         subset_request = create_json_wsp(product, begTime)
         myJobId, response = request_subset(subset_request)
         urls = get_url(myJobId, response)
-        json_out = download_data_file(urls)
+        json_out = download_data_file(urls,product )
     except:
         out = numpy.array(numpy.zeros((361, 576)))
         numpyData = {"SLP": out}
@@ -158,7 +158,7 @@ def get_json_file(product, begTime):
 
 if __name__ == "__main__":
 
-    product ='dfd'
+    product ='PS'
 
     begTime = '2021-01-01'
     print(get_json_file(product,begTime ))
