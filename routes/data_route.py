@@ -14,8 +14,8 @@ import requests
 data_api = Blueprint('data_api', __name__)
 
 # RabbitMQ connection
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='rabbitmq-neo'))
+# connection = pika.BlockingConnection(
+#     pika.ConnectionParameters(host='rabbitmq-neo'))
 
 
 @data_api.route('/nexrad-data', methods=["GET"])
