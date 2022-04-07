@@ -25,7 +25,7 @@ connection = pika.BlockingConnection(
 def publish_output(request_id, data_output_value):
     request_body = {"request_id": str(request_id),
                     "data_output_value": str(data_output_value)}
-    print("request_body: ", request_body)
+    # print("request_body: ", request_body)
     redis_response = requests.post(
         'http://redis-service:8083/weather-output', json=request_body)
     print('redis POST response: ', redis_response.json())

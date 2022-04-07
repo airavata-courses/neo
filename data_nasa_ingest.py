@@ -10,9 +10,7 @@ import json
 import tempfile
 
 
-http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where())
-# Set the URL for the GES DISC subset service endpoint
-url = 'https://disc.gsfc.nasa.gov/service/subset/jsonwsp'
+
 
 
 class NumpyArrayEncoder(JSONEncoder):
@@ -22,6 +20,9 @@ class NumpyArrayEncoder(JSONEncoder):
         return JSONEncoder.default(self, obj)
 
 def get_http_data(request):
+    http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where())
+    # Set the URL for the GES DISC subset service endpoint
+    url = 'https://disc.gsfc.nasa.gov/service/subset/jsonwsp'
     hdrs = {'Content-Type': 'application/json',
             'Accept'      : 'application/json'}
     data = json.dumps(request)
