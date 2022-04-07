@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 8089
 
 # CMD ["/usr/local/envs/neodata/bin/python","-u" ,"app.py"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8083", "--capture-output", "app:app"]
+CMD ["sh", "/data-processor/nasa_login.sh"]
