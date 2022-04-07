@@ -10,7 +10,7 @@ export class NasaDashboardClientService {
 
     constructor(private readonly http: HttpClient) { }
 
-    private readonly pathBase = `http://149.165.153.238:32000/api/`;
+    private readonly pathBase = `https://dull-eagle-11.loca.lt/api/`;
 
     private getPath(action: string) {
         return `${this.pathBase}${action}`
