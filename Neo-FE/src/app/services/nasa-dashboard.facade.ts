@@ -24,7 +24,7 @@ export class NasaDashboardFacade {
 
   removeNasaWidget(payload: RemoveNasaWidgetArgs) {
     this.store.dispatch(
-      a.removeWidget({ payload })
+      a.removeNasaWidget({ payload })
     )
   }
 }

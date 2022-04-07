@@ -4,6 +4,7 @@ import * as fromDashboard from './dashboard.reducer';
 import * as fromHistory from './history.reducer';
 import * as fromMetadata from './metadata.reducer';
 import * as fromNasaDashboard from './nasa-dashboard.reducer';
+import * as fromMapdata from './mapdata.reducer';
 
 export interface NeoState {
   readonly login: fromAuth.LoginState;
@@ -11,6 +12,7 @@ export interface NeoState {
   readonly history: fromHistory.HistoryState;
   readonly metadata: fromMetadata.MetadataState;
   readonly nasaDashboard: fromNasaDashboard.NasaDashboardState;
+  readonly mapData: fromMapdata.MapdataState;
 }
 
 export const NEO_FEATURE = 'neo';
@@ -24,5 +26,6 @@ export const neoReducers: ActionReducerMap<NeoState, any> = {
   dashboard: fromDashboard.reducer,
   history: fromHistory.reducer,
   metadata: fromMetadata.reducer,
-  nasaDashboard: fromNasaDashboard.reducer
+  nasaDashboard: fromNasaDashboard.reducer,
+  mapData: fromMapdata.reducer
 };

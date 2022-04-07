@@ -26,17 +26,17 @@ export interface NasaWidgetData {
     readonly widgetId: number;
     readonly isAuth: boolean;
     readonly status: boolean;
-    readonly ack: string;
-    readonly result?: NasaResult;
-    readonly data_output_value?: NasaResult | -1
+    readonly ack: number;
+    readonly result?: NasaResult | -1;
+    readonly data_output_value?: string | -1
 }
 
 export interface NasaWidgetProperty extends NasaWidgetArgs {
     readonly isLoading: boolean,
     readonly image?: string,
-    readonly ack?: string,
+    readonly ack?: number,
     readonly failed?: boolean,
-    readonly result?: NasaResult;
+    readonly result?: NasaResult | -1;
 }
 
 export interface NasaWidgetsList {

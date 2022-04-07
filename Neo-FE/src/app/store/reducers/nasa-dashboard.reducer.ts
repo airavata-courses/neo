@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { NasaWidgetsList } from "src/app/dto"
+import { NasaResult, NasaWidgetsList } from "src/app/dto"
 import { Nullable, StateSlice } from "../../model/state-slice"
 
 import * as nasaDashboardActions from '../actions';
@@ -55,7 +55,7 @@ const nasaDashboardReducer = createReducer(
             ...updatedData[indexOfData],
             isLoading: false,
             ack: payload.ack,
-            result: payload.result
+            result: payload.data_output_value && payload.data_output_value !== -1? JSON.parse((payload.data_output_value as unknown as string).slice(2,-1)) as NasaResult : undefined
         }
 
         return {

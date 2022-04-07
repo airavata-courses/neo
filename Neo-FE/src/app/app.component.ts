@@ -27,6 +27,7 @@ export class AppComponent {
   ngOnInit() {
     this.authService.attemptLoginFromSessionStorage();
     this.metadataService.getMetadata();
+    this.metadataService.getMapData();
   }
 
   logout(): void {

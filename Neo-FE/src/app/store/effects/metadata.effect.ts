@@ -30,4 +30,19 @@ export class MetadataEffects {
                 ))
         )
     );
+
+    getMapdata$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(a.getMapdata),
+            switchMap(() =>
+                this.metadataClient.get_map_data().pipe(
+                    take(1),
+                    switchMap((response) => {
+                        return [a.getMapdataSuccess({payload: response})]
+                    }),
+                    catchError((error: boolean) => [
+                    ])
+                ))
+        )
+    );
 }

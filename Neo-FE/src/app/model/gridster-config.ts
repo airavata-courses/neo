@@ -30,7 +30,7 @@ export const OPTIONS = {
     defaultItemCols: 1,
     defaultItemRows: 1,
     fixedColWidth: 300,
-    fixedRowHeight: 400,
+    fixedRowHeight: 300,
     keepFixedHeightInMobile: false,
     keepFixedWidthInMobile: false,
     scrollSensitivity: 10,

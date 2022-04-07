@@ -52,6 +52,8 @@ import { MetadataFacade } from './services/metadata.facade';
 import { NasaDashboardComponent } from './components/nasa-dashboard/nasa-dashboard.component';
 import { AddNasaWidgetModalComponent } from './components/nasa-dashboard/add-nasa-widget-modal/add-nasa-widget-modal.component';
 import { NasaDashboardFacade } from './services/nasa-dashboard.facade';
+import { MapDataModalComponent } from './components/nasa-dashboard/map-data-modal/map-data-modal.component';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 const jwtProvider = {
   provide: JwtHelperService,
@@ -70,7 +72,8 @@ const jwtProvider = {
     AddWidgetModalComponent,
     AddNasaWidgetModalComponent,
     LoginComponent,
-    HistoryComponent
+    HistoryComponent,
+    MapDataModalComponent
   ],
   imports: [
     CommonModule,
@@ -110,7 +113,8 @@ const jwtProvider = {
     SocialLoginModule,
     MatTableModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    HighchartsChartModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

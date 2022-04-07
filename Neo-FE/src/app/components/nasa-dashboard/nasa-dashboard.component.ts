@@ -2,12 +2,14 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from "@angular/
 import { MatDialogRef } from "@angular/material/dialog";
 import { DomSanitizer } from "@angular/platform-browser";
 import { take } from "rxjs";
-import { NasaWidgetProperty } from "src/app/dto";
+import { NasaResult, NasaWidgetProperty } from "src/app/dto";
 import { OPTIONS, Safe } from "src/app/model/gridster-config";
 import { AuthFacade } from "src/app/services/auth.facade";
+import { MetadataFacade } from "src/app/services/metadata.facade";
 import { ModalService } from "src/app/services/modal.service";
 import { NasaDashboardFacade } from "src/app/services/nasa-dashboard.facade";
 import { AddNasaWidgetModalComponent, AddNasaWidgetModalData } from "./add-nasa-widget-modal/add-nasa-widget-modal.component";
+import { MapDataModalComponent, MapDataModalData } from "./map-data-modal/map-data-modal.component";
 
 @Component({
     selector: 'app-nasa-dashboard',
@@ -28,11 +30,13 @@ export class NasaDashboardComponent {
             this.email = data.data?.email
         }
     });
+    readonly topology$ = this.metaDataService.getMapData$;
 
     constructor(
         private readonly nasaDashboardService: NasaDashboardFacade,
         private readonly modalService: ModalService,
         private readonly authService: AuthFacade,
+        private readonly metaDataService: MetadataFacade,
         private readonly domSanitizer: DomSanitizer
     ) { }
 
@@ -84,7 +88,12 @@ export class NasaDashboardComponent {
                 month: instance.month,
                 feature: instance.feature,
                 id: item.id,
-                request_id: 'abcde', // WRITE GENERATE REQUEST ID CODE 
+                request_id: this.generateBtoA({
+                    day: instance.day,
+                    month: instance.month,
+                    year: instance.year,
+                    feature: instance.feature
+                }), // WRITE GENERATE REQUEST ID CODE 
                 gridster: {
                     x: 0,
                     y: 0,
@@ -96,6 +105,10 @@ export class NasaDashboardComponent {
 
             modal.close();
         })
+    }
+
+    generateBtoA(body: Object) {
+        return btoa(JSON.stringify(body))
     }
 
     addItem(id: number): void {
@@ -117,7 +130,12 @@ export class NasaDashboardComponent {
                 month: instance.month,
                 feature: instance.feature,
                 id,
-                request_id: 'abcde', // WRITE GENERATE REQUEST ID CODE
+                request_id: this.generateBtoA({
+                    day: instance.day,
+                    month: instance.month,
+                    year: instance.year,
+                    feature: instance.feature
+                }), // WRITE GENERATE REQUEST ID CODE
                 gridster: {
                     x: 0,
                     y: 0,
@@ -131,5 +149,20 @@ export class NasaDashboardComponent {
         })
     }
 
+    openMapData(topology: Object, item: NasaWidgetProperty) {
+        const modal = this.modalService.open(
+            MapDataModalComponent,
+            MapDataModalData.asConfig(
+                `Nasa Data Projection for Feature:${item.feature}, Date:${item.date}`,
+                {
+                    feature: item.feature,
+                    date: item.date,
+                    buttonData: 'Update NASA Widget',
+                    topology,
+                    data: item.result as NasaResult
+                }
+            )
+        );
+    }
 
 }

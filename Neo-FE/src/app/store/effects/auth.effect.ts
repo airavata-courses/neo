@@ -40,7 +40,9 @@ export class AuthEffects {
                         return [a.createAuthTokenSuccess({ payload: response })]
                     }),
                     catchError((error: UserTokenFail) => [
-                        a.createAuthTokenFail({ payload: { error: error.isAuth } }),
+                        error.isAuth === undefined?
+                        a.createAuthToken(action)
+                        :a.createAuthTokenFail({ payload: { error: error.isAuth } })
                     ])
                 ))
         )

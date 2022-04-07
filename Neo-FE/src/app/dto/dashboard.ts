@@ -26,7 +26,7 @@ export interface WidgetData {
     readonly isAuth: boolean,
     readonly status: boolean,
     readonly image?: string,
-    readonly ack?: string,
+    readonly ack?: number,
     readonly data_output_value?: string | -1
 }
 

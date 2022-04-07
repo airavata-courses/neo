@@ -16,7 +16,7 @@ export class PollingDataEffects {
     pollingData$ = createEffect(() =>
         this.actions$.pipe(
             ofType(a.pollingData),
-            delay(10000),
+            delay(5000),
             mergeMap(action =>
                 this.pollingDataClient.get_poll(action.payload, action.payload.id).pipe(
                     take(1),
@@ -24,11 +24,11 @@ export class PollingDataEffects {
                         if (hasPollingRequestFailed(response)) {
                             return throwError(response)
                         }
-                        if (response.result !== -1) {
+                        if (response.data_output_value !== -1) {
                             if (action.payload.type === 'NASA') {
-                                return [a.getNasaWidgetSuccess({ payload: { ...response, result: response.result as NasaResult,widgetId: action.payload.id, status: true, ack: '1' } })]
+                                return [a.getNasaWidgetSuccess({ payload: { ...response, data_output_value: response.data_output_value,widgetId: action.payload.id, status: true, ack: 1 } })]
                             }
-                            return [a.getWidgetSuccess({ payload: { ...response, image: response.result as string, id: action.payload.id, status: true, ack: '1' } })]
+                            return [a.getWidgetSuccess({ payload: { ...response, image: response.data_output_value as string, id: action.payload.id, status: true, ack: 1 } })]
                         }
                         else return [a.pollingData(action)]
                     }),

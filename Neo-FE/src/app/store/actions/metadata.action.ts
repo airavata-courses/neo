@@ -19,7 +19,18 @@ export const getMetadataSuccess = createAction(
     props<{ readonly payload: MetaData }>()
 )
 
+export const getMapdata = createAction(
+    '[Metadata] Get Map Data'
+)
+
+export const getMapdataSuccess = createAction(
+    '[Metadata] Get Map Data Success',
+    props<{ readonly payload: Object }>()
+)
+
 export type MetadataAction =
     | typeof getMetadataFail
     | typeof getMetadata
-    | typeof getMetadataSuccess;
+    | typeof getMetadataSuccess
+    | typeof getMapdataSuccess
+    | typeof getMapdata;

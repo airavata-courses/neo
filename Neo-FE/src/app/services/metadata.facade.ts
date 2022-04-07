@@ -13,11 +13,18 @@ export class MetadataFacade {
     readonly getProperties$ = this.store.select(s.getProperties);
     readonly getNasaProperties$ = this.store.select(s.getNasaProperties);
     readonly getNasaPropertiesById$ = this.store.select(s.getNasaPropertiesById);
+    readonly getMapData$ = this.store.select(s.getMapData);
     readonly error$ = this.store.select(s.getMetadataError);
 
     getMetadata() {
         this.store.dispatch(
             a.getMetadata()
         );
+    }
+
+    getMapData() {
+        this.store.dispatch(
+            a.getMapdata()
+        )
     }
 }

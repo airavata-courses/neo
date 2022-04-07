@@ -24,14 +24,14 @@ export class NasaDashboardEffects {
                             return throwError(response)
                         }
                         if (response.data_output_value !== -1) {
-                            return [a.getNasaWidgetSuccess({ payload: { ...response, widgetId: action.payload.id } })]
+                            return [a.getNasaWidgetSuccess({ payload: { ...response, widgetId: action.payload.id, ack: 1 } })]
                         }
                         else {
                             return [a.getNasaWidgetSuccess({ payload: { ...response, widgetId: action.payload.id } }), a.pollingData({payload: {id: action.payload.id, request_id: action.payload.request_id, email: action.payload.email, type: 'NASA'}})]
                         }
                     }),
                     catchError((error: NasaWidgetDataFail) => [
-                        a.getNasaWidgetFail({ payload: { widgetId: action.payload.id, error } })
+                        a.getNasaWidget(action)
                     ])
                 ))
         )

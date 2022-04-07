@@ -12,7 +12,7 @@ export interface PollingArgs {
 export interface PollingData {
     readonly widgetId: number;
     readonly isAuth: boolean;
-    readonly result?: NasaResult | -1 | string;
+    readonly data_output_value?: -1 | string;
 }
 
 export interface PollingDataFail {

@@ -10,7 +10,7 @@ export class HistoryClientService {
 
     constructor(private readonly http: HttpClient) { }
 
-    private readonly pathBase = `${window.location.origin}/api/`;
+    private readonly pathBase = `http://149.165.153.238:32000/api/`;
 
     private getPath(action: string) {
         return `${this.pathBase}${action}`
