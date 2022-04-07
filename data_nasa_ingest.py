@@ -123,6 +123,18 @@ def get_url(myJobId, response):
     return urls
 
 
+def normalize_2d(X):
+    X = X + abs(numpy.min(X))
+    matrix = (X - numpy.average(X))
+    matrix = matrix/numpy.max(abs(matrix))
+
+    matrix = matrix*500
+    matrix = matrix +abs( numpy.amin(matrix))
+
+
+    return matrix
+
+
 def download_data_file(urls, product):
     for item in urls :
         URL = item['link']
@@ -140,6 +152,7 @@ def download_data_file(urls, product):
     data = Dataset(outfn)
     a = data.variables[product][0][:][:]
     out = numpy.array(a)
+    out = normalize_2d(out)
     numpyData = {"SLP": out}
     out_file = json.dumps(numpyData, cls=NumpyArrayEncoder)
     return out_file
@@ -152,6 +165,7 @@ def get_json_file(product, begTime):
         urls = get_url(myJobId, response)
         json_out = download_data_file(urls,product )
     except Exception as e:
+        print("error:")
         print(e)
         out = numpy.array(numpy.zeros((361, 576)))
         numpyData = {"SLP": out}
@@ -160,7 +174,7 @@ def get_json_file(product, begTime):
 
 if __name__ == "__main__":
 
-    product ='PS'
-
-    begTime = '2021-01-01'
+    product ='SLP'
+    begTime ='2022-02-02'
+    # begTime = '2021-01-01'
     print(get_json_file(product,begTime ))
