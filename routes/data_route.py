@@ -221,7 +221,7 @@ def nasa_data():
         if redis_response.json()["data_output_value"] != -1:
             response_dict = {
                 'isAuth': auth_response.isAuth,
-                'status': registry_response.status,
+                'status': False,
                 'ack': 0,
                 'data_output_value': redis_response.json()["data_output_value"]
             }
