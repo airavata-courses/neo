@@ -23,6 +23,18 @@
     transform: scale(0.6)
 }
 
+.spinner-container-2 {
+    height: 100%;
+    text-align:center;
+    text-align: -webkit-center;
+}
+
+.spinner-2 {
+    position: relative;
+    top: 27%;
+    transform: scale(0.3)
+}
+
 .label-content {
     margin: 0 20px;
     text-align: center;

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { map, Observable } from "rxjs";
 import { NasaWidgetData, PollingArgs, PollingData, PollingResponse } from "../dto";
 
@@ -10,7 +11,7 @@ export class PollingClientService {
 
     constructor(private readonly http: HttpClient) { }
 
-    private readonly pathBase = `https://dull-eagle-11.loca.lt/api/`;
+    private readonly pathBase = `http://149.165.153.238:32000/api/`;
 
     private getPath(action: string) {
         return `${this.pathBase}${action}`

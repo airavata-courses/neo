@@ -41,6 +41,14 @@
                                 <label>{{item.feature}}</label>
                                 <br>
                                 <label>{{item.date}}</label>
+                                <br>
+                                <label *ngIf="item.ack === 0">Data Processing Failed, please retry</label>
+                                <ng-container *ngIf="item.ack === 1 && !item.image">
+                                    <label style="color: #3f51b5;">Your Data is getting prepared, hold tight it will be shortly here!!</label>
+                                    <div class="spinner-container-2">
+                                        <mat-spinner class="spinner-2"></mat-spinner>
+                                    </div>
+                                </ng-container>
                             </mat-card>
                         </div>
                         <ng-template #noData>

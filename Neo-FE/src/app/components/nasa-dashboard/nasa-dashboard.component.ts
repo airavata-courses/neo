@@ -19,7 +19,7 @@ import { MapDataModalComponent, MapDataModalData } from "./map-data-modal/map-da
     encapsulation: ViewEncapsulation.None
 })
 export class NasaDashboardComponent {
-    options: Safe = OPTIONS;
+    options: Safe = {...OPTIONS, fixedRowHeight: 300};
     readonly dashboard$ = this.nasaDashboardService.getNasaWidgetsList$;
     readonly dashboardById$ = this.nasaDashboardService.getNasaWidgetsListbyId$;
     readonly error$ = this.nasaDashboardService.nasaError$;

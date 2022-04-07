@@ -55,7 +55,8 @@ const dashboardReducer = createReducer(
         updatedData[indexOfData] = {
             ...updatedData[indexOfData],
             isLoading: false,
-            image: payload.image
+            ack: payload.ack,
+            image: payload.data_output_value && payload.data_output_value !== -1? (payload.data_output_value as unknown as string).slice(4,-2) as string : undefined
         }
 
         return {

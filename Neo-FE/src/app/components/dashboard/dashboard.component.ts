@@ -50,7 +50,7 @@ export class DashboardComponent {
     }
 
     sanitizeImage(base64Data: string) {
-        return this.domSanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${base64Data.slice(18,-4)}`);
+        return this.domSanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${base64Data}`);
     }
 
     getLabel(data: WidgetProperty) {
@@ -88,7 +88,14 @@ export class DashboardComponent {
                 minute: instance.minute,
                 feature: instance.feature,
                 id: item.id,
-                request_id: '', // WRITE GENERATE REQUEST ID CODE
+                request_id: this.generateBtoA({
+                    day: instance.day,
+                    month: instance.month,
+                    year: instance.year,
+                    feature: instance.feature,
+                    station: instance.station,
+                    hour: instance.hour
+                }), // WRITE GENERATE REQUEST ID CODE
                 gridster: {
                     x: 0,
                     y: 0,
@@ -124,7 +131,14 @@ export class DashboardComponent {
                 minute: instance.minute,
                 feature: instance.feature,
                 id,
-                request_id: '', // WRITE GENERATE REQUEST ID CODE
+                request_id: this.generateBtoA({
+                    day: instance.day,
+                    month: instance.month,
+                    year: instance.year,
+                    feature: instance.feature,
+                    station: instance.station,
+                    hour: instance.hour
+                }), // WRITE GENERATE REQUEST ID CODE
                 gridster: {
                     x: 0,
                     y: 0,
@@ -138,5 +152,8 @@ export class DashboardComponent {
         })
     }
 
+    generateBtoA(body: Object) {
+        return btoa(JSON.stringify(body))
+    }
 
 }

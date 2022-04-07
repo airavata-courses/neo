@@ -82,7 +82,6 @@ export class MapDataModalComponent implements AfterViewInit{
             color: this.random_hex_color_code(data?.SLP[idx][jdx] || 0)
           })
         } catch(e) {
-          debugger
         }
         jdx = jdx + (1 * 10);
         lon = lon + (0.625 * 10);

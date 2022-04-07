@@ -33,7 +33,8 @@ export interface WidgetData {
 export interface WidgetProperty extends WidgetArgs {
     readonly isLoading: boolean,
     readonly image?: string,
-    readonly failed?: boolean
+    readonly failed?: boolean,
+    readonly ack?: number
 }
 
 export interface WidgetsList {
