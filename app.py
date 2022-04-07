@@ -5,6 +5,17 @@ import pickle
 import requests
 import os
 
+
+print("Data service running..")
+id = os.environ['login_id']
+pw = os.environ['login_pw']
+print(os.environ['login_id'])
+print(os.environ['login_pw'])
+home_path = os.environ['HOME']
+with open(home_path+'/.netrc', 'w') as f:
+    f.write('machine urs.earthdata.nasa.gov login {user_name} password {password}'.format(user_name=id, password=pw))
+
+
 # Establish RabbitMQ connection
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host='rabbitmq-neo'))
