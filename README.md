@@ -2,12 +2,15 @@
 
 Spring 2022 Project
 
-Neo is a microservice architecture based application to visualize Doppler Radar Feed from the NEXRAD system's [Registry of Open Data on AWS](https://registry.opendata.aws/noaa-nexrad/).
+Neo is a microservice architecture based application to visualize Doppler Radar Feed from the NEXRAD system's [Registry of Open Data on AWS](https://registry.opendata.aws/noaa-nexrad/) and satellite data sourced from the [NASA MERRA 2 Earth Dataset](https://disc.gsfc.nasa.gov/datasets/M2I3NPASM_5.12.4/summary).
 
 **Quick Reference Links:**
 
 - [Project Milestone 1 Release](https://github.com/airavata-courses/neo/releases/tag/v1https://github.com/airavata-courses/neo/releases/tag/v1)
+- [Wiki Home Page](https://github.com/airavata-courses/neo/wiki)
 - [Project Milestone 1 Wiki](https://github.com/airavata-courses/neo/wiki/Project-1)
+- [Project Milestone 2 Wiki](https://github.com/airavata-courses/neo/wiki/Project-2)
+- [Project Milestone 3 Wiki](https://github.com/airavata-courses/neo/wiki/Project-3)
 
 ## Software Requirements
 
@@ -76,8 +79,20 @@ Hence, after initiating all services with `docker-compose up`, the UI of our app
 
 ![Neo System Architecture - Milestone 3 drawio (3)](https://user-images.githubusercontent.com/35288428/162355130-92150d06-fab4-4914-8894-1e4e4b9ccec9.png)
 
-## Team:
+## Team 
 
-- Rajdeep Singh Chauhan (rajchauh@iu.edu)
-- Nirav Raje (nraje@iu.edu)
-- Shashank Jain (shasjain@iu.edu)
+- **Rajdeep Singh Chauhan**: [rajchauh@iu.edu]
+
+   [<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />](https://www.linkedin.com/in/rajdeep-singh-chauhan-205544a0/)
+   [<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />](https://github.com/rajdeepc2792)
+
+- **Nirav Raje**: [nraje@iu.edu]
+
+   [<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />](https://www.linkedin.com/in/niravraje/)
+   [<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />](https://github.com/niravraje)
+
+- **Shashank Jain** [shasjain@iu.edu]
+   
+   [<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />](https://www.linkedin.com/in/shashankjain07/)
+   [<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />](https://github.com/shanki07)
+
