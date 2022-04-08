@@ -74,7 +74,7 @@ Hence, after initiating all services with `docker-compose up`, the UI of our app
 
 ## Architecture Diagram
 
-![Neo System Architecture - Milestone 3 drawio (2)](https://user-images.githubusercontent.com/35288428/162354784-6c9edb43-20b8-4604-98d5-0a0ab6ad861f.png)
+![Neo System Architecture - Milestone 3 drawio (3)](https://user-images.githubusercontent.com/35288428/162355130-92150d06-fab4-4914-8894-1e4e4b9ccec9.png)
 
 ## Team:
 
