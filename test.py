@@ -2,9 +2,9 @@ import requests
 
 BASE = "http://127.0.0.1:5000/"
 
-# response = requests.get(BASE+"user/shasjain@iu.edu")
+# response = requests.get(BASE+"user")
 # print(response.json())
-#
+
 
 # response = requests.put(BASE+"user/nemo", {
 #     'first_name': 'Nemo',
@@ -18,8 +18,8 @@ BASE = "http://127.0.0.1:5000/"
 
 
 # response = requests.put(BASE+"userupdate/abelota", {
-#     'firstName': 'naap',
-#     'lastName': 'tola'
+#     'firstName': 'naapa',
+#     'lastName': 'tol'
 # })
 #
 # print(response.json())
@@ -33,7 +33,12 @@ BASE = "http://127.0.0.1:5000/"
 # print(response.json())
 
 
-response = requests.put(BASE+"usergroup/alice/neo_group_411af813-bebb-4f2e-b7d7-d105d0b383d0")
+# response = requests.put(BASE+"usergroup/alice/neo_group_411af813-bebb-4f2e-b7d7-d105d0b383d0")
+#
+# print(response.json())
+
+
+response = requests.put(BASE+"user")
 
 print(response.json())
 
