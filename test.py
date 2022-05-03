@@ -33,7 +33,7 @@ BASE = "http://127.0.0.1:5000/"
 # print(response.json())
 
 
-response = requests.put(BASE+"usergroup/alice/neo_group")
+response = requests.put(BASE+"usergroup/alice/neo_group_411af813-bebb-4f2e-b7d7-d105d0b383d0")
 
 print(response.json())
 
