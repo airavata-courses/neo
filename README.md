@@ -1,6 +1,5 @@
 # neo
-
-Spring 2022 Project
+Welcome to neo!
 
 Neo is a microservice architecture based application to visualize Doppler Radar Feed from the NEXRAD system's [Registry of Open Data on AWS](https://registry.opendata.aws/noaa-nexrad/) and satellite data sourced from the [NASA MERRA 2 Earth Dataset](https://disc.gsfc.nasa.gov/datasets/M2I3NPASM_5.12.4/summary).
 
@@ -11,73 +10,42 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 - [Project Milestone 1 Wiki](https://github.com/airavata-courses/neo/wiki/Project-1)
 - [Project Milestone 2 Wiki](https://github.com/airavata-courses/neo/wiki/Project-2)
 - [Project Milestone 3 Wiki](https://github.com/airavata-courses/neo/wiki/Project-3)
+- [Project Milestone 4 Wiki](https://github.com/airavata-courses/neo/wiki/Project-4)
 
-## Software Requirements
+***
+### Technology Stack
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+| Function                                   | Language/Framework/Technology Used                                            |
+|--------------------------------------------|-------------------------------------------------------------------------------|
+| Backend Microservice Implementation        | TypeScript (Node.js, Nginx)<br>Python (Flask, Gunicorn)<br>Java (Spring Boot) |
+| Frontend Microservice Implementation       | Angular<br>Redux                                                              |
+| Inter-service Communication                | gRPC (primary)<br>RabbitMQ (for data service)<br>REST                         |
+| Database & Cache Management                | MongoDB<br>Redis                                                              |
+| Containerization & Container Orchestration | Docker<br>Kubernetes                                                          |
+| Performance Testing                        | Apache JMeter (with Ultimate Thread Group plugin)                             |
+| CI/CD, Infra-as-code, Build Automation     | Jenkins<br>OpenStack API<br>Terraform<br>Ansible                              |
+| Secret Management                          | Kubeseal                                                                      |
 
-## Installation Steps
+***
+### Napkin Diagram:
 
-- Clone project repository:
+![Neo Napkin Diagram 3 drawio](https://user-images.githubusercontent.com/35288428/167030786-05d23df7-cd0f-425c-9ae1-9f616781eec8.png)
+***
+### System Architecture Diagram:
 
-  `git clone https://github.com/airavata-courses/neo.git`
+![image](https://user-images.githubusercontent.com/35288428/167029768-2f9119cc-aa69-4cc6-be77-39a28ed1e674.png)
+***
+### Visualizations Generated for NEXRAD and NASA datasets
 
-- Change directory:
+#### NEXRAD Data Visualized:
 
-  `cd neo`
+![Screen Shot 2022-05-06 at 12 47 03 AM](https://user-images.githubusercontent.com/35288428/167070527-878ca5c5-ada3-44ec-ab3b-06e8f4f98342.png)
 
-- Checkout `dev` branch:
+#### NASA Data Visualized:
 
-  `git checkout dev`
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/35288428/167070567-f302f3a9-597b-4884-968b-b2d2636a277a.gif)
 
-  The `dev` branch contains the `docker-compose.yml` configuration file which will pull, build and run all images from our [neoairavata](https://hub.docker.com/u/neoairavataproject) public repository on Docker Hub.
 
-## Launching all microservices:
-
-All our microservices are hosted on the [neoairavata](https://hub.docker.com/u/neoairavataproject) Docker hub repository.
-
-- Start Docker Desktop to ensure Docker Daemon is running. For running on local machine for Milestone 1, we highly recommend to ensure that Docker Desktop's default resource limits (especially RAM) are increased to atleast 75% of available system resources.
-
-- To start all microservices, execute the below command in the terminal. Ensure that you are in the root directory of the `dev` branch while executing below command:
-
-  `docker-compose up`
-
-**Note:** Each microservice's Docker image has been built with multi-arch support for `linux/arm64` and `linux/amd64`.
-Based on the user's machine (arm64 or amd64 arch), the appropriate Docker image gets pulled by docker-compose.
-
-## Accessing User Interface
-
-Our UI service is exposed on port 4200 in the Docker container and maps to port 4200 of localhost.
-
-Hence, after initiating all services with `docker-compose up`, the UI of our application can be accessed from: `http://localhost:4200`
-
-## Technology Stack
-
-- gRPC
-- RabbitMQ
-- RESTful APIs
-- Redis
-- Angular
-- TypeScript
-- Python
-- Flask
-- Java
-- Spring Boot
-- Nginx
-- Docker (with docker-compose)
-- Kubernetes
-- OpenStack API
-- Terraform
-- Ansible
-- JetStream VMs
-
-## Napkin Diagram
-
-![Neo Napkin Diagram 2](https://user-images.githubusercontent.com/35288428/153309704-4b3c9175-3bb2-4208-92b2-b90a7c81effa.png)
-
-## Architecture Diagram
-
-![Neo System Architecture - Milestone 3 drawio (3)](https://user-images.githubusercontent.com/35288428/162355130-92150d06-fab4-4914-8894-1e4e4b9ccec9.png)
 
 ## Team 
 
