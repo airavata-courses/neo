@@ -12,6 +12,18 @@ Neo is a microservice architecture based application to visualize Doppler Radar 
 - [Project Milestone 3 Wiki](https://github.com/airavata-courses/neo/wiki/Project-3)
 - [Project Milestone 4 Wiki](https://github.com/airavata-courses/neo/wiki/Project-4)
 
+**Source Code Branches for Microservices:**
+- [Gateway Service](https://github.com/airavata-courses/neo/tree/feature-gateway-milestone3)
+- [UI Service](https://github.com/airavata-courses/neo/tree/feature-UI-milestone3)
+- [Data Processor Service](https://github.com/airavata-courses/neo/tree/feature-data-processing)
+- [User Service](https://github.com/airavata-courses/neo/tree/feature-user-milestone3)
+- [Registry Service](https://github.com/airavata-courses/neo/tree/feature-registry-milestone3)
+- [Auth Service](https://github.com/airavata-courses/neo/tree/feature-auth-milestone3)
+- [Database Service](https://github.com/airavata-courses/neo/tree/feature-database-milestone3)
+- [Redis DB Store Instance](https://github.com/airavata-courses/neo/tree/feature-redis-neo-milestone3)
+- [Cache Service](https://github.com/airavata-courses/neo/tree/feature-redis-milestone3)
+- [RabbitMQ Instance](https://github.com/airavata-courses/neo/tree/feature-rabbitmq-neo-milestone3)
+
 ***
 ### Technology Stack
 
